@@ -1,7 +1,7 @@
-from ..object import AqObject
+from ..object import CObject
 
 
-class AqContainer(AqObject):
+class CContainer(CObject):
     def __init__(self):
         super().__init__()
 

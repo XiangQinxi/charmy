@@ -2,11 +2,11 @@ import typing
 import warnings
 
 from ..const import UIFrame
-from ..object import AqObject
+from ..object import CObject
 
 
-class AqApp(AqObject):
-    """The base of AqApp Class
+class CApp(CObject):
+    """The base of CApp Class
 
     Attributes:
         ui.framework: What UI Framework will be used
@@ -23,14 +23,14 @@ class AqApp(AqObject):
         super().__init__()
 
         if self.instance_count >= 1:
-            warnings.warn("There should be only one instance of AqApp.")
+            warnings.warn("There should be only one instance of CApp.")
 
         self.new("ui.framework", ui)
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 
         self.new("windows", [])
-        self.new("alive", False)
+        self.new("is_alive", False)
 
         self._init_ui_framework()
 
@@ -51,7 +51,7 @@ class AqApp(AqObject):
                 glfw.set_error_callback(self.error)
 
     def update(self):
-        from glfw import poll_events, wait_events, get_current_context, swap_interval
+        from glfw import get_current_context, poll_events, swap_interval, wait_events
 
         input_mode: bool = True
 
@@ -59,10 +59,12 @@ class AqApp(AqObject):
         windows = self.get("windows")
 
         for window in windows:
-            if window["visible"] and window["alive"]:
+            if window["is_visible"] and window["is_alive"]:
                 window.update()
                 if get_current_context():
-                    swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
+                    swap_interval(
+                        1 if self.get("ui.is_vsync") else 0
+                    )  # 是否启用垂直同步
 
         if input_mode:
             poll_events()
@@ -70,16 +72,15 @@ class AqApp(AqObject):
             # if self._check_delay_events()
             wait_events()
 
-
     def run(self):
         if not self.get("windows"):
             warnings.warn(
                 "At least one window is required to run application!",
             )
 
-        self.set("alive", True)
+        self.set("is_alive", True)
 
-        while self.get("alive"):
+        while self.get("is_alive"):
             windows = self.get("windows")
             if not windows:
                 self.quit()
@@ -101,6 +102,7 @@ class AqApp(AqObject):
         match self.get("ui.framework"):
             case UIFrame.GLFW:
                 import glfw
+
                 for window in self.get("windows"):
                     glfw.destroy_window(window.the_window)
                 glfw.terminate()
@@ -108,12 +110,12 @@ class AqApp(AqObject):
 
     def quit(self) -> None:
         """Quit application."""
-        self.set("alive", False)
+        self.set("is_alive", False)
 
     @staticmethod
     def error(error_code: typing.Any, description: bytes):
         """
-        处理GLFW错误
+        GLFW Error Callback
 
         :param error_code: 错误码
         :param description: 错误信息

@@ -1,6 +1,6 @@
-from aqua import *
+from charmy import *
 
-obj = AqObject()
+obj = CObject()
 obj.new("name", "obj1")
 print(obj.get("name"))  # OUTPUT: obj1
 obj.set("name", "obj2")
@@ -9,13 +9,14 @@ print(obj.get("name"))  # OUTPUT: obj2
 
 def set_func(value):
     print("User set value:", value)
-    return "Hi" + value
+    return "Hello, " + value
 
 
 def get_func():
-    print("User get value")
+    return f"User get value: {obj.get('title', skip=True)}"
 
 
-obj.new("title", "", set_func=set_func, get_func=get_func)
-obj.set("title", "A")
-print(obj.get("title"))
+obj.new("title", "default title", set_func=set_func, get_func=get_func)
+print(obj.get("title"))  # OUTPUT: default title
+obj.set("title", "A")  # OUTPUT: User set value: A
+print(obj.get("title"))  # User get value: Hello, A

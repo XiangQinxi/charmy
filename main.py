@@ -1,6 +1,7 @@
-from aqua import *
+from charmy import *
 
-app = AqApp()
-window = AqWindow()
+app = CApp()
+window = CWindow(size=(300, 160))
+window2 = CWindow(size=(300, 160))
 
 app.run()

@@ -4,9 +4,9 @@ import weakref
 from .const import ID
 
 
-class AqInstanceCounterMeta(type):
+class CInstanceCounterMeta(type):
     """
-    AqInstanceCounterMeta
+    CInstanceCounterMeta
     """
 
     def __init__(cls, name, bases, attrs):
@@ -22,13 +22,15 @@ class AqInstanceCounterMeta(type):
         return instance
 
 
-class AqObject(metaclass=AqInstanceCounterMeta):
+class CObject(metaclass=CInstanceCounterMeta):
     """
-    AqObject is this project`s basic class, can set and get attribute
+    CObject is this project's basic class, can set and get attribute
     """
 
-    objects: typing.Dict[str, typing.Any] = {}
-    objects_sorted: typing.Dict[str, typing.Any] = {}
+    objects: typing.Dict[str, typing.Any] = {}  # find by ID {1: OBJ1, 2: OBJ2}
+    objects_sorted: typing.Dict[str, typing.Any] = (
+        {}
+    )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     def __init__(self, _id: ID = ID.AUTO):
         self._attributes = {}
@@ -49,6 +51,7 @@ class AqObject(metaclass=AqInstanceCounterMeta):
 
     @property
     def class_name(self) -> str:
+        """Return the lowered class name"""
         return self.__class__.__name__.lower()
 
     @property
@@ -74,6 +77,9 @@ class AqObject(metaclass=AqInstanceCounterMeta):
         Example
         -------
         .. code-block:: python
+            from charmy import *
+
+            obj = CObject()
             obj.new("name", "obj1")
             print(obj.get("name"))  # OUTPUT: obj1
             obj.set("name", "obj2")
@@ -82,16 +88,18 @@ class AqObject(metaclass=AqInstanceCounterMeta):
 
             def set_func(value):
                 print("User set value:", value)
-                return "Hi" + value
+                return "Hello, " + value
 
 
             def get_func():
-                print("User get value")
+                return f"User get value: {obj.get('title', skip=True)}"
 
 
-            obj.new("title", "", set_func=set_func, get_func=get_func)
-            obj.set("title", "A")
-            print(obj.get("title"))
+            obj.new("title", "default title", set_func=set_func, get_func=get_func)
+            print(obj.get("title"))  # OUTPUT: default title
+            obj.set("title", "A")  # OUTPUT: User set value: A
+            print(obj.get("title"))  # User get value: Hello, A
+
 
         Parameters:
             key (str): attribute name
@@ -108,12 +116,13 @@ class AqObject(metaclass=AqInstanceCounterMeta):
             self._attributes[key] = default
         return self
 
-    def set(self, key: str, value) -> typing.Self:
+    def set(self, key: str, value, *, skip: bool = False) -> typing.Self:
         """Set attribute
 
         Parameters:
             key (str): attribute name
             value (typing.Any): attribute value
+            skip (bool): skip custom set_func function
 
         Return:
             self
@@ -123,7 +132,10 @@ class AqObject(metaclass=AqInstanceCounterMeta):
         if isinstance(self._attributes[key], list):
             if self._attributes[key][0] == "@custom":
                 if self._attributes[key][2]:
-                    _return = self._attributes[key][2](value)
+                    if not skip:
+                        _return = self._attributes[key][2](value)
+                    else:
+                        _return = None
                     if _return:
                         self._attributes[key][1] = _return
                     else:
@@ -134,19 +146,32 @@ class AqObject(metaclass=AqInstanceCounterMeta):
         self._attributes[key] = value
         return self
 
-    def get(self, key: str) -> typing.Any:
+    def get(self, key: str, *, skip: bool = False) -> typing.Any:
         """Get attribute by key
 
         Parameters:
             key (str): attribute name
+            skip (bool): skip custom get_func function
 
         Return:
             the value corresponding to the key
         """
+
+        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
+
+        # check is a available key
+        if key not in self._attributes:
+            raise KeyError(key)
+
+        # check is a custom attribute
         if isinstance(self._attributes[key], list) and len(self._attributes[key]) > 0:
             if self._attributes[key][0] == "@custom":
                 if self._attributes[key][3]:
-                    _return = self._attributes[key][3]()
+                    if not skip:
+                        _return = self._attributes[key][3]()
+                    else:
+                        _return = None
+
                     if _return:
                         return _return
                     else:
@@ -163,15 +188,22 @@ class AqObject(metaclass=AqInstanceCounterMeta):
             return None
 
     def configure(self, **kwargs):
+        """High level set attributes by keyword arguments"""
         for key, value in kwargs.items():
             self.set(key, value)
 
     config = configure
 
+    def cget(self, key: str) -> typing.Any:
+        """Low level get attribute by key"""
+        return self.get(key)
+
     def __setitem__(self, key: str, value: typing.Any):
+        """You can set attribute by key: obj["key"] = value"""
         self.set(key, value)
 
     def __getitem__(self, key: str) -> typing.Any:
+        """You can get attribute by key: obj["key"]"""
         return self.get(key)
 
     @property

@@ -8,3 +8,4 @@ class ID(Enum):
 
 class UIFrame(Enum):
     GLFW = glfw = "GLFW"
+    SDL = sdl = "SDL"

@@ -1,5 +1,5 @@
 [project]
-name = "aquaui"
+name = "charmy-gui"
 version = "0.1.0"
 description = ""
 authors = [
@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "suzaku"}]
+packages = [{include = "charmy"}]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
