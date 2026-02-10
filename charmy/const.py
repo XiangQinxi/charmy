@@ -9,3 +9,11 @@ class ID(Enum):
 class UIFrame(Enum):
     GLFW = glfw = "GLFW"
     SDL = sdl = "SDL"
+
+
+class BackendFrame(Enum):
+    OPENGL = opengl = "OPENGL"
+
+
+class DrawingFrame(Enum):
+    SKIA = skia = "SKIA"

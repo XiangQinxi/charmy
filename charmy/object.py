@@ -32,7 +32,7 @@ class CObject(metaclass=CInstanceCounterMeta):
         {}
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
-    def __init__(self, _id: ID = ID.AUTO):
+    def __init__(self, _id: ID | str = ID.AUTO):
         self._attributes = {}
 
         if _id == ID.AUTO:
@@ -186,6 +186,8 @@ class CObject(metaclass=CInstanceCounterMeta):
             return self.objects[_id]
         except KeyError:
             return None
+
+    find = get_obj
 
     def configure(self, **kwargs):
         """High level set attributes by keyword arguments"""

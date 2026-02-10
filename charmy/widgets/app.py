@@ -1,8 +1,9 @@
 import typing
 import warnings
 
-from ..const import UIFrame
+from ..const import UIFrame, DrawingFrame, BackendFrame
 from ..object import CObject
+from ..event import CEventThread
 
 
 class CApp(CObject):
@@ -17,6 +18,8 @@ class CApp(CObject):
     def __init__(
         self,
         ui: UIFrame = UIFrame.GLFW,
+        drawing: DrawingFrame = DrawingFrame.SKIA,
+        backend: BackendFrame = BackendFrame.OPENGL,
         vsync: bool = True,
         samples: int = 4,
     ):
@@ -25,9 +28,16 @@ class CApp(CObject):
         if self.instance_count >= 1:
             warnings.warn("There should be only one instance of CApp.")
 
+        self.new("event.thread", CEventThread())
+        self["event.thread"].start()
+
         self.new("ui.framework", ui)
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
+
+        self.new("drawing.framework", drawing)
+        
+        self.new("backend.framework", backend)
 
         self.new("windows", [])
         self.new("is_alive", False)
@@ -111,6 +121,7 @@ class CApp(CObject):
     def quit(self) -> None:
         """Quit application."""
         self.set("is_alive", False)
+        self["event.thread"].is_alive = False
 
     @staticmethod
     def error(error_code: typing.Any, description: bytes):

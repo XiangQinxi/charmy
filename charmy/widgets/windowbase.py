@@ -2,14 +2,16 @@ import importlib
 import sys
 import typing
 
-from ..const import UIFrame
+from ..const import UIFrame, DrawingFrame, BackendFrame
 from ..object import CObject
 from ..pos import CPos
 from ..size import CSize
 from .app import CApp
 
+from ..event import CEventHandler
 
-class CWindowBase(CObject):
+
+class CWindowBase(CEventHandler):
     """CWindowBase is a base class for window
 
     Parameters:
@@ -60,6 +62,23 @@ class CWindowBase(CObject):
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
 
+        self.new("drawing.framework", self._get_drawing_framework(), get_func=self._get_drawing_framework)
+
+        match self["drawing.framework"]:
+            case DrawingFrame.SKIA:
+                self.skia = importlib.import_module("skia")
+            case _:
+                raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
+
+        self.new("backend.framework", self._get_backend_framework(), get_func=self._get_backend_framework)
+
+        match self["backend.framework"]:
+            case BackendFrame.OPENGL:
+                self.opengl = importlib.import_module("OpenGL")
+            case _:
+                raise ValueError(
+                    f"Unknown Backend Framework: {self['backend.framework']}")
+
         self.new("is_force_hardware_acceleration", fha)
         self.new("pos", CPos(0, 0))  # Always (0, 0)
         self.new(
@@ -76,6 +95,7 @@ class CWindowBase(CObject):
         self.new("is_alive", True)  # Is the window alive
 
         self.new("the_window", self.create())  # GLFW/SDL Window
+        self.create_event_bounds()
 
     def create(self):
         window = None
@@ -121,6 +141,18 @@ class CWindowBase(CObject):
                 _root_point.set("y", pos[1])
 
         return window
+
+    def create_event_bounds(self):
+        match self.get("ui.framework"):
+            case UIFrame.GLFW:
+                self.glfw.set_window_size_callback(
+                    self["the_window"],
+                    lambda window, width, height: self.trigger("on_resize", width=width, height=height),
+                )
+                self.glfw.set_window_pos_callback(
+                    self["the_window"],
+                    lambda window, root_x, root_y: self.trigger("on_move", x_root=root_x, y_root=root_y),
+                )
 
     def update(self):
         pass
@@ -177,6 +209,12 @@ class CWindowBase(CObject):
     def _get_ui_framework(self):
         return self["app"].get("ui.framework")
 
+    def _get_drawing_framework(self):
+        return self["app"].get("drawing.framework")
+
+    def _get_backend_framework(self):
+        return self["app"].get("backend.framework")
+
     def _get_ui_is_vsync(self):
         return self["app"].get("ui.is_vsync")
 
@@ -195,6 +233,7 @@ class CWindowBase(CObject):
                     self.glfw.set_window_size(
                         self["the_window"], size["width"], size["height"]
                     )
+        self.trigger("on_resize")
 
     def _get_size(self) -> None:
         if self["ui.framework"] == UIFrame.GLFW:
@@ -224,6 +263,7 @@ class CWindowBase(CObject):
             if self["ui.framework"] == UIFrame.GLFW:
                 self.set("root_pos", pos, skip=True)
                 self.glfw.set_window_pos(self["the_window"], pos["x"], pos["y"])
+        self.trigger("on_move")
 
     def _get_pos(self) -> None:
         if self["ui.framework"] == UIFrame.GLFW:
@@ -241,5 +281,9 @@ class CWindowBase(CObject):
             None
         """
         self.set("root_pos", pos)
+
+    # endregion
+
+    # region Events
 
     # endregion
