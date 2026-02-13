@@ -40,12 +40,12 @@ class CObject(metaclass=CInstanceCounterMeta):
             raise KeyError(_id)
         if _id != ID.NONE:
             self.objects[_id] = self
-            self.new("id", _id)
+            self.id=_id
 
             if self.class_name not in self.objects_sorted:
-                self.objects_sorted[self.class_name] = {self.get("id"): self}
+                self.objects_sorted[self.class_name] = {self.id: self}
             else:
-                self.objects_sorted[self.class_name][self.get("id")] = self
+                self.objects_sorted[self.class_name][self.id] = self
 
     @property
     def class_name(self) -> str:

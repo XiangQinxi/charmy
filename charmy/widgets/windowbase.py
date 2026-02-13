@@ -3,13 +3,14 @@ import sys
 import typing
 
 from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame
-from ..event import CEvent, CEventHandler
+from ..event import CEvent, CEventHandling
+from ..object import CObject
 from ..pos import CPos
 from ..size import CSize
 from .app import CApp
 
 
-class CWindowBase(CEventHandler):
+class CWindowBase(CEventHandling, CObject):
     """CWindowBase is a base class for window.
 
     Args:
@@ -159,8 +160,10 @@ class CWindowBase(CEventHandler):
 
     def create_event_bounds(self):
         """Create event bounds."""
-        match self.get("ui.frameork"):
+        match self.get("ui.framework"):
             case UIFrame.GLFW:
+                NotImplemented
+                # To 相亲西：请适配新的trigger方法！   —— rgzz666
                 self.glfw.set_window_size_callback(
                     self.the_window,
                     lambda window, width, height: self.trigger(

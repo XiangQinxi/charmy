@@ -159,7 +159,7 @@ class CEventHandling:
 
         Example
         -------
-        This is mostly for internal use of suzaku.
+        This is mostly for internal use of Charmy.
         .. code-block:: python
             class CWidget(CEventHandling, ...):
                 def __init__(self):
@@ -315,77 +315,6 @@ class CEventHandling:
         self.Tasks[event_type].append(Task)
         return Task
 
-    def find_Task(self, Task_id: str) -> CBoundTask | bool:
-        """To find a bound Task using Task ID.
-
-        Example
-        -------
-        .. code-block:: python
-            my_button = CButton(...)
-            press_Task = my_button.find_Task("CButton114.mouse_press.514")
-        This shows getting the `CBoundTask` object of Task with ID `CButton114.mouse_press.514`
-        from bound Tasks of `my_button`.
-
-        :return: The CBoundTask object of the Task, or False if not found
-        """
-        Task_id_parsed = Task_id.split(".")
-        if len(Task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
-            Task_id_parsed.insert(0, self.id)  # We assume that this indicates self
-        for Task in self.Tasks[Task_id_parsed[1]]:
-            if Task.id == Task_id:
-                return Task
-        else:
-            return False
-
-    def unbind(self, target_Task: str | CBoundTask) -> bool:
-        """To unbind the Task with specified Task ID.
-
-        Example
-        -------
-        .. code-block:: python
-            my_button = CButton(...)
-            my_button.unbind("CButton114.mouse_press.514")
-        This show unbinding the Task with ID `CButton114.mouse_press.514` from `my_button`.
-
-        .. code-block:: python
-            my_button = CButton(...)
-            my_button.unbind("CButton114.mouse_press.*")
-            my_button.unbind("mouse_release.*")
-        This show unbinding all Tasks under `mouse_press` and `mouse_release` event from
-        `my_button`.
-
-        :param target_Task: The Task ID or `CBoundTask` to unbind.
-        :return: If success
-        """
-        match target_Task:
-            case str():  # If given an ID string
-                Task_id_parsed = target_Task.split(".")
-                if len(Task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
-                    Task_id_parsed.insert(0, self.id)  # We assume that this indicates self
-                if Task_id_parsed != self.id:  # If given ID indicates another widget
-                    NotImplemented
-                    # Still not inplemented, as we currently cannot get a CWidget object itself
-                    # only with its ID (waiting for @XiangQinxi)
-                    # This part should call the unbind function of the widget with such ID
-                for Task_index, Task in enumerate(self.Tasks[Task_id_parsed[1]]):
-                    if Task.id == target_Task:
-                        self.Tasks[Task_id_parsed[1]].pop(Task_index)
-                        return True
-                else:
-                    return False
-            case CBoundTask():
-                for event_type in self.Tasks:
-                    if target_Task in self.Tasks[event_type]:
-                        self.Tasks[event_type].remove(target_Task)
-                        return True
-                else:
-                    return False
-            case _:
-                warnings.warn(
-                    "Wrong type for unbind()! Must be event ID or Task object",
-                    UserWarning,
-                )
-                return False
 
     def clear_bind(self, event_type: str) -> bool:
         """To clear clear Tasks binded to a spcific event or widget

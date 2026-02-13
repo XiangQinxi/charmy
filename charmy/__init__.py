@@ -1,6 +1,6 @@
 from .const import *
 from .drawing import *
-from .event import CEvent, CEventHandler, CEventTask, CEventThread
+from .event import CEvent, CEventHandling, CEventTask, CWorkingThread
 from .object import CObject
 from .pos import CPos
 from .size import CSize

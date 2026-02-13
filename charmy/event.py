@@ -1,108 +1,394 @@
+from __future__ import annotations as _
+
+import typing
+
+import collections.abc
 import threading
 import time
-import typing
+import re
+import warnings
 
 from .const import ID
 from .object import CObject
 
 
-class CEvent(CObject):
-    """Record attributes of an event"""
+class CEventHandling(CObject):
 
-    def __init__(self, event_type: str | None = None, **kwargs):
+    # fmt: off
+    EVENT_TYPES: list[str] = [
+        # Window size & pos
+        "resize", "move", 
+        # Widget internal changes
+        "configure", "update", "redraw", 
+        # Mouse events
+        "mouse_move", "mouse_enter", "mouse_leave", "mouse_press", "mouse_release", "click", 
+        "double_click",
+        # Focus events
+        "focus_gain", "focus_loss", 
+        # Key events
+        "key_press", "key_release", "key_repeat", "char", 
+        # Special events
+        "delay", "repeat", 
+    ]
+    # fmt: on
+    multithread_tasks: list[tuple[CEventTask, CEvent]] = []
+    WORKING_THREAD: threading.Thread
+
+    @staticmethod
+    def _execute_task(task: CEventTask | CDelayTask, event_obj: CEvent) -> None:
+        """To execute the binded task directly, regardless its props, mainly for internal use."""
+        match task.target:
+            case _ if callable(task.target):
+                task.target(event_obj)
+            case _ if isinstance(task.target, collections.abc.Iterable):
+                for task_step in task.target:
+                    task_step(event_obj)
+            case _:
+                raise ValueError(
+                    "Error type for suzaku Task target! Excepted callable or "
+                    f"iterable but received {type(task.target)}"
+                )
+
+    def __init__(self):
+        """A class containing event handling abilities.
+
+        Example
+        -------
+        This is mostly for internal use of Charmy.
+        .. code-block:: python
+            class CWidget(CEventHandling, ...):
+                def __init__(self):
+                    super().__init__(self)
+            ...
+        This shows subclassing CEventHandling to let CWidget gain the ability of handling events.
+        """
         super().__init__()
+        self.latest_event: CEvent = CEvent(widget=None, event_type="NO_EVENT")
+        self.tasks: dict[str, list[CEventTask]] = {}
+        ## Initialize tasks list
+        for event_type in self.__class__.EVENT_TYPES:
+            self.tasks[event_type] = []
 
-        self.new("event_type", event_type)
+    def parse_event_type_str(self, event_type_str: str) -> dict:
+        """This function parses event type string.
 
-        for key, value in kwargs.items():
-            self.new(key, value)
+        :param event_type_str: The event type string to be parsed
+        :returns: json, parsed event type
+        """
+        if not re.match(".*\\[.*\\]", event_type_str):  # NOQA
+            return {"type": event_type_str, "params": []}
+        event_type = re.findall("^(.*?)\\[", event_type_str)[0]
+        params_raw = re.findall("\\[(.*?)\\]$", event_type_str)[0]  # NOQA
+        params = params_raw.split(",")
+        if len(params) == 1:
+            if params[0].strip() == "":
+                params = []
+        return {"type": event_type, "params": params}
+
+    def execute_task(self, task: CEventTask, event_obj: CEvent | None = None):
+        """To execute a task
+
+        Example
+        -------
+        .. code-block:: python
+            my_task = CWidget.bind("delay[5]", lambda: print("Hello Suzaku"))
+            CWidget.execute_task(my_task)
+        """
+        if event_obj is None:
+            event_obj = CEvent()
+        assert event_obj is not None
+        if event_obj.widget is None:
+            event_obj.widget = self
+        if not task.multithread:
+            # If not multitask, execute directly
+            CEventHandling._execute_task(task, event_obj)
+            # If is a delay event, it should be removed right after execution
+            if isinstance(task, CDelayTask):
+                self.unbind(task)
+        else:
+            # Otherwise add to multithread tasks list and let the working thread to deal with it
+            # If is a delay task, should add some code to let it unbind itself, here is a way,
+            # which is absolutely not perfect, though works, to implement this mechanism, by
+            # overriding its target with a modified version
+            def self_destruct_template(task, event_obj):
+                CEventHandling._execute_task(task, event_obj)
+                self.unbind(task)
+
+            if isinstance(task, CDelayTask):
+                task.target = lambda event_obj: self_destruct_template(task, event_obj)
+            CEventHandling.multithread_tasks.append((task, event_obj))
+
+    def trigger_event(self, event_obj: CEvent) -> None:
+        """To trigger a type of event
+
+        Example
+        -------
+        .. code-block:: python
+            class CWidget(CEventHandling, ...):
+                ...
+
+            my_widget = CWidget()
+            my_widget.trigger("mouse_press")
+        This shows triggering a `mouse_press` event in a `CWidget`, which inherited 
+        `CEventHandling` so has the ability to handle events.
+
+        :param event_type: The type of event to trigger
+        """
+        # Parse event type string
+        parsed_event_type = self.parse_event_type_str(event_obj.event_type)
+        # Create a default CEvent object if not specified
+        if event_obj is None:
+            event_obj = CEvent(widget=self, event_type=tuple(parsed_event_type.keys())[0])
+        # Add the event to event lists (the widget itself and the global list)
+        self.latest_event = event_obj
+        CEvent.latest = event_obj
+        # Find targets
+        targets = [parsed_event_type["type"]]
+        if not parsed_event_type["params"]:
+            targets.append(parsed_event_type["type"] + "[*]")
+        else:
+            targets.append(event_obj.event_type)
+        # if parsed_event_type["params"][0] in ["", "*"]: # If match all
+        #     targets.append(parsed_event_type["type"])
+        #     targets.append(parsed_event_type["type"] + "[*]")
+        for target in targets:
+            if target in self.tasks:
+                for task in self.tasks[target]:
+                    # To execute all tasks bound under this event
+                    self.execute_task(task, event_obj)
+
+    trigger = trigger_event # Alias for trigger
+
+    def bind(
+        self,
+        event_type: str,
+        target: typing.Callable | typing.Iterable,
+        multithread: bool = False,
+        _keep_at_clear: bool = False,
+    ) -> CEventTask | bool:
+        """To bind a task to the object when a specific type of event is triggered.
+
+        Example
+        -------
+        .. code-block
+            my_button = CButton(...).pack()
+            press_down_event = my_button.bind("mouse_press", lambda _: print("Hello world!"))
+        This shows binding a hello world to the button when it's press.
+
+        :param event_type: The type of event to be bound to
+        :param target: A (list of) callable thing, what to do when this task is executed
+        :param multithread: If this task should be executed in another thread (False by default)
+        :param _keep_at_clear: If the task should be kept when cleaning the event's binding
+        :return: CEventTask that is bound to the task if success, otherwise False
+        """
+        parsed_event_type = self.parse_event_type_str(event_type)
+        if parsed_event_type["type"] not in self.__class__.EVENT_TYPES:
+            # warnings.warn(f"Event type {event_type} is not present in {self.__class__.__name__}, "
+            #                "so the task cannot be bound as expected.")
+            # return False
+            self.EVENT_TYPES.append(event_type)
+        if event_type not in self.tasks:
+            self.tasks[event_type] = []
+        task_id = f"{self.id}.{event_type}.{len(self.tasks[event_type])}"
+        # e.g. CButton114.focus_gain.514 / CEventHandling114.focus_gain.514
+        match parsed_event_type["type"]:
+            case "delay":
+                raise NotImplementedError("Delay tasks are not implemented yet!")
+                task = CDelayTask(
+                    target,  # I will fix this type error later (ignore is ur type check is off)
+                    parsed_event_type["params"][0],
+                    multithread,
+                    _keep_at_clear,
+                    task_id,
+                )
+            case "repeat":
+                raise NotImplementedError("Repeat tasks is not implemented yet!")
+            case _:  # All normal event types
+                task = CEventTask(target, multithread, _keep_at_clear, task_id)
+        self.tasks[event_type].append(task)
+        return task
+
+    def find_task(self, task_id: str) -> CEventTask | bool:
+        """To find a event task using task ID.
+
+        Example
+        -------
+        .. code-block:: python
+            my_button = CButton(...)
+            press_task = my_button.find_task("CButton114.mouse_press.514")
+        This shows getting the `CEventtask` object of task with ID `CButton114.mouse_press.514`
+        from bound tasks of `my_button`.
+
+        :return: The CEventTask object of the task, or False if not found
+        """
+        task_id_parsed = task_id.split(".")
+        if len(task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
+            task_id_parsed.insert(0, self.id)  # We assume that this indicates self
+        for task in self.tasks[task_id_parsed[1]]:
+            if task.id == task_id:
+                return task
+        else:
+            return False
+
+    def unbind(self, target_task: str | CEventTask | CDelayTask) -> bool:
+        """To unbind the task with specified task ID.
+
+        Example
+        -------
+        .. code-block:: python
+            my_button = CButton(...)
+            my_button.unbind("CButton114.mouse_press.514")
+        This show unbinding the task with ID `CButton114.mouse_press.514` from `my_button`.
+
+        .. code-block:: python
+            my_button = CButton(...)
+            my_button.unbind("CButton114.mouse_press.*")
+            my_button.unbind("mouse_release.*")
+        This show unbinding all tasks under `mouse_press` and `mouse_release` event from
+        `my_button`.
+
+        :param target_task: The task ID or `CEventTask` to unbind.
+        :return: If success
+        """
+        match target_task:
+            case str():  # If given an ID string
+                for task_index, task in enumerate(self.tasks[target_task]):
+                    if task.id == target_task:
+                        self.tasks[target_task].pop(task_index)
+                        return True
+                else:
+                    return False
+            case CEventTask():
+                for event_type in self.tasks:
+                    if target_task in self.tasks[event_type]:
+                        self.tasks[event_type].remove(target_task)
+                        return True
+                else:
+                    return False
+            case _:
+                warnings.warn(
+                    "Wrong type for unbind()! Must be event ID or task object",
+                    UserWarning,
+                )
+                return False
 
 
-class CEventTask(CObject):
-    """CEventTask is a class to store event task
+class CEvent(CObject):
+    """Used to represent an event."""
 
-    Args:
-        _id (ID): the id of the task
-        target: The function to be called when the event is triggered
-    """
+    latest: "CEvent"
 
     def __init__(
         self,
-        _id=ID.AUTO,
-        target: typing.Callable[..., None] = None,
+        widget: CEventHandling | None = None,
+        event_type: str = "[Unspecified]",
+        **kwargs,
     ):
-        super().__init__(_id=_id)
+        """This class is used to represent events.
 
-        self.new("target", target)
+        Some properties owned by all types of events are stored as attributes, such as widget and type.
+        Others are stored as items, which can be accessed or manipulated just like dict, e.g.
+        `CEvent["x"]` for get and `CEvent["y"] = 16` for set.
+
+        Example
+        -------
+        Included in description.
+
+        :param widget: The widget of the event, None by default
+        :param event_type: Type of the event, in string, `"[Unspecified]"` by default
+        :param **kwargs: Other properties of the event, will be added as items
+        """
+        self.event_type: str = event_type  # Type of event
+        self.widget: typing.Optional[typing.Any] = widget  # Relating widget
+        self.window_base: typing.Optional[typing.Any] = None  # WindowBase of the current window
+        self.window: typing.Optional[typing.Any] = None  # Current window
+        self.event_data: dict = {}
+        # Not all properties above will be used
+        # Update stuff from args into attributes
+        for prop in kwargs.keys():
+            if prop not in ["widget", "event_type"]:
+                self[prop] = kwargs[prop]
+
+    def __setitem__(self, key: str, value: typing.Any):
+        self.event_data[key] = value
+
+    def __getitem__(self, key: str) -> typing.Any:
+        if key in self.event_data:
+            return self.event_data[key]
+        else:
+            return None  # If no such item avail, returns None
+
+CEvent.latest = CEvent(widget=None, event_type="NO_EVENT")
 
 
-class CEventThread(threading.Thread, CObject):
-    """CEventThread is a class to store event tasks and execute them"""
+class CEventTask:
+    """A class to represent event task when a event is triggered."""
 
-    tasks: list[list[CEventTask | CEvent]] = []
-    is_alive = True
-    lock = threading.Lock()
+    def __init__(
+        self,
+        target: typing.Callable | typing.Iterable,
+        multithread: bool = False,
+        _keep_at_clear: bool = False,
+        id_: str | int | typing.Literal[ID.AUTO] = ID.AUTO,
+    ):
+        """Each object is to represent a task bound to the event.
+
+        Example
+        -------
+        This is mostly for internal use of suzaku.
+        .. code-block:: python
+            class CEventHandling():
+                def bind(self, ...):
+                    ...
+                    task = CEventTask(event_id, target, multithread, _keep_at_clear)
+                    ...
+        This shows where this class is used for storing task properties in most cases.
+
+        :param target: A callable thing, what to do when this task is executed
+        :param multithread: If this task should be executed in another thread (False by default)
+        :param _keep_at_clear: If the task should be kept when cleaning the event's binding
+        :param id_: The task id of this task
+        """
+        self.id: str | int | typing.Literal[ID.AUTO] = id_
+        self.target: typing.Callable | typing.Iterable = target
+        self.multithread: bool = multithread
+        self.keep_at_clear: bool = _keep_at_clear
+
+
+class CDelayTask(CEventTask):
+    NotImplemented
+
+
+class CWorkingThread(threading.Thread, CObject):
+    """CWorkingThread is a class represent the event working thread."""
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
         CObject.__init__(self, _id="event.main_thread")
+        self.tasks: list[tuple[CEvent, CEventTask | CDelayTask]] = []
+        self.is_alive: bool = True
+        self.lock: threading.Lock = threading.Lock()
 
     def execute_tasks(self):
         self.lock.acquire()
         for task in self.tasks:
-            task[0]["target"](task[1])
+            if callable(task[1].target):
+                task[1].target(task[0])
+            elif isinstance(task[1], collections.abc.Iterable):
+                # Function list
+                for func in task[1]:
+                    func(task[0])
             self.tasks.remove(task)
+        else:
+            warnings.warn("")
         self.lock.release()
 
     def run(self):
         while self.is_alive:
             self.execute_tasks()
-            time.sleep(0.01)
+            if len(self.tasks) == 0:
+                # If idle, then rest for 0.01s to save CPU time
+                time.sleep(0.01)
 
-    def add_task(self, task: CEventTask, event: CEvent):
-        self.tasks.append([task, event])
-
-
-class CEventHandler(CObject):
-
-    basic_event_types = [
-        "on_click",
-        "on_dbclick",  # NOQA
-        "on_draw",
-        "on_move",
-        "on_resize",
-    ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.new("event.main_thread", self.find("event.main_thread"))
-        self.new("events", {})  # e.g. {"Click": [Target1, Target2]}
-        self.create_event_types(self.basic_event_types)
-
-    def create_event_type(self, event_type: str):
-        self["events"][event_type] = []
-
-    def create_event_types(self, event_types: typing.List[str]):
-        for event_type in event_types:
-            self.create_event_type(event_type)
-
-    generate = create_event_type
-
-    def generate_event_signal(self, event_type: str, **kwargs):
-        for target in self["events"][event_type]:
-            self["event.main_thread"].add_task(
-                CEventTask(target=target), CEvent(event_type=event_type, **kwargs)
-            )
-
-    trigger = generate_event_signal
-
-    def bind_event(self, event_type: str, target: typing.Callable[..., None]):
-        self["events"][event_type].append(target)
-
-    bind = bind_event
-
-    def unbind_event(self, event_type: str, target: typing.Callable[..., None]):
-        self["events"][event_type].remove(target)
-
-    unbind = unbind_event
+    def add_task(self, task: CEventTask | CDelayTask, event: CEvent):
+        self.tasks.append((event, task))

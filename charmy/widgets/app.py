@@ -2,7 +2,7 @@ import typing
 import warnings
 
 from ..const import BackendFrame, DrawingFrame, UIFrame
-from ..event import CEventThread
+from ..event import CWorkingThread
 from ..object import CObject
 
 
@@ -28,7 +28,7 @@ class CApp(CObject):
         if self.instance_count >= 1:
             warnings.warn("There should be only one instance of CApp.")
 
-        self.new("event.thread", CEventThread())
+        self.new("event.thread", CWorkingThread())
 
         self.new("ui.framework", ui)
         self.new("ui.is_vsync", vsync)
