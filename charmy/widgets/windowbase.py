@@ -47,8 +47,6 @@ class CWindowBase(CEventHandler):
         self.app.add_window(self)
 
         # Init Attributes
-        self.new("is_dirty", False)
-
         self.new(
             "ui.framework", self._get_ui_framework(), get_func=self._get_ui_framework
         )  # The UI Framework
@@ -99,7 +97,8 @@ class CWindowBase(CEventHandler):
         self.new("root_pos", CPos(0, 0), set_func=self._set_pos)  # The position of the window
         self.new("size", CSize(size[0], size[1]), set_func=self._set_size)  # The size of the window
         self.new("title", title)  # The title of the window
-        
+
+        self.is_dirty: bool = False
         self.is_force_hardware_acceleration: bool = fha
         self.is_visible: bool = False  # Is the window visible
         self.is_alive: bool = False  # Is the window alive
@@ -148,6 +147,7 @@ class CWindowBase(CEventHandler):
                     raise RuntimeError("Can't create window")
 
                 self.is_visible = True
+                self.is_alive = True
 
                 pos = glfw.get_window_pos(window)
 
@@ -181,9 +181,9 @@ class CWindowBase(CEventHandler):
                 case DrawingMode.IMMEDIATE:
                     self.draw()
                 case DrawingMode.Retained:
-                    if self["is_dirty"]:
+                    if self.is_dirty:
                         self.draw()
-                        self["is_dirty"] = False
+                        self.is_dirty = False
 
     import contextlib
 
@@ -295,11 +295,11 @@ class CWindowBase(CEventHandler):
 
     def dirty(self):
         """Set the dirty flag."""
-        self["is_dirty"] = True
+        self.is_dirty = True
 
     def cancel_dirty(self):
         """Cancel the dirty flag."""
-        self["is_dirty"] = False
+        self.is_dirty = False
 
     def destroy(self) -> None:
         """Destroy the window.
