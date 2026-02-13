@@ -41,15 +41,18 @@ class CEventThread(threading.Thread, CObject):
 
     tasks: list[list[CEventTask | CEvent]] = []
     is_alive = True
+    lock = threading.Lock()
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
         CObject.__init__(self, _id="event.main_thread")
 
     def execute_tasks(self):
+        self.lock.acquire()
         for task in self.tasks:
             task[0]["target"](task[1])
             self.tasks.remove(task)
+        self.lock.release()
 
     def run(self):
         while self.is_alive:
