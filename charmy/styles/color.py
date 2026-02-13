@@ -2,7 +2,7 @@ import importlib
 
 from ..const import DrawingFrame
 from ..object import CObject
-
+from ..widgets.app import CApp
 
 class CColor(CObject):
     """Color manager"""
@@ -16,7 +16,7 @@ class CColor(CObject):
             app = self.get_obj("capp0")
             if app is None:
                 raise ValueError("Not found main CApp")
-            self.new("app", app)
+            self.app: CApp = app
             self.new(
                 "drawing.framework",
                 self._get_drawing_framework(),
@@ -32,7 +32,7 @@ class CColor(CObject):
             case _:
                 raise ValueError("Not supported drawing framework")
 
-    def set_rgba(
+    def set_color_rgba(
         self, r: int | float, g: int | float, b: int | float, a: int | float = 255
     ) -> None:
         """set_rgba(r=255, g=255, b=255, a=255) or set_rgba(r=1.0, g=1.0, b=1.0, a=1.0)
@@ -82,7 +82,7 @@ class CColor(CObject):
                 case DrawingFrame.SKIA:
                     self["color_object"] = self.skia.ColorSetARGB(a, r, g, b)  # 返回含透明度的颜色
         else:
-            raise ValueError("HEX 颜色格式应为 #RRGGBB 或 #RRGGBBAA")
+            raise ValueError("HEX Should be #RRGGBB or #RRGGBBAA format")
 
     def set_color_name(self, name: str) -> None:
         """Convert color name string to color.
@@ -117,4 +117,4 @@ class CColor(CObject):
         return x
 
     def _get_drawing_framework(self):
-        return self["app"].get("drawing.framework")
+        return self.app["drawing.framework"]

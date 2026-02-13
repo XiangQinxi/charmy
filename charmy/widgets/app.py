@@ -7,12 +7,12 @@ from ..object import CObject
 
 
 class CApp(CObject):
-    """The base of CApp Class
+    """The base of CApp Class.
 
     Args:
-        ui.framework: What UI Framework will be used
-        ui.is_vsync: Is vsync enabled
-        ui.samples: UI Samples
+        ui.framework: What UI Framework will be used.
+        ui.is_vsync: Is vsync enabled.
+        ui.samples: UI Samples.
     """
 
     def __init__(
@@ -29,7 +29,6 @@ class CApp(CObject):
             warnings.warn("There should be only one instance of CApp.")
 
         self.new("event.thread", CEventThread())
-        self["event.thread"].start()
 
         self.new("ui.framework", ui)
         self.new("ui.is_vsync", vsync)
@@ -39,8 +38,8 @@ class CApp(CObject):
 
         self.new("backend.framework", backend)
 
-        self.new("windows", [])
-        self.new("is_alive", False)
+        self.windows = []
+        self.is_alive: bool = False
 
         self._init_ui_framework()
 
@@ -67,10 +66,10 @@ class CApp(CObject):
         input_mode: bool = True
 
         # poll_events()
-        windows = self.get("windows")
+        windows = self.windows
 
         for window in windows:
-            if window["is_visible"] and window["is_alive"]:
+            if window.is_visible and window.is_alive:
                 window.update()
                 if get_current_context():
                     swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
@@ -89,24 +88,37 @@ class CApp(CObject):
 
         If no windows are added to the application, a warning will be issued.
         """
-        if not self.get("windows"):
+        if not self.windows:
             warnings.warn(
                 "At least one window is required to run application!",
             )
 
-        self.set("is_alive", True)
+        self.is_alive: bool = True
+        self["event.thread"].start()
 
-        while self.get("is_alive"):
-            windows = self.get("windows")
-            if not windows:
-                self.quit()
-                break
-            for window in windows:
-                if window.can_be_close():
-                    window.destroy()
-            self.update()
+        while self.is_alive:
+            try:
+                windows = self.windows
+                if not windows:
+                    self.quit()
+                    break
+                for window in windows:
+                    if window.can_be_close():
+                        window.destroy()
+                self.update()
+            except Exception as e:
+                self.is_alive = False
+                raise e
 
         self.cleanup()
+
+    def add_window(self, window):
+        """Add a window to the application.
+
+        Args:
+            window (CWindow): The window to be added.
+        """
+        self.windows.append(window)
 
     def destroy_window(self, window):
         """Destroy a window.
@@ -114,7 +126,7 @@ class CApp(CObject):
         Args:
             window (CWindow): The window to be destroyed.
         """
-        windows = self.get("windows")
+        windows = self.windows
         if window in windows:
             windows.remove(window)
 
@@ -124,14 +136,14 @@ class CApp(CObject):
             case UIFrame.GLFW:
                 import glfw
 
-                for window in self.get("windows"):
+                for window in self.windows:
                     glfw.destroy_window(window.the_window)
                 glfw.terminate()
         self.quit()
 
     def quit(self) -> None:
         """Quit application."""
-        self.set("is_alive", False)
+        self.is_alive = False
         self["event.thread"].is_alive = False
 
     @staticmethod

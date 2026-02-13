@@ -2,7 +2,7 @@ from .object import CObject
 
 
 class CSize(CObject):
-    """CSize is a class to store size"""
+    """CSize is a class to store size."""
 
     def __init__(self, width=0, height=0):
         super().__init__()

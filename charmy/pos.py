@@ -2,7 +2,7 @@ from .object import CObject
 
 
 class CPos(CObject):
-    """CPos is a class to store position"""
+    """CPos is a class to store position."""
 
     def __init__(self, x=0, y=0):
         super().__init__()
