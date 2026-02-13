@@ -431,8 +431,7 @@ class CWindowBase(CEventHandler):
             event (CEvent): The resize event.
         """
         _size = self.get("size", skip=True)
-        _size.set("width", event["width"])
-        _size.set("height", event["height"])
+        _size(event["width"], event["height"])
         self.dirty()
 
     # endregion

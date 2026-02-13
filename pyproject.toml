@@ -8,7 +8,12 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "json5"
 ]
+
+[tool.poetry.optional]
+docs = ["myst-parser", "sphinx-design", "furo"]
+basic = ["skia-python", "glfw", "pyopengl"]
 
 [tool.poetry]
 packages = [{include = "charmy"}]

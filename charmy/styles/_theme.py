@@ -368,6 +368,7 @@ class CTheme:
         make_path: bool = ...,
         allow_not_found: typing.Literal[True] = True,
     ) -> dict | None: ...
+
     @typing.overload
     def select(
         self,
