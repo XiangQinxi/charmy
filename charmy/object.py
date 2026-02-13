@@ -67,8 +67,8 @@ class CObject(metaclass=CInstanceCounterMeta):
         key: str,
         default=None,
         *,
-        set_func: typing.Callable = None,
-        get_func: typing.Callable = None,
+        set_func: typing.Callable | None = None,
+        get_func: typing.Callable | None = None,
     ) -> typing.Self:
         """New attribute
         [Suggested: add `is_`~ as prefix if value is in type bool]
