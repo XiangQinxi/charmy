@@ -8,10 +8,10 @@ Art is filled with beauty making it murky.
 Art is just fart with comments and space bars. 
 Fart is whatever piled up from nothing, 
 messy but runs fast, 
-except it is the programmer who runs fast, 
+except it is the programmer who runs away fast, 
 while anyway (s)he types fast. 
 
-Both art and fart aren't easy to parse, 
+Both art and fart aren't easy to parse; 
 those who understand are a rare class. 
 
 For those who want to make arts with arts... 
