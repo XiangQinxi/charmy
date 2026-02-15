@@ -1,4 +1,4 @@
-from ..const import MAIN_MANAGER_ID, DrawingFrame
+from ..const import MAIN_MANAGER_ID, Backends
 from ..object import CharmyObject
 from ..widgets.cmm import CharmyManager
 
@@ -6,7 +6,7 @@ from ..widgets.cmm import CharmyManager
 class Color(CharmyObject):
     """Color manager"""
 
-    def __init__(self, *args, draw_framework: DrawingFrame = None, **kwargs):
+    def __init__(self, *args, draw_framework: Backends = None, **kwargs):
         super().__init__(*args, **kwargs)
 
         # The Drawing Framework
@@ -26,7 +26,7 @@ class Color(CharmyObject):
 
         # Import Drawing Framework
         match self["drawing.framework"]:
-            case DrawingFrame.SKIA:
+            case Backends.SKIA:
                 self.skia = self.manager.skia
             case _:
                 raise ValueError("Not supported drawing framework")
@@ -46,7 +46,7 @@ class Color(CharmyObject):
             None
         """
         match self["drawing.framework"]:
-            case DrawingFrame.SKIA:
+            case Backends.SKIA:
                 self["color_object"] = self.skia.Color(
                     self._c(r), self._c(g), self._c(b), self._c(a)
                 )
@@ -70,7 +70,7 @@ class Color(CharmyObject):
             g = int(hex_color[2:4], 16)
             b = int(hex_color[4:6], 16)
             match self["drawing.framework"]:
-                case DrawingFrame.SKIA:
+                case Backends.SKIA:
                     self["color_object"] = self.skia.ColorSetRGB(r, g, b)  # 返回不透明颜色
         elif len(hex_color) == 8:  # RGBA 格式(含 Alpha 通道)
             r = int(hex_color[0:2], 16)
@@ -78,7 +78,7 @@ class Color(CharmyObject):
             b = int(hex_color[4:6], 16)
             a = int(hex_color[6:8], 16)
             match self["drawing.framework"]:
-                case DrawingFrame.SKIA:
+                case Backends.SKIA:
                     self["color_object"] = self.skia.ColorSetARGB(a, r, g, b)  # 返回含透明度的颜色
         else:
             raise ValueError("HEX Should be #RRGGBB or #RRGGBBAA format")
@@ -94,7 +94,7 @@ class Color(CharmyObject):
             ValueError: When color not exists
         """
         match self["drawing.framework"]:
-            case DrawingFrame.SKIA:
+            case Backends.SKIA:
                 try:
                     self["color_object"] = getattr(self.skia, f"Color{name.upper()}")
                 except:

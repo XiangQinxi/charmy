@@ -2,7 +2,7 @@ import importlib.util
 import sys
 import typing
 
-from .const import DrawingFrame, UIFrame
+from .const import Backends, Backends
 from .event import Event
 from .pos import Pos
 from .size import Size
@@ -120,7 +120,7 @@ class WindowFramework:
         ...
 
 
-window_framework_map: dict[UIFrame, WindowFramework] = {}
+window_framework_map: dict[Backends, WindowFramework] = {}
 
 
 class GLFW(WindowFramework):
@@ -211,7 +211,7 @@ class GLFW(WindowFramework):
 
 
 if importlib.util.find_spec("glfw") is not None:
-    window_framework_map[UIFrame.GLFW] = GLFW  # NOQA
+    window_framework_map[Backends.GLFW] = GLFW  # NOQA
 # endregion
 
 
@@ -220,5 +220,5 @@ class DrawingFramework:
     """The base class of DrawingFramework."""
 
 
-drawing_framework_map: dict[DrawingFrame, DrawingFramework] = {}
+drawing_framework_map: dict[Backends, DrawingFramework] = {}
 # endregion

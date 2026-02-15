@@ -1,7 +1,7 @@
 import typing
 
-from ..const import (MAIN_MANAGER_ID, BackendFrame, DrawingFrame, DrawingMode,
-                     UIFrame)
+from ..const import (MAIN_MANAGER_ID, BackendFrame, Backends, DrawingMode,
+                     Backends)
 from ..event import Event, EventHandling
 from ..object import CharmyObject
 from ..pos import Pos
@@ -61,9 +61,9 @@ class WindowBase(EventHandling, CharmyObject):
 
         # """
         match self["ui.framework"]:
-            case UIFrame.GLFW:
+            case Backends.GLFW:
                 self.glfw = self.manager.glfw
-            case UIFrame.SDL:
+            case Backends.SDL:
                 self.sdl3 = self.manager.sdl3
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
@@ -79,7 +79,7 @@ class WindowBase(EventHandling, CharmyObject):
         self.new("drawing.mode", drawing_mode)
 
         match self["drawing.framework"]:
-            case DrawingFrame.SKIA:
+            case Backends.SKIA:
                 self.skia = self.manager.skia
                 self.new("drawing.surface", None)
             case _:
@@ -159,7 +159,7 @@ class WindowBase(EventHandling, CharmyObject):
         :return: Skia Surface
         """
         match self["ui.framework"]:
-            case UIFrame.GLFW:
+            case Backends.GLFW:
                 if not self.glfw.get_current_context() or self.glfw.window_should_close(arg):
                     yield None
                     return
@@ -167,7 +167,7 @@ class WindowBase(EventHandling, CharmyObject):
                 match self["backend.framework"]:
                     case BackendFrame.OPENGL:
                         match self["drawing.framework"]:
-                            case DrawingFrame.SKIA:
+                            case Backends.SKIA:
                                 self["backend.context"] = self.skia.GrDirectContext.MakeGL()
                                 fb_width, fb_height = self.glfw.get_framebuffer_size(arg)
                                 backend_render_target = self.skia.GrBackendRenderTarget(
@@ -191,7 +191,7 @@ class WindowBase(EventHandling, CharmyObject):
 
                                 yield surface
 
-            case UIFrame.SDL:
+            case Backends.SDL:
                 import ctypes
 
                 width, height = arg.w, arg.h
@@ -220,11 +220,11 @@ class WindowBase(EventHandling, CharmyObject):
             # Set the current context for each arg
             # 【为该窗口设置当前上下文】
             match self["ui.framework"]:
-                case UIFrame.GLFW:
+                case Backends.GLFW:
                     self["ui.framework.class"].make_context_current(self.the_window)
 
                     match self["drawing.framework"]:
-                        case DrawingFrame.SKIA:
+                        case Backends.SKIA:
                             # Create a Surface and hand it over to this arg.
                             # 【创建Surface，交给该窗口】
                             with self.skia_surface(self.the_window) as self[  # NOQA
@@ -300,7 +300,7 @@ class WindowBase(EventHandling, CharmyObject):
         :return: None
         """
         match self.get("ui.framework"):
-            case UIFrame.GLFW:
+            case Backends.GLFW:
                 import glfw
 
                 if value is not None:
