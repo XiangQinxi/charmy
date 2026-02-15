@@ -9,7 +9,7 @@ charmy.widgets
    :maxdepth: 2
    :caption: Contents:
 
-   app
+   cmm
    container
    widget
    window

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="app" href="app.html"><link rel="prev" title="charmy.size" href="../size.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="&lt;no title&gt;" href="cmm.html"><link rel="prev" title="charmy.size" href="../size.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>charmy.widgets - Charmy GUI 0.1.0 documentation</title>
@@ -199,7 +199,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../getstarted/install.html">Install Charmy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../getstarted/first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../getstarted/custom_app_settings.html">Custom main App settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/custom_app_settings.html">Custom main manager settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -210,7 +210,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="app.html">app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="window.html">window</a></li>
@@ -272,12 +274,21 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="app.html">app</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="app.html#charmy.widgets.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="app.html#charmy.widgets.app.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="app.html#charmy.widgets.app.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.__init__"><code class="docutils literal notranslate"><span class="pre">CharmyManager.__init__()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.update"><code class="docutils literal notranslate"><span class="pre">CharmyManager.update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.mainloop"><code class="docutils literal notranslate"><span class="pre">CharmyManager.mainloop()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.launch"><code class="docutils literal notranslate"><span class="pre">CharmyManager.launch()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.run"><code class="docutils literal notranslate"><span class="pre">CharmyManager.run()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.add_window"><code class="docutils literal notranslate"><span class="pre">CharmyManager.add_window()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.destroy_window"><code class="docutils literal notranslate"><span class="pre">CharmyManager.destroy_window()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.cleanup"><code class="docutils literal notranslate"><span class="pre">CharmyManager.cleanup()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.quit"><code class="docutils literal notranslate"><span class="pre">CharmyManager.quit()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager.error"><code class="docutils literal notranslate"><span class="pre">CharmyManager.error()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="container.html">container</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="container.html#charmy.widgets.container.Container"><code class="docutils literal notranslate"><span class="pre">Container</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="container.html#charmy.widgets.container.auto_find_parent"><code class="docutils literal notranslate"><span class="pre">auto_find_parent()</span></code></a></li>
@@ -304,12 +315,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="app.html">
+          <a class="next-page" href="cmm.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">app</div>
+                <div class="title">&lt;no title&gt;</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

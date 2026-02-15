@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API Reference" href="../api/index.html"><link rel="prev" title="First application" href="first_app.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Custom main App settings - Charmy GUI 0.1.0 documentation</title>
+        <title>Custom main manager settings - Charmy GUI 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -199,7 +199,7 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="install.html">Install Charmy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="first_app.html">First application</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Custom main App settings</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Custom main manager settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -210,7 +210,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/size.html">charmy.size</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/app.html">app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/widgets/container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/widgets/window.html">window</a></li>
@@ -266,28 +268,12 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="custom-main-app-settings">
-<h1>Custom main App settings<a class="headerlink" href="#custom-main-app-settings" title="Link to this heading">¶</a></h1>
-<p>You can set the environment variables to customize the main app settings before import charmy.</p>
+          <section id="custom-main-manager-settings">
+<h1>Custom main manager settings<a class="headerlink" href="#custom-main-manager-settings" title="Link to this heading">¶</a></h1>
+<p>You can set the environment variables to customize the main manager settings before import charmy.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span>
 </pre></div>
 </div>
-<section id="disable-auto-create-main-app">
-<h2>Disable auto create main app<a class="headerlink" href="#disable-auto-create-main-app" title="Link to this heading">¶</a></h2>
-<p>If you don`t want to create the main app automatically,
-you can set the environment variable “AUTO_CREATE_MAIN_APP” to “False”.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AUTO_CREATE_MAIN_APP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;False&quot;</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">App</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">MAINAPP_ID</span><span class="p">)</span>
-
-<span class="o">...</span>
-
-<span class="n">app</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
 <section id="switch-ui-framework">
 <h2>Switch UI framework<a class="headerlink" href="#switch-ui-framework" title="Link to this heading">¶</a></h2>
 <p>If you want to switch the ui framework,
@@ -353,8 +339,7 @@ you can set the environment variable “UI_FRAMEWORK” to “GLFW” or …</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Custom main App settings</a><ul>
-<li><a class="reference internal" href="#disable-auto-create-main-app">Disable auto create main app</a></li>
+<li><a class="reference internal" href="#">Custom main manager settings</a><ul>
 <li><a class="reference internal" href="#switch-ui-framework">Switch UI framework</a></li>
 </ul>
 </li>

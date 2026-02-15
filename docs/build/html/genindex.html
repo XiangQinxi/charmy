@@ -197,7 +197,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">Install Charmy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">Custom main App settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">Custom main manager settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -208,7 +208,9 @@
 <li class="toctree-l2"><a class="reference internal" href="api/pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/app.html">app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
@@ -292,7 +294,7 @@
 </li>
           <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.__init__">(charmy.styles.theme.Theme method)</a>
 </li>
-          <li><a href="api/widgets/app.html#charmy.widgets.app.App.__init__">(charmy.widgets.app.App method)</a>
+          <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.__init__">(charmy.widgets.cmm.CharmyManager method)</a>
 </li>
           <li><a href="api/widgets/container.html#charmy.widgets.container.Container.__init__">(charmy.widgets.container.Container method)</a>
 </li>
@@ -317,11 +319,9 @@
 </li>
         <li><a href="api/event.html#charmy.event.WorkingThread.add_task">add_task() (charmy.event.WorkingThread method)</a>
 </li>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.add_window">add_window() (charmy.widgets.app.App method)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App">App (class in charmy.widgets.app)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.add_window">add_window() (charmy.widgets.cmm.CharmyManager method)</a>
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.attributes">attributes (charmy.object.CharmyObject property)</a>
 </li>
@@ -448,10 +448,10 @@
 </li>
         </ul></li>
         <li>
-    charmy.widgets.app
+    charmy.widgets.cmm
 
         <ul>
-          <li><a href="api/widgets/app.html#module-charmy.widgets.app">module</a>
+          <li><a href="api/widgets/cmm.html#module-charmy.widgets.cmm">module</a>
 </li>
         </ul></li>
         <li>
@@ -482,11 +482,13 @@
           <li><a href="api/widgets/windowbase.html#module-charmy.widgets.windowbase">module</a>
 </li>
         </ul></li>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager">CharmyManager (class in charmy.widgets.cmm)</a>
+</li>
         <li><a href="api/object.html#charmy.object.CharmyObject">CharmyObject (class in charmy.object)</a>
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.class_name">class_name (charmy.object.CharmyObject property)</a>
 </li>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.cleanup">cleanup() (charmy.widgets.app.App method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.cleanup">cleanup() (charmy.widgets.cmm.CharmyManager method)</a>
 </li>
         <li><a href="api/styles/color.html#charmy.styles.color.Color">Color (class in charmy.styles.color)</a>
 </li>
@@ -498,7 +500,7 @@
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.contextlib">contextlib (charmy.widgets.windowbase.WindowBase attribute)</a>
 </li>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.cquit">cquit() (in module charmy.widgets.app)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.cquit">cquit() (in module charmy.widgets.cmm)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.GLFW.create">create() (charmy.framework.GLFW method)</a>
 
@@ -538,7 +540,7 @@
           <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.destroy">(charmy.widgets.windowbase.WindowBase method)</a>
 </li>
         </ul></li>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.destroy_window">destroy_window() (charmy.widgets.app.App method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.destroy_window">destroy_window() (charmy.widgets.cmm.CharmyManager method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -566,7 +568,7 @@
   <h2>E</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.error">error() (charmy.widgets.app.App static method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.error">error() (charmy.widgets.cmm.CharmyManager static method)</a>
 </li>
         <li><a href="api/event.html#charmy.event.Event">Event (class in charmy.event)</a>
 </li>
@@ -698,7 +700,7 @@
           <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.latest_event">(charmy.widgets.windowbase.WindowBase attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.launch">launch() (charmy.widgets.app.App method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.launch">launch() (charmy.widgets.cmm.CharmyManager method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -718,10 +720,10 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.mainloop">mainloop() (charmy.widgets.app.App method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.mainloop">mainloop() (charmy.widgets.cmm.CharmyManager method)</a>
 
         <ul>
-          <li><a href="api/widgets/app.html#charmy.widgets.app.mainloop">(in module charmy.widgets.app)</a>
+          <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.mainloop">(in module charmy.widgets.cmm)</a>
 </li>
         </ul></li>
         <li><a href="api/framework.html#charmy.framework.GLFW.make_context_current">make_context_current() (charmy.framework.GLFW method)</a>
@@ -758,7 +760,7 @@
 </li>
           <li><a href="api/widgets/index.html#module-charmy.widgets">charmy.widgets</a>
 </li>
-          <li><a href="api/widgets/app.html#module-charmy.widgets.app">charmy.widgets.app</a>
+          <li><a href="api/widgets/cmm.html#module-charmy.widgets.cmm">charmy.widgets.cmm</a>
 </li>
           <li><a href="api/widgets/container.html#module-charmy.widgets.container">charmy.widgets.container</a>
 </li>
@@ -831,7 +833,7 @@
   <h2>Q</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.quit">quit() (charmy.widgets.app.App method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.quit">quit() (charmy.widgets.cmm.CharmyManager method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -854,7 +856,7 @@
         <li><a href="api/event.html#charmy.event.WorkingThread.run">run() (charmy.event.WorkingThread method)</a>
 
         <ul>
-          <li><a href="api/widgets/app.html#charmy.widgets.app.App.run">(charmy.widgets.app.App method)</a>
+          <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.run">(charmy.widgets.cmm.CharmyManager method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -953,7 +955,7 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/app.html#charmy.widgets.app.App.update">update() (charmy.widgets.app.App method)</a>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.update">update() (charmy.widgets.cmm.CharmyManager method)</a>
 
         <ul>
           <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.update">(charmy.widgets.windowbase.WindowBase method)</a>
