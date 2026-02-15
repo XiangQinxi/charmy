@@ -199,11 +199,13 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../getstarted/install.html">Install Charmy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../getstarted/first_app.html">First application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/custom_app_settings.html">Custom main App settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
@@ -286,6 +288,24 @@ ui.samples: UI Samples.</p>
 <dt class="sig sig-object py" id="charmy.widgets.app.App.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.update" title="Link to this definition">¶</a></dt>
 <dd><p>Update the CWindows’ UI and events</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.app.App.mainloop">
+<span class="sig-name descname"><span class="pre">mainloop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.mainloop" title="Link to this definition">¶</a></dt>
+<dd><p>Run the application.</p>
+<p>This method will start the application event loop. It will continue running
+as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
+<p>If no windows are added to the application, a warning will be issued.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.app.App.launch">
+<span class="sig-name descname"><span class="pre">launch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.launch" title="Link to this definition">¶</a></dt>
+<dd><p>Run the application.</p>
+<p>This method will start the application event loop. It will continue running
+as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
+<p>If no windows are added to the application, a warning will be issued.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -421,6 +441,8 @@ as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
 <li><a class="reference internal" href="#charmy.widgets.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.widgets.app.App.__init__"><code class="docutils literal notranslate"><span class="pre">App.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.app.App.update"><code class="docutils literal notranslate"><span class="pre">App.update()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.mainloop"><code class="docutils literal notranslate"><span class="pre">App.mainloop()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.launch"><code class="docutils literal notranslate"><span class="pre">App.launch()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.app.App.add_window"><code class="docutils literal notranslate"><span class="pre">App.add_window()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.app.App.destroy_window"><code class="docutils literal notranslate"><span class="pre">App.destroy_window()</span></code></a></li>

@@ -12,6 +12,7 @@ Core Modules
 
    const
    event
+   framework
    object
    pos
    size

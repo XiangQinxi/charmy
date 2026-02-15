@@ -11,7 +11,7 @@ First application
 
 .. code-block:: python
 
-   window = cm.Window()  # If you want to use other App, pass it as argument
+   window = cm.Window()
 
 3. Run the application
 There is auto created ``App`` object. You can run it by ``cm.mainloop()``.
