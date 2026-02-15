@@ -5,9 +5,6 @@ API Reference
 .. automodule:: charmy
    :members:
 
-.. automodule:: charmy.event
-   :members:
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -17,3 +14,5 @@ API Reference
    object
    pos
    size
+
+   widgets/index

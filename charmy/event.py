@@ -177,9 +177,11 @@ class CEventHandling(CObject):
 
         Example
         -------
-        .. code-block
+        .. code-block:: python
+
             my_button = CButton(...).pack()
             press_down_event = my_button.bind("mouse_press", lambda _: print("Hello world!"))
+
         This shows binding a hello world to the button when it's press.
 
         :param event_type: The type of event to be bound to
