@@ -35,7 +35,7 @@ class CharmyManager(CharmyObject):
         self.new("event.thread", WorkingThread())
 
         self.new("ui.framework", ui)
-        self.new("ui.framework.class", window_framework_map[ui]())
+        self.new("ui.framework.class", window_framework_map[ui]())  # NOQA
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 
@@ -135,7 +135,7 @@ class CharmyManager(CharmyObject):
         """Add a window to the manager.
 
         Args:
-            window (charmy.widgets.Window): The window to be added.
+            window (charmy.widgets.WindowBase): The window to be added.
         """
         self.windows.append(window)
 
@@ -143,7 +143,7 @@ class CharmyManager(CharmyObject):
         """Destroy a window from the manager.
 
         Args:
-            window (charmy.widgets.Window): The window to be destroyed.
+            window (charmy.widgets.WindowBase): The window to be destroyed.
         """
         windows = self.windows
         if window in windows:

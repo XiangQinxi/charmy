@@ -1,5 +1,3 @@
-import importlib
-
 from ..const import MAIN_MANAGER_ID, DrawingFrame
 from ..object import CharmyObject
 from ..widgets.cmm import CharmyManager
@@ -13,11 +11,11 @@ class Color(CharmyObject):
 
         # The Drawing Framework
         if draw_framework is None:
-            # Auto find CApp Object
-            app = self.get_obj(MAINAPP_ID)
-            if app is None:
-                raise ValueError("Not found main App")
-            self.app: CharmyManager = app
+            # Auto find CharmyManager Object
+            manager = self.get_obj(MAIN_MANAGER_ID)
+            if manager is None:
+                raise ValueError("Not found main CharmyManager")
+            self.manager: CharmyManager = manager
             self.new(
                 "drawing.framework",
                 self._get_drawing_framework(),
@@ -29,7 +27,7 @@ class Color(CharmyObject):
         # Import Drawing Framework
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
-                self.skia = self.app.skia
+                self.skia = self.manager.skia
             case _:
                 raise ValueError("Not supported drawing framework")
 
@@ -118,4 +116,4 @@ class Color(CharmyObject):
         return x
 
     def _get_drawing_framework(self):
-        return self.app["drawing.framework"]
+        return self.manager["drawing.framework"]
