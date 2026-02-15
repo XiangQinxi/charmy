@@ -23,7 +23,7 @@ class WindowBase(EventHandling, CharmyObject):
 
     def __init__(
         self,
-        parent: CharmyManager = None,
+        parent: CharmyManager | None = None,
         *,
         title: str = "Charmy GUI",
         size: tuple[int, int] = (100, 100),
@@ -211,7 +211,7 @@ class WindowBase(EventHandling, CharmyObject):
 
                 yield surface  # ⚠️ 必须用 yield，不要 return
 
-    def draw(self, event: Event = None) -> None:  # NOQA
+    def draw(self, event: Event | None = None) -> None:  # NOQA
         """Draw the window.
 
         Args:
