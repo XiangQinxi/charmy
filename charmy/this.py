@@ -23,7 +23,7 @@ Never mind,
 it will be OK if it runs fast... 
 I mean myself...
 
-—— Translated by rgzz666
+—— Translated by rgzz666 from original text by LittleWhiteCloud
 """
 
 # Translated from original Chinese version / 译自中文原文: 
