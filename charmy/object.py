@@ -32,21 +32,21 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         {}
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
-    def __init__(self, _id: ID | str = ID.AUTO):
+    def __init__(self, id_: ID | str = ID.AUTO):
         self._attributes: dict[
             str, typing.Any | list[str, typing.Any, typing.Callable | None, typing.Callable | None]
         ] = {}  # NOQA: Expected to be user-modifiable.
         # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
         # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
 
-        if _id == ID.AUTO:
+        if id_ == ID.AUTO:
             _prefix = self.class_name
-            _id = _prefix + str(self.instance_count)
-        if _id in self.objects:
-            raise KeyError(_id)
-        if _id != ID.NONE:
-            self.objects[_id] = self
-            self.id = _id
+            id_ = _prefix + str(self.instance_count)
+        if id_ in self.objects:
+            raise KeyError(id_)
+        if id_ != ID.NONE:
+            self.objects[id_] = self
+            self.id = id_
 
             if self.class_name not in self.objects_sorted:
                 self.objects_sorted[self.class_name] = {self.id: self}

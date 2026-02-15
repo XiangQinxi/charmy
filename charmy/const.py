@@ -51,3 +51,6 @@ class DrawingMode(Enum):
 
     IMMEDIATE = immediate = "IMMEDIATE"
     RETAINED = retained = "READIED"
+
+
+MAINAPP_ID = "mainapp"

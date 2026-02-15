@@ -2,7 +2,7 @@ import typing
 import importlib
 import warnings
 
-from ..const import BackendFrame, DrawingFrame, UIFrame
+from ..const import BackendFrame, DrawingFrame, UIFrame, MAINAPP_ID
 from ..event import WorkingThread
 from ..object import CharmyObject
 
@@ -23,8 +23,9 @@ class App(CharmyObject):
         backend: BackendFrame = BackendFrame.OPENGL,
         vsync: bool = True,
         samples: int = 4,
+        **kwargs
     ):
-        super().__init__()
+        super().__init__(**kwargs)
 
         if self.instance_count >= 1:
             warnings.warn("There should be only one instance of CApp.")
@@ -174,3 +175,18 @@ class App(CharmyObject):
         :return: None
         """
         raise f"GLFW Error {error_code}: {description.decode()}"
+
+
+# Auto create App Object
+mainapp: App = App(id_=MAINAPP_ID)
+
+
+def mainloop() -> None:
+    """Run the main application"""
+    return mainapp.run()
+
+
+def cquit():  # NOQA
+    """Quit the main application"""
+    mainapp.quit()
+

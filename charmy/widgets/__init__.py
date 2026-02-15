@@ -1,6 +1,6 @@
 """Widgets for Charmy"""
 
-from .app import App
+from .app import mainloop, mainapp
 from .container import Container, auto_find_parent
 from .widget import Widget
 from .window import Window

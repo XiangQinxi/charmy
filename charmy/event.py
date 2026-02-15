@@ -383,7 +383,7 @@ class WorkingThread(threading.Thread, CharmyObject):
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
-        CharmyObject.__init__(self, _id="event.main_thread")
+        CharmyObject.__init__(self, id_="event.main_thread")
         self.tasks: list[tuple[Event, EventTask | DelayTask]] = []  # [(event, task), ...]
         self.is_alive: bool = True
         self.lock: threading.Lock = threading.Lock()

@@ -2,7 +2,7 @@ import importlib
 import sys
 import typing
 
-from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame
+from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame, MAINAPP_ID
 from ..event import Event, EventHandling
 from ..object import CharmyObject
 from ..pos import Pos
@@ -34,7 +34,7 @@ class WindowBase(EventHandling, CharmyObject):
 
         # Auto find CApp Object
         if parent is None:
-            parent = self.get_obj("app0")
+            parent = self.get_obj(MAINAPP_ID)
             if parent is None:
                 raise ValueError("Not found main App")
 
