@@ -35,7 +35,7 @@ class CharmyManager(CharmyObject):
         self.new("event.thread", WorkingThread())
 
         self.new("ui.framework", ui)
-        self.new("ui.framework.class", window_framework_map[ui]())
+        self.new("ui.framework.class", window_framework_map[ui]())  # NOQA
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 

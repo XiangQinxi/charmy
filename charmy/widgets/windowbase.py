@@ -14,7 +14,7 @@ class WindowBase(EventHandling, CharmyObject):
     """WindowBase is a base class for window.
 
     Args:
-        parent: The parent CApp object,
+        parent: The CharmyManager object,
         title: The title of the window,
         size: The size of the window,
         fha: Whether to force hardware acceleration
@@ -32,20 +32,20 @@ class WindowBase(EventHandling, CharmyObject):
     ):
         super().__init__()
 
-        # Auto find CApp Object
+        # Auto find Manager Object
         if parent is None:
             parent = self.get_obj(MAIN_MANAGER_ID)
             if parent is None:
-                raise ValueError("Not found main App")
+                raise ValueError("Not found main CharmyManager")
 
         # Init parent attribute
         self.parent = parent
 
         if isinstance(parent, CharmyManager):
-            self.app = parent
+            self.manager = parent
         elif isinstance(parent, WindowBase):
-            self.app = parent.app
-        self.app.add_window(self)
+            self.manager = parent.manager
+        self.manager.add_window(self)
 
         # Init Attributes
         self.new(
@@ -63,9 +63,9 @@ class WindowBase(EventHandling, CharmyObject):
         # """
         match self["ui.framework"]:
             case UIFrame.GLFW:
-                self.glfw = self.app.glfw
+                self.glfw = self.manager.glfw
             case UIFrame.SDL:
-                self.sdl3 = self.app.sdl3
+                self.sdl3 = self.manager.sdl3
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
         # """
@@ -81,7 +81,7 @@ class WindowBase(EventHandling, CharmyObject):
 
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
-                self.skia = self.app.skia
+                self.skia = self.manager.skia
                 self.new("drawing.surface", None)
             case _:
                 raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
@@ -94,8 +94,8 @@ class WindowBase(EventHandling, CharmyObject):
 
         match self["backend.framework"]:
             case BackendFrame.OPENGL:
-                self.opengl = self.app.opengl
-                self.opengl_GL = self.app.opengl_GL
+                self.opengl = self.manager.opengl
+                self.opengl_GL = self.manager.opengl_GL
                 self.new("backend.context", None)
             case _:
                 raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
@@ -277,7 +277,7 @@ class WindowBase(EventHandling, CharmyObject):
         """
         # self._event_init = False
         # print(self.id)
-        self.app.destroy_window(self)
+        self.manager.destroy_window(self)
         try:
             self["ui.framework.class"].destroy(the_window=self.the_window)
         except TypeError:
@@ -316,19 +316,19 @@ class WindowBase(EventHandling, CharmyObject):
 
     # region Getters and Setters
     def _get_ui_framework(self):
-        return self.app.get("ui.framework")
+        return self.manager.get("ui.framework")
 
     def _get_ui_framework_class(self):
-        return self.app.get("ui.framework.class")
+        return self.manager.get("ui.framework.class")
 
     def _get_drawing_framework(self):
-        return self.app.get("drawing.framework")
+        return self.manager.get("drawing.framework")
 
     def _get_backend_framework(self):
-        return self.app.get("backend.framework")
+        return self.manager.get("backend.framework")
 
     def _get_ui_is_vsync(self):
-        return self.app.get("ui.is_vsync")
+        return self.manager.get("ui.is_vsync")
 
     def _set_size(self, size: Size | tuple[int, int]) -> None:
         """Set the size of the window.
