@@ -315,7 +315,6 @@ class CEventHandling:
         self.Tasks[event_type].append(Task)
         return Task
 
-
     def clear_bind(self, event_type: str) -> bool:
         """To clear clear Tasks binded to a spcific event or widget
 

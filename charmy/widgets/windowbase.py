@@ -11,7 +11,7 @@ from .app import App
 
 
 class WindowBase(EventHandling, CharmyObject):
-    """CWindowBase is a base class for window.
+    """WindowBase is a base class for window.
 
     Args:
         parent: The parent CApp object,
@@ -57,9 +57,9 @@ class WindowBase(EventHandling, CharmyObject):
 
         match self["ui.framework"]:
             case UIFrame.GLFW:
-                self.glfw = importlib.import_module("glfw")
+                self.glfw = self.app.glfw
             case UIFrame.SDL:
-                self.sdl3 = importlib.import_module("sdl3")
+                self.sdl3 = self.app.sdl3
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
 
@@ -74,8 +74,7 @@ class WindowBase(EventHandling, CharmyObject):
 
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
-                self.skia = importlib.import_module("skia")
-                self.new("drawing.surface", None)
+                self.skia = self.app.skia
             case _:
                 raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
 
@@ -87,9 +86,8 @@ class WindowBase(EventHandling, CharmyObject):
 
         match self["backend.framework"]:
             case BackendFrame.OPENGL:
-                self.opengl = importlib.import_module("OpenGL")
-                self.opengl_GL = importlib.import_module("OpenGL.GL")
-                self.new("backend.context", None)
+                self.opengl = self.app.opengl
+                self.opengl_GL = self.app.opengl_GL
             case _:
                 raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
 
@@ -162,8 +160,6 @@ class WindowBase(EventHandling, CharmyObject):
         """Create event bounds."""
         match self.get("ui.framework"):
             case UIFrame.GLFW:
-                NotImplemented
-                # To 相亲西：请适配新的trigger方法！   —— rgzz666
                 self.glfw.set_window_size_callback(
                     self.the_window,
                     lambda window, width, height: self.trigger(
@@ -183,7 +179,7 @@ class WindowBase(EventHandling, CharmyObject):
             match self["drawing.mode"]:
                 case DrawingMode.IMMEDIATE:
                     self.draw()
-                case DrawingMode.Retained:
+                case DrawingMode.RETAINED:
                     if self.is_dirty:
                         self.draw()
                         self.is_dirty = False
@@ -266,7 +262,9 @@ class WindowBase(EventHandling, CharmyObject):
                         case DrawingFrame.SKIA:
                             # Create a Surface and hand it over to this arg.
                             # 【创建Surface，交给该窗口】
-                            with self.skia_surface(self.the_window) as self["drawing.surface"]:  # NOQA
+                            with self.skia_surface(self.the_window) as self[
+                                "drawing.surface"
+                            ]:  # NOQA
                                 if self["drawing.surface"]:
                                     with self["drawing.surface"] as canvas:
                                         # Determine and call the drawing function of this arg.

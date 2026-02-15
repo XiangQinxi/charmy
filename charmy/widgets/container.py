@@ -1,6 +1,6 @@
-import typing
-import threading
 import functools
+import threading
+import typing
 
 from ..object import CharmyObject
 
@@ -18,19 +18,19 @@ class Container(CharmyObject):
     # region Context
 
     @classmethod
-    def _get_context_stack(cls) -> typing.List['Container']:
+    def _get_context_stack(cls) -> typing.List["Container"]:
         """Get the context stack of the current thread"""
-        if not hasattr(cls._local, 'context_stack'):
+        if not hasattr(cls._local, "context_stack"):
             cls._local.context_stack = []
         return cls._local.context_stack
-    
+
     @classmethod
-    def get_context(cls) -> typing.Optional['Container']:
+    def get_context(cls) -> typing.Optional["Container"]:
         """Get the current context container"""
         stack = cls._get_context_stack()
         return stack[-1] if stack else None
 
-    def __enter__(self) -> 'Container':
+    def __enter__(self) -> "Container":
         """Enter the context"""
         stack = self._get_context_stack()
         stack.append(self)
@@ -43,7 +43,7 @@ class Container(CharmyObject):
             stack.pop()
         return False  # 不抑制异常
 
-    def add_child(self, child: 'CharmyObject'):
+    def add_child(self, child: "CharmyObject"):
         """Add a child object"""
         if child not in self["children"]:
             self["children"].append(child)
@@ -63,7 +63,7 @@ def auto_find_parent(widget_class: typing.Callable) -> typing.Callable:
         parent_specified = False
 
         # Check if parent is specified in keyword arguments
-        if 'parent' in kwargs:
+        if "parent" in kwargs:
             parent_specified = True
         # Check if parent is specified in positional arguments
         elif len(args) >= 2:
@@ -73,7 +73,7 @@ def auto_find_parent(widget_class: typing.Callable) -> typing.Callable:
         if not parent_specified:
             parent = Container.get_context()
             if parent is not None:
-                kwargs['parent'] = parent
+                kwargs["parent"] = parent
 
         # Call the original constructor
         original_init(self, *args, **kwargs)

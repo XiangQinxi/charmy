@@ -8,7 +8,7 @@ from .const import ID
 
 class InstanceCounterMeta(type):
     """
-    CInstanceCounterMeta
+    InstanceCounterMeta
     """
 
     def __init__(cls, name, bases, attrs):
@@ -25,7 +25,7 @@ class InstanceCounterMeta(type):
 
 
 class CharmyObject(metaclass=InstanceCounterMeta):
-    """CObject is this project's basic class, with features to set and get attribute."""
+    """CharmyObject is this project's basic class, with features to set and get attribute."""
 
     objects: typing.Dict[str, typing.Any] = {}  # find by ID {1: OBJ1, 2: OBJ2}
     objects_sorted: typing.Dict[str, typing.Any] = (
@@ -33,8 +33,11 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     def __init__(self, _id: ID | str = ID.AUTO):
-        self._attributes: dict[str, typing.Any | list[str, typing.Any, typing.Callable | None, typing.Callable | None]] = {}  # NOQA: Expected to be user-modifiable.
-        # {key: value, key2: ["@custom", value, set_func, get_func]}
+        self._attributes: dict[
+            str, typing.Any | list[str, typing.Any, typing.Callable | None, typing.Callable | None]
+        ] = {}  # NOQA: Expected to be user-modifiable.
+        # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
+        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
 
         if _id == ID.AUTO:
             _prefix = self.class_name
@@ -43,7 +46,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             raise KeyError(_id)
         if _id != ID.NONE:
             self.objects[_id] = self
-            self.id=_id
+            self.id = _id
 
             if self.class_name not in self.objects_sorted:
                 self.objects_sorted[self.class_name] = {self.id: self}
@@ -81,7 +84,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         .. code-block:: python
             from charmy import *
 
-            obj = CObject()
+            obj = CharmyObject()
             obj.new("name", "obj1")
             print(obj.get("name"))  # OUTPUT: obj1
             obj.set("name", "obj2")
@@ -159,8 +162,6 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             the value corresponding to the key
         """
 
-        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
-
         # check is an available key
         if key not in self._attributes:
             raise KeyError(key)
@@ -205,16 +206,25 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     # region Item configuration
 
     def __setitem__(self, key: str, value: typing.Any):
-        """You can set attribute by key: obj["key"] = value"""
+        """Set attribute by key: obj["key"] = value"""
         self.set(key, value)
 
     def __getitem__(self, key: str) -> typing.Any:
-        """You can get attribute by key: obj["key"]"""
+        """Get attribute by key: obj["key"]"""
         return self.get(key)
 
-    def __delitem__(self, key):
-        """You can delete attribute by key: obj["key"]"""
+    def __delitem__(self, key: str):
+        """Delete attribute by key: obj["key"]"""
         del self._attributes[key]
+
+    def __contains__(self, item: str) -> bool:
+        return item in self._attributes
+
+    def __getattr__(self, item: str) -> typing.Any:
+        """Get attribute by key: obj.key"""
+        if item in self._attributes:
+            return self.get(item)
+        return None
 
     # endregion
 

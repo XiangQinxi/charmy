@@ -2,7 +2,7 @@ from .object import CharmyObject
 
 
 class Size(CharmyObject):
-    """CSize is a class to store size.
+    """Size is a class to store size.
 
     To reset the size, use the __call__ method.
 

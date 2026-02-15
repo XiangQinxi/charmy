@@ -1,4 +1,5 @@
 import typing
+import importlib
 import warnings
 
 from ..const import BackendFrame, DrawingFrame, UIFrame
@@ -35,9 +36,32 @@ class App(CharmyObject):
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 
+        match self["ui.framework"]:
+            case UIFrame.GLFW:
+                self.glfw = importlib.import_module("glfw")
+            case UIFrame.SDL:
+                self.sdl3 = importlib.import_module("sdl3")
+            case _:
+                raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
+
         self.new("drawing.framework", drawing)
 
+        match self["drawing.framework"]:
+            case DrawingFrame.SKIA:
+                self.skia = importlib.import_module("skia")
+                self.new("drawing.surface", None)
+            case _:
+                raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
+
         self.new("backend.framework", backend)
+
+        match self["backend.framework"]:
+            case BackendFrame.OPENGL:
+                self.opengl = importlib.import_module("OpenGL")
+                self.opengl_GL = importlib.import_module("OpenGL.GL")
+                self.new("backend.context", None)
+            case _:
+                raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
 
         self.windows = []
         self.is_alive: bool = False
@@ -48,21 +72,18 @@ class App(CharmyObject):
         """According to attribute `ui.framework` to init ui framework"""
         match self.get("ui.framework"):
             case UIFrame.GLFW:
-                import glfw
+                if not self.glfw.init():
+                    raise self.glfw.GLFWError("Init failed")
 
-                if not glfw.init():
-                    raise glfw.GLFWError("Init failed")
-
-                glfw.window_hint(glfw.STENCIL_BITS, 8)
-                glfw.window_hint(glfw.TRANSPARENT_FRAMEBUFFER, True)
-                glfw.window_hint(glfw.WIN32_KEYBOARD_MENU, True)
-                glfw.window_hint(glfw.COCOA_RETINA_FRAMEBUFFER, True)
-                glfw.window_hint(glfw.SAMPLES, self.get("ui.samples"))
-                glfw.set_error_callback(self.error)
+                self.glfw.window_hint(self.glfw.STENCIL_BITS, 8)
+                self.glfw.window_hint(self.glfw.TRANSPARENT_FRAMEBUFFER, True)
+                self.glfw.window_hint(self.glfw.WIN32_KEYBOARD_MENU, True)
+                self.glfw.window_hint(self.glfw.COCOA_RETINA_FRAMEBUFFER, True)
+                self.glfw.window_hint(self.glfw.SAMPLES, self.get("ui.samples"))
+                self.glfw.set_error_callback(self.error)
 
     def update(self):
         """Update the CWindows' UI and events"""
-        from glfw import get_current_context, poll_events, swap_interval, wait_events
 
         input_mode: bool = True
 
@@ -72,14 +93,14 @@ class App(CharmyObject):
         for window in windows:
             if window.is_visible and window.is_alive:
                 window.update()
-                if get_current_context():
-                    swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
+                if self.glfw.get_current_context():
+                    self.glfw.swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
 
         if input_mode:
-            poll_events()
+            self.glfw.poll_events()
         else:
             # if self._check_delay_events()
-            wait_events()
+            self.glfw.wait_events()
 
     def run(self):
         """Run the application.
@@ -135,11 +156,9 @@ class App(CharmyObject):
         """Clean up resources."""
         match self.get("ui.framework"):
             case UIFrame.GLFW:
-                import glfw
-
                 for window in self.windows:
-                    glfw.destroy_window(window.the_window)
-                glfw.terminate()
+                    self.glfw.destroy_window(window.the_window)
+                self.glfw.terminate()
         self.quit()
 
     def quit(self) -> None:

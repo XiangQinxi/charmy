@@ -1,16 +1,15 @@
-import pathlib
-import typing
-import os
-import os.path
 import inspect
 import json
+import os
+import os.path
+import pathlib
+import typing
 import warnings
 
 from ..object import CharmyObject
 
 
 class Theme(CharmyObject):
-    
     """Theme class for CWindow and CWidgets.
 
     Example
@@ -35,7 +34,7 @@ class Theme(CharmyObject):
 
     重置后我摸改了一些地方，但逻辑、功能应是大差不差的，某些方法名、变量名我改的易读了点
     """
-    
+
     LOADED_THEMES: list["Theme"] = []
     INTERNAL_THEME_DIR = pathlib.Path(__file__).parent.parent / "resources" / "themes"
     INTERNAL_THEME: dict[str, "Theme"] = {}
@@ -83,7 +82,7 @@ class Theme(CharmyObject):
 
         Theme.LOADED_THEMES.append(self)
         return
-    
+
     @classmethod
     def find_loaded_theme(cls, theme_name: str) -> "Theme | typing.Literal[False]":
         """Search for a loaded theme by name, returns the CTheme object if found, or False if not.
@@ -101,7 +100,7 @@ class Theme(CharmyObject):
             if theme["name"] == theme_name:
                 return theme
         return False
-    
+
     @classmethod
     def validate_theme_existed(cls, theme_name: str) -> bool:
         """Validate if the theme with given name existed and loaded.

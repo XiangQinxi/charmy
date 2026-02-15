@@ -4,6 +4,7 @@ from ..const import DrawingFrame
 from ..object import CharmyObject
 from ..widgets.app import App
 
+
 class Color(CharmyObject):
     """Color manager"""
 
@@ -28,7 +29,7 @@ class Color(CharmyObject):
         # Import Drawing Framework
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
-                self.skia = importlib.import_module("skia")
+                self.skia = self.app.skia
             case _:
                 raise ValueError("Not supported drawing framework")
 

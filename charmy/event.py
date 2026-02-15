@@ -1,11 +1,10 @@
 from __future__ import annotations as _
 
-import typing
-
 import collections.abc
+import re
 import threading
 import time
-import re
+import typing
 import warnings
 
 from .const import ID
@@ -36,7 +35,7 @@ class EventHandling(CharmyObject):
 
     @staticmethod
     def _execute_task(task: EventTask | DelayTask, event_obj: Event) -> None:
-        """To execute the binded task directly, regardless its props, mainly for internal use."""
+        """To execute the bound task directly, regardless its props, mainly for internal use."""
         match task.target:
             case _ if callable(task.target):
                 task.target(event_obj)
@@ -57,12 +56,12 @@ class EventHandling(CharmyObject):
         This is mostly for internal use of Charmy.
         .. code-block:: python
 
-            class CWidget(CEventHandling, ...):
+            class Widget(EventHandling, ...):
                 def __init__(self):
                     super().__init__(self)
             ...
 
-        This shows subclassing CEventHandling to let CWidget gain the ability of handling events.
+        This shows subclassing EventHandling to let Widget gain the ability of handling events.
         """
         super().__init__()
         self.latest_event: Event = Event(widget=None, event_type="NO_EVENT")
@@ -75,7 +74,7 @@ class EventHandling(CharmyObject):
         """This function parses event type string.
 
         :param event_type_str: The event type string to be parsed
-        :returns: json, parsed event type
+        :returns: JSON, parsed event type
         """
         if not re.match(".*\\[.*\\]", event_type_str):  # NOQA
             return {"type": event_type_str, "params": []}
@@ -94,8 +93,8 @@ class EventHandling(CharmyObject):
         -------
         .. code-block:: python
 
-            my_task = CWidget.bind("delay[5]", lambda: print("Hello Suzaku"))
-            CWidget.execute_task(my_task)
+            my_task = Widget.bind("delay[5]", lambda: print("Hello Suzaku"))
+            Widget.execute_task(my_task)
 
         """
         if event_obj is None:
@@ -132,18 +131,18 @@ class EventHandling(CharmyObject):
         -------
         .. code-block:: python
 
-            class CWidget(CEventHandling, ...):
+            class Widget(EventHandling, ...):
                 ...
 
-            my_widget = CWidget()
+            my_widget = Widget()
             my_widget.trigger("mouse_press")
 
-        This shows triggering a `mouse_press` event in a `CWidget`, which inherited 
-        `CEventHandling` so has the ability to handle events.
+        This shows triggering a `mouse_press` event in a `Widget`, which inherited
+        `EventHandling` so has the ability to handle events.
         """
         # Parse event type string
         parsed_event_type = self.parse_event_type_str(event_obj.event_type)
-        # Create a default CEvent object if not specified
+        # Create a default Event object if not specified
         if event_obj is None:
             event_obj = Event(widget=self, event_type=tuple(parsed_event_type.keys())[0])
         # Add the event to event lists (the widget itself and the global list)
@@ -164,7 +163,7 @@ class EventHandling(CharmyObject):
                     # To execute all tasks bound under this event
                     self.execute_task(task, event_obj)
 
-    trigger = trigger_event # Alias for trigger
+    trigger = trigger_event  # Alias for trigger
 
     def bind(
         self,
@@ -179,7 +178,7 @@ class EventHandling(CharmyObject):
         -------
         .. code-block:: python
 
-            my_button = CButton(...).pack()
+            my_button = Button(...).pack()
             press_down_event = my_button.bind("mouse_press", lambda _: print("Hello world!"))
 
         This shows binding a hello world to the button when it's press.
@@ -188,7 +187,7 @@ class EventHandling(CharmyObject):
         :param target: A (list of) callable thing, what to do when this task is executed
         :param multithread: If this task should be executed in another thread (False by default)
         :param _keep_at_clear: If the task should be kept when cleaning the event's binding
-        :return: CEventTask that is bound to the task if success, otherwise False
+        :return: EventTask that is bound to the task if success, otherwise False
         """
         parsed_event_type = self.parse_event_type_str(event_type)
         if parsed_event_type["type"] not in self.__class__.EVENT_TYPES:
@@ -203,12 +202,12 @@ class EventHandling(CharmyObject):
         match parsed_event_type["type"]:
             case "delay":
                 raise NotImplementedError("Delay tasks are not implemented yet!")
-                task = DelayTask(
+                task = DelayTask(  # NOQA
                     target,  # I will fix this type error later (ignore is ur type check is off)
                     parsed_event_type["params"][0],
                     multithread,
                     _keep_at_clear,
-                    task_id,
+                    task_id,  # NOQA
                 )
             case "repeat":
                 raise NotImplementedError("Repeat tasks is not implemented yet!")
@@ -218,17 +217,20 @@ class EventHandling(CharmyObject):
         return task
 
     def find_task(self, task_id: str) -> EventTask | bool:
-        """To find a event task using task ID.
+        """To find an event task using task ID.
 
         Example
         -------
+
         .. code-block:: python
-            my_button = CButton(...)
-            press_task = my_button.find_task("CButton114.mouse_press.514")
-        This shows getting the `CEventtask` object of task with ID `CButton114.mouse_press.514`
+
+            my_button = Button(...)
+            press_task = my_button.find_task("Button114.mouse_press.514")
+
+        This shows getting the `EventTask` object of task with ID `Button114.mouse_press.514`
         from bound tasks of `my_button`.
 
-        :return: The CEventTask object of the task, or False if not found
+        :return: The EventTask object of the task, or False if not found
         """
         task_id_parsed = task_id.split(".")
         if len(task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
@@ -244,19 +246,24 @@ class EventHandling(CharmyObject):
 
         Example
         -------
-        .. code-block:: python
-            my_button = CButton(...)
-            my_button.unbind("CButton114.mouse_press.514")
-        This show unbinding the task with ID `CButton114.mouse_press.514` from `my_button`.
 
         .. code-block:: python
-            my_button = CButton(...)
-            my_button.unbind("CButton114.mouse_press.*")
+
+            my_button = Button(...)
+            my_button.unbind("Button114.mouse_press.514")
+
+        This show unbinding the task with ID `Button114.mouse_press.514` from `my_button`.
+
+        .. code-block:: python
+
+            my_button = Button(...)
+            my_button.unbind("Button114.mouse_press.*")
             my_button.unbind("mouse_release.*")
+
         This show unbinding all tasks under `mouse_press` and `mouse_release` event from
         `my_button`.
 
-        :param target_task: The task ID or `CEventTask` to unbind.
+        :param target_task: The task ID or `EventTask` to unbind.
         :return: If success
         """
         match target_task:
@@ -287,7 +294,7 @@ class Event(CharmyObject):
 
     latest: "Event"
 
-    def __init__(
+    def __init__(  # NOQA
         self,
         widget: EventHandling | None = None,
         event_type: str = "[Unspecified]",
@@ -327,11 +334,12 @@ class Event(CharmyObject):
         else:
             return None  # If no such item avail, returns None
 
+
 Event.latest = Event(widget=None, event_type="NO_EVENT")
 
 
 class EventTask:
-    """A class to represent event task when a event is triggered."""
+    """A class to represent event task when an event is triggered."""
 
     def __init__(
         self,
@@ -346,11 +354,13 @@ class EventTask:
         -------
         This is mostly for internal use of suzaku.
         .. code-block:: python
-            class CEventHandling():
+
+            class EventHandling():
                 def bind(self, ...):
                     ...
-                    task = CEventTask(event_id, target, multithread, _keep_at_clear)
+                    task = EventTask(event_id, target, multithread, _keep_at_clear)
                     ...
+
         This shows where this class is used for storing task properties in most cases.
 
         :param target: A callable thing, what to do when this task is executed
@@ -365,7 +375,7 @@ class EventTask:
 
 
 class DelayTask(EventTask):
-    NotImplemented
+    NotImplemented  # NOQA
 
 
 class WorkingThread(threading.Thread, CharmyObject):
@@ -374,7 +384,7 @@ class WorkingThread(threading.Thread, CharmyObject):
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
         CharmyObject.__init__(self, _id="event.main_thread")
-        self.tasks: list[tuple[Event, EventTask | DelayTask]] = []
+        self.tasks: list[tuple[Event, EventTask | DelayTask]] = []  # [(event, task), ...]
         self.is_alive: bool = True
         self.lock: threading.Lock = threading.Lock()
 
@@ -389,7 +399,7 @@ class WorkingThread(threading.Thread, CharmyObject):
                     func(task[0])
             self.tasks.remove(task)
         else:
-            #warnings.warn("")
+            # warnings.warn("")
             pass
         self.lock.release()
 
