@@ -97,7 +97,7 @@ class CWindowBase(CEventHandling, CObject):
         self.new("canvas_pos", CPos(0, 0))  # Always (0, 0)
         self.new("root_pos", CPos(0, 0), set_func=self._set_pos)  # The position of the window
         self.new("size", CSize(size[0], size[1]), set_func=self._set_size)  # The size of the window
-        self.new("title", title)  # The title of the window
+        self.new("title", title, set_func=self._set_title)  # The title of the window
 
         self.is_dirty: bool = False
         self.is_force_hardware_acceleration: bool = fha
@@ -416,6 +416,17 @@ class CWindowBase(CEventHandling, CObject):
             None
         """
         self.set("root_pos", pos)
+
+    def _set_title(self, title: str) -> None:
+        """Set the title of the window.
+
+        Args:
+            title (str): Title to set
+        Returns:
+            None
+        """
+        if self["ui.framework"] == UIFrame.GLFW:
+            self.glfw.set_window_title(self.the_window, title)
 
     # endregion
 
