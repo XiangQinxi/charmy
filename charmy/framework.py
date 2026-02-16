@@ -7,11 +7,13 @@ from .event import Event
 from .pos import Pos
 from .size import Size
 
+from abc import ABC, abstractmethod
 
 # region Window
-class WindowFramework:
+class WindowFramework(ABC):
     """The base class of WindowFramework."""
 
+    @abstractmethod
     def init(self, **kwargs) -> None:
         """Init the window framework
 
@@ -23,6 +25,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def create(self, size, title, **kwargs) -> dict[str, typing.Any]:
         """Create a window
 
@@ -38,6 +41,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def create_event_bounds(self, the_window, window_class, **kwargs):
         """Create event bounds for the window
 
@@ -51,6 +55,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def destroy(self, the_window) -> None:
         """Destroy the window
 
@@ -60,7 +65,9 @@ class WindowFramework:
         Returns:
             None
         """
+        ...
 
+    @abstractmethod
     def set_size(self, the_window, size: Size) -> None:
         """Set the size of the window
 
@@ -73,6 +80,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def set_pos(self, the_window, pos: Pos | tuple[int, int]) -> None:
         """Set the position of the window
 
@@ -85,6 +93,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def set_title(self, the_window, title: str) -> None:
         """Set the title of the window
 
@@ -97,6 +106,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def make_context_current(self, the_window, **kwargs) -> dict[str, typing.Any]:
         """Make the context current for the window
 
@@ -108,6 +118,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def swap_buffers(self, the_window) -> None:
         """Swap the buffers of the window
 

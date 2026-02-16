@@ -1,7 +1,6 @@
 import typing
 
-from ..const import (MAIN_MANAGER_ID, BackendFrame, Backends, DrawingMode,
-                     Backends)
+from ..const import MANAGER_ID, Backends, DrawingMode
 from ..event import Event, EventHandling
 from ..object import CharmyObject
 from ..pos import Pos
@@ -31,14 +30,8 @@ class WindowBase(EventHandling, CharmyObject):
     ):
         super().__init__()
 
-        # Auto find Manager Object
-        if parent is None:
-            parent = self.get_obj(MAIN_MANAGER_ID)
-            if parent is None:
-                raise ValueError("Not found main CharmyManager")
-
         # Init parent attribute
-        self.parent = parent
+        self.parent = self.get_obj(MANAGER_ID)
 
         if isinstance(parent, CharmyManager):
             self.manager = parent
@@ -92,7 +85,7 @@ class WindowBase(EventHandling, CharmyObject):
         )
 
         match self["backend.framework"]:
-            case BackendFrame.OPENGL:
+            case Backends.OPENGL:
                 self.opengl = self.manager.opengl
                 self.opengl_GL = self.manager.opengl_GL
                 self.new("backend.context", None)
@@ -165,7 +158,7 @@ class WindowBase(EventHandling, CharmyObject):
                     return
 
                 match self["backend.framework"]:
-                    case BackendFrame.OPENGL:
+                    case Backends.OPENGL:
                         match self["drawing.framework"]:
                             case Backends.SKIA:
                                 self["backend.context"] = self.skia.GrDirectContext.MakeGL()

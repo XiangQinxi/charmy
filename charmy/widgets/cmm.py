@@ -3,7 +3,7 @@ import typing
 import warnings
 from os import environ
 
-from ..const import MAIN_MANAGER_ID, BackendFrame, Backends, Backends
+from ..const import MANAGER_ID, Backends
 from ..event import WorkingThread
 from ..framework import window_framework_map
 from ..object import CharmyObject
@@ -22,7 +22,7 @@ class CharmyManager(CharmyObject):
         self,
         ui: Backends = Backends.GLFW,
         drawing: Backends = Backends.SKIA,
-        backend: BackendFrame = BackendFrame.OPENGL,
+        backend: Backends = Backends.OPENGL,
         vsync: bool = True,
         samples: int = 4,
         **kwargs,
@@ -58,7 +58,7 @@ class CharmyManager(CharmyObject):
         self.new("backend.framework", backend)
 
         match self["backend.framework"]:
-            case BackendFrame.OPENGL:
+            case Backends.OPENGL:
                 self.opengl = importlib.import_module("OpenGL")
                 self.opengl_GL = importlib.import_module("OpenGL.GL")
             case _:
@@ -82,7 +82,7 @@ class CharmyManager(CharmyObject):
 
         input_mode: bool = True
 
-        # poll_events()
+        self.glfw.wait_events()
         windows = self.windows
 
         for window in windows:
@@ -179,19 +179,19 @@ class CharmyManager(CharmyObject):
 uimap = {
     "GLFW": Backends.GLFW,
 }
-main_manager: CharmyManager = CharmyManager(
-    id_=MAIN_MANAGER_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")]
+manager: CharmyManager = CharmyManager(
+    id_=MANAGER_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")]
 )
 
 
 def mainloop() -> None:
     """Start main loop."""
     try:
-        main_manager.run()
+        manager.run()
     except Exception as e:
         raise e
 
 
 def cquit():  # NOQA
     """Quit the main loop"""
-    main_manager.quit()
+    manager.quit()

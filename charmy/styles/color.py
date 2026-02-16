@@ -1,4 +1,4 @@
-from ..const import MAIN_MANAGER_ID, Backends
+from ..const import MANAGER_ID, Backends
 from ..object import CharmyObject
 from ..widgets.cmm import CharmyManager
 
@@ -12,10 +12,7 @@ class Color(CharmyObject):
         # The Drawing Framework
         if draw_framework is None:
             # Auto find CharmyManager Object
-            manager = self.get_obj(MAIN_MANAGER_ID)
-            if manager is None:
-                raise ValueError("Not found main CharmyManager")
-            self.manager: CharmyManager = manager
+            self.manager: CharmyManager = self.get_obj(MANAGER_ID)
             self.new(
                 "drawing.framework",
                 self._get_drawing_framework(),
