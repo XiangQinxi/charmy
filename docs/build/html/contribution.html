@@ -9,6 +9,7 @@
         <title>Contribution - Charmy GUI 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     
@@ -288,15 +289,95 @@
           <section id="contribution">
 <h1>Contribution<a class="headerlink" href="#contribution" title="Link to this heading">¶</a></h1>
 <p><a class="reference external" href="https://github.com/XiangQinxi/charmy">https://github.com/XiangQinxi/charmy</a></p>
+<section id="how-to-contribute-the-project">
+<h2>How to contribute the project ?<a class="headerlink" href="#how-to-contribute-the-project" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Fork the project on GitHub.</p></li>
+</ol>
+<ol class="arabic simple" start="2">
+<li><p>Create a new branch for your feature or bug fix.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/your-feature-name
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Make your changes and commit them.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add your commit message here&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Push your branch to your fork.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/your-feature-name
+</pre></div>
+</div>
+<ol class="arabic" start="5">
+<li><p>Open a pull request on the original project.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clearly describe the changes you made.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</section>
 <section id="build-documentation">
 <h2>Build documentation<a class="headerlink" href="#build-documentation" title="Link to this heading">¶</a></h2>
 <p>The documentation is built with Sphinx.</p>
 <p>Run it to install the required packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>charmy<span class="o">[</span>docs<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>charmy<span class="o">[</span>docs<span class="o">]</span>
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
 .<span class="se">\m</span>ake<span class="w"> </span>html
+</pre></div>
+</div>
+<p>When writing documents, markdown or reStructuredText formats can be used.</p>
+</section>
+<section id="code-standards">
+<h2>Code Standards<a class="headerlink" href="#code-standards" title="Link to this heading">¶</a></h2>
+<p>We follow the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a> style guide for Python code.</p>
+<p>Annotations should be uniformly in <code class="docutils literal notranslate"><span class="pre">Sphinx</span></code> or <code class="docutils literal notranslate"><span class="pre">Google</span></code> format.</p>
+<p>such as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">function_name</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
+<span class="w">     </span><span class="sd">&quot;&quot;&quot;Function summary line.</span>
+
+<span class="sd">     Args:</span>
+<span class="sd">         param1 (int): The first parameter.</span>
+<span class="sd">         param2 (str): The second parameter.</span>
+
+<span class="sd">     Returns:</span>
+<span class="sd">         bool: The return value. True for success, False otherwise.</span>
+
+<span class="sd">     Raises:</span>
+<span class="sd">         ValueError: If `param1` is equal to `param2`.</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SampleClass</span><span class="p">:</span>
+<span class="w">     </span><span class="sd">&quot;&quot;&quot;Summary of class here.</span>
+
+<span class="sd">     Longer class information....</span>
+<span class="sd">     Longer class information....</span>
+
+<span class="sd">     Examples:</span>
+
+<span class="sd">         &gt;&gt;&gt; sample = SampleClass()</span>
+<span class="sd">         &gt;&gt;&gt; sample.likes_spam</span>
+<span class="sd">         False</span>
+<span class="sd">         &gt;&gt;&gt; sample.eggs</span>
+<span class="sd">         0</span>
+
+<span class="sd">     Attributes:</span>
+<span class="sd">         likes_spam (bool): A boolean indicating if we like SPAM or not.</span>
+<span class="sd">         eggs (int): The number of eggs we have.</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+
+     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">likes_spam</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">         </span><span class="sd">&quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">likes_spam</span> <span class="o">=</span> <span class="n">likes_spam</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">eggs</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </section>
@@ -358,7 +439,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Contribution</a><ul>
+<li><a class="reference internal" href="#how-to-contribute-the-project">How to contribute the project ?</a></li>
 <li><a class="reference internal" href="#build-documentation">Build documentation</a></li>
+<li><a class="reference internal" href="#code-standards">Code Standards</a></li>
 </ul>
 </li>
 </ul>
@@ -374,6 +457,8 @@
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

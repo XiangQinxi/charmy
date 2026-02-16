@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [tool.poetry.optional]
-docs = ["myst-parser", "sphinx-design", "furo"]
+docs = ["myst-parser", "sphinx-design", "furo", "sphinx-copybutton", "sphinx"]
 basic = ["skia-python", "glfw", "pyopengl"]
 
 [tool.poetry]
