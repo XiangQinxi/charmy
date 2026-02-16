@@ -293,9 +293,10 @@ from .rect import Rect
 
 
 # region Drawing
-class DrawingFramework:
+class DrawingFramework(ABC):
     """The base class of DrawingFramework."""
 
+    @abstractmethod
     def draw_rect(self, canvas, rect: Rect, radius: int = 0, bg=None, bd=None):
         """Draw a rectangle
 
@@ -312,7 +313,7 @@ class DrawingFramework:
 drawing_framework_map: dict[Backends, DrawingFramework] = {}
 
 
-class SKIA:
+class SKIA(DrawingFramework):
     def __init__(self):
         self.skia = importlib.import_module("skia")
 

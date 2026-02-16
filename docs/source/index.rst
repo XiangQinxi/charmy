@@ -1,8 +1,3 @@
-.. Charmy GUI documentation master file, created by
-   sphinx-quickstart on Fri Feb 13 15:56:34 2026.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Charmy GUI documentation
 ========================
 
@@ -20,10 +15,15 @@ Welcome to Charmy GUI documentation! ``Charmy GUI`` is modern, simple GUI librar
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
+   :caption: Main Content:
 
    getstarted/index
-   contribution
+   how_does_it_work/index
    api/index
 
+.. toctree::
+   :maxdepth: 3
+   :caption: Other:
+
+   contribution
    license

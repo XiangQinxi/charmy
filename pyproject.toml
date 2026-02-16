@@ -1,6 +1,6 @@
 [project]
 name = "charmy-gui"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = [
     {name = "XiangQinxi",email = "XiangQinxi@outlook.com"}
@@ -12,8 +12,8 @@ dependencies = [
 ]
 license = "Apache 2.0"
 
-[tool.poetry.optional]
-docs = ["myst-parser", "sphinx-design", "furo", "sphinx-copybutton", "sphinx"]
+[tool.poetry.extras]
+docs = ["myst-parser", "sphinx-design", "furo", "sphinx-copybutton", "sphinx", "sphinxcontrib-mermaid"]
 basic = ["skia-python", "glfw", "pyopengl"]
 
 [tool.poetry]

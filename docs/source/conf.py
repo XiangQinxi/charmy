@@ -25,16 +25,19 @@ release = "0.1.0"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "myst_parser",
-    "sphinx_design",
-    "sphinx.ext.autodoc",
+    "myst_parser",  # Markdown解析器
+    "sphinx_design",  # 设计元素（如按钮、卡片等）
+    "sphinx.ext.autodoc",  # 自动API文档生成
     # 'sphinx.ext.napoleon',  # 暂时禁用，避免递归深度错误
-    "sphinx.ext.doctest",
-    "sphinx.ext.intersphinx",
+    "sphinx.ext.doctest",  # 文档测试
+    "sphinx.ext.intersphinx",  # 跨项目引用
     "sphinx.ext.todo",
-    "sphinx.ext.coverage",
-    "sphinx.ext.mathjax",
-    "sphinx_copybutton",
+    "sphinx.ext.coverage",  # 文档覆盖率报告
+    "sphinx.ext.mathjax",  # 数学公式渲染
+    "sphinx_copybutton",  # 代码块复制按钮
+    "sphinx.ext.graphviz",  # Graphviz图
+    "sphinx.ext.inheritance_diagram",  # 类继承图
+    "sphinxcontrib.mermaid",  # 流程图
 ]
 myst_enable_extensions = ["colon_fence"]
 
