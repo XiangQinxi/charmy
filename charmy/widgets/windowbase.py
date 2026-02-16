@@ -31,7 +31,8 @@ class WindowBase(EventHandling, CharmyObject):
         super().__init__()
 
         # Init parent attribute
-        self.parent = self.get_obj(MANAGER_ID)
+        if parent is None:
+            parent = self.get_obj(MANAGER_ID)
 
         if isinstance(parent, CharmyManager):
             self.manager = parent

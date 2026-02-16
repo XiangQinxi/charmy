@@ -2,12 +2,13 @@ import importlib.util
 import sys
 import typing
 
-from .const import DrawingFrame, UIFrame
+from .const import Backends
 from .event import Event
 from .pos import Pos
 from .size import Size
 
 from abc import ABC, abstractmethod
+
 
 # region Window
 class WindowFramework(ABC):
@@ -142,7 +143,7 @@ class WindowFramework(ABC):
         ...
 
 
-window_framework_map: dict[UIFrame, WindowFramework] = {}
+window_framework_map: dict[Backends, WindowFramework] = {}
 
 
 class GLFW(WindowFramework):
@@ -204,9 +205,6 @@ class GLFW(WindowFramework):
             ),
         )
 
-        from glfw import (MOD_ALT, MOD_CAPS_LOCK, MOD_CONTROL, MOD_NUM_LOCK,
-                          MOD_SHIFT, MOD_SUPER)
-
         def _enter(w, entered: int):
             if entered:
                 event_type = "mouse_enter"
@@ -225,7 +223,7 @@ class GLFW(WindowFramework):
             ),
         )
 
-        def _mouse(w, button, action, mods):
+        def _mouse(w, button, action, mods):  # NOQA
             if action == self.glfw.PRESS:
                 event_type = "mouse_press"
             elif action == self.glfw.RELEASE:
@@ -288,7 +286,7 @@ class GLFW(WindowFramework):
 
 
 if importlib.util.find_spec("glfw") is not None:
-    window_framework_map[UIFrame.GLFW] = GLFW  # NOQA
+    window_framework_map[Backends.GLFW] = GLFW  # NOQA
 # endregion
 
 from .rect import Rect
@@ -311,14 +309,14 @@ class DrawingFramework:
         ...
 
 
-drawing_framework_map: dict[DrawingFrame, DrawingFramework] = {}
+drawing_framework_map: dict[Backends, DrawingFramework] = {}
 
 
 class SKIA:
     def __init__(self):
         self.skia = importlib.import_module("skia")
 
-    def draw_rect(self, canvas, rect: Rect, radius: int | float = 8, bg=None, bd=None):
+    def draw_rect(self, canvas, rect: Rect, radius: int | float = 8, bg=None, bd=None):  # noqa
         # from skia import RRect, Rect, Canvas, Paint
         # Paint()
         # canvas: Canvas
@@ -338,6 +336,6 @@ class SKIA:
 
 
 if importlib.util.find_spec("skia") is not None:
-    drawing_framework_map[DrawingFrame.SKIA] = SKIA  # NOQA
+    drawing_framework_map[Backends.SKIA] = SKIA  # NOQA
 
 # endregion

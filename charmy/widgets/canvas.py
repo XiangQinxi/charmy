@@ -1,7 +1,7 @@
 import typing
 import warnings
 
-from ..const import ID, MAIN_MANAGER_ID
+from ..const import ID, MANAGER_ID
 from ..framework import drawing_framework_map
 from ..object import CharmyObject
 from ..rect import Rect
@@ -13,7 +13,7 @@ class CanvasBase(CharmyObject):
         super().__init__(*args, **kwargs)
 
         # Auto find CharmyManager Object
-        manager = self.get_obj(MAIN_MANAGER_ID)
+        manager = self.get_obj(MANAGER_ID)
         if manager is None:
             raise ValueError("Not found main CharmyManager")
         self.manager: CharmyManager = manager

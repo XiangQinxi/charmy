@@ -1,4 +1,4 @@
-from ..const import DrawingFrame
+from ..const import Backends
 from .container import Container
 from .windowbase import WindowBase
 
@@ -10,7 +10,7 @@ class Window(WindowBase, Container):
         WindowBase.__init__(self, *args, **kwargs)
         self.new("children", [])
         match self["drawing.framework"]:
-            case DrawingFrame.SKIA:
+            case Backends.SKIA:
                 self.set(
                     "ui.draw_func", self.skia_draw_func
                 )  # When `draw` is called, trigger `ui.draw_func`
