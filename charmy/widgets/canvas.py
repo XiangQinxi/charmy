@@ -29,8 +29,13 @@ class CanvasBase(CharmyObject):
         self.new("color_object", None)
         self._last_count = 0
 
+    def draw_config(self, canvas):
+        """Config elements' properties before `draw()`."""
+        ...
+
     def draw(self, canvas):
         """Draw the widget"""
+        self.draw_config(canvas)
         for element in self.elements:
             if element["type"] in self.draw_type_map:
                 self.draw_type_map[element["type"]](canvas, element)
@@ -66,10 +71,14 @@ class CanvasBase(CharmyObject):
     # region Element config
 
     def add_element(self, type_: str, rect: Rect, **kwargs):
-        self.elements.append(self._template(type_, rect, **kwargs))
+        _ = self._template(type_, rect, **kwargs)
+        self.elements.append(_)
+        return _["id"]
 
     def insert_element(self, index: int, type_: str, rect: Rect, **kwargs):
-        self.elements.insert(index, self._template(type_, rect, **kwargs))
+        _ = self._template(type_, rect, **kwargs)
+        self.elements.insert(index, _)
+        return _["id"]
 
     def remove_element(self, index: int):
         self.elements.remove(index)
@@ -81,6 +90,12 @@ class CanvasBase(CharmyObject):
         return None
 
     get_element = find_element
+
+    def config_element(self, id_: ID, **kwargs):
+        element = self.find_element(id_)
+        if element is None:
+            raise ValueError(f"Not found element {id_}")
+        element.update(kwargs)
 
     def _get_framework(self):
         return self.manager["framework"]

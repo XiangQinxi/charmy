@@ -1,4 +1,5 @@
 from ..const import Backends
+from ..rect import Rect
 from .container import Container
 from .windowbase import WindowBase
 

@@ -3,6 +3,7 @@ import threading
 import typing
 
 from ..object import CharmyObject
+from ..rect import Rect
 
 
 class Container(CharmyObject):
@@ -14,6 +15,16 @@ class Container(CharmyObject):
         super().__init__(*args, **kwargs)
 
         self.new("children", [])
+
+    @property
+    def rect(self):
+        """Get window rect."""
+        return Rect(
+            x=self["pos"]["x"],
+            y=self["pos"]["y"],
+            width=self["size"]["width"],
+            height=self["size"]["height"],
+        )
 
     # region Context
 

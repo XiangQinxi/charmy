@@ -1,14 +1,13 @@
 import importlib.util
 import sys
 import typing
-
+from abc import ABC, abstractmethod
 from os import environ
+
 from .const import Backends
 from .event import Event
 from .pos import Pos
 from .size import Size
-
-from abc import ABC, abstractmethod
 
 
 # region Window
@@ -271,7 +270,7 @@ class GLFW(UIFramework):
             self.glfw.set_window_pos(the_window, pos["x"], pos["y"])
 
     def set_title(self, the_window, title: str) -> None:
-        self.glfw.set_title(the_window, title)
+        self.glfw.set_window_title(the_window, title)
 
     def get_mouse_pos(self, the_window) -> tuple[int, int]:
         return self.glfw.get_cursor_pos(the_window)
