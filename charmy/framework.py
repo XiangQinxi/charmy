@@ -1,5 +1,3 @@
-"""我暂时将他们都包在一起，没分开不要太在意，到后面我会将他们分成一个个扩展库的😊"""
-
 import importlib.util
 import sys
 import typing
@@ -9,11 +7,13 @@ from .event import Event
 from .pos import Pos
 from .size import Size
 
+from abc import ABC, abstractmethod
 
 # region Window
-class WindowFramework:
+class WindowFramework(ABC):
     """The base class of WindowFramework."""
 
+    @abstractmethod
     def init(self, **kwargs) -> None:
         """Init the window framework
 
@@ -25,6 +25,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def create(self, size, title, **kwargs) -> dict[str, typing.Any]:
         """Create a window
 
@@ -40,6 +41,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def create_event_bounds(self, the_window, window_class, **kwargs):
         """Create event bounds for the window
 
@@ -53,6 +55,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def destroy(self, the_window) -> None:
         """Destroy the window
 
@@ -62,7 +65,9 @@ class WindowFramework:
         Returns:
             None
         """
+        ...
 
+    @abstractmethod
     def set_size(self, the_window, size: Size) -> None:
         """Set the size of the window
 
@@ -75,6 +80,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def set_pos(self, the_window, pos: Pos | tuple[int, int]) -> None:
         """Set the position of the window
 
@@ -87,6 +93,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def set_title(self, the_window, title: str) -> None:
         """Set the title of the window
 
@@ -99,6 +106,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def get_mouse_pos(self, the_window) -> tuple[int, int]:
         """Get the mouse position of the window
 
@@ -121,6 +129,7 @@ class WindowFramework:
         """
         ...
 
+    @abstractmethod
     def swap_buffers(self, the_window) -> None:
         """Swap the buffers of the window
 

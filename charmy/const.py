@@ -14,32 +14,15 @@ class ID(Enum):
     NONE = 1
 
 
-class UIFrame(Enum):
+class Backends(Enum):
     """UIFrame is an enum to store UI frame.
 
-    GLFW: GLFW is an enum to store UI frame.
-    SDL: SDL is an enum to store UI frame.
+    GLFW, SDL, OPENGL, SKIA are consts representing those backends
     """
 
     GLFW = glfw = "GLFW"
     SDL = sdl = "SDL"
-
-
-class BackendFrame(Enum):
-    """BackendFrame is an enum to store backend frame.
-
-    OPENGL: OPENGL is an enum to store backend frame.
-    """
-
     OPENGL = opengl = "OPENGL"
-
-
-class DrawingFrame(Enum):
-    """DrawingFrame is an enum to store drawing frame.
-
-    SKIA: SKIA is an enum to store drawing frame.
-    """
-
     SKIA = skia = "SKIA"
 
 
@@ -53,4 +36,4 @@ class DrawingMode(Enum):
     RETAINED = retained = "READIED"
 
 
-MAIN_MANAGER_ID = "main_manager"
+MANAGER_ID = "main_manager"

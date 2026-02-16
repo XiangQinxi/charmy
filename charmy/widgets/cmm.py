@@ -3,7 +3,7 @@ import typing
 import warnings
 from os import environ
 
-from ..const import MAIN_MANAGER_ID, BackendFrame, DrawingFrame, UIFrame
+from ..const import MANAGER_ID, Backends
 from ..event import WorkingThread
 from ..framework import drawing_framework_map, window_framework_map
 from ..object import CharmyObject
@@ -20,9 +20,9 @@ class CharmyManager(CharmyObject):
 
     def __init__(
         self,
-        ui: UIFrame = UIFrame.GLFW,
-        drawing: DrawingFrame = DrawingFrame.SKIA,
-        backend: BackendFrame = BackendFrame.OPENGL,
+        ui: Backends = Backends.GLFW,
+        drawing: Backends = Backends.SKIA,
+        backend: Backends = Backends.OPENGL,
         vsync: bool = True,
         samples: int = 4,
         **kwargs,
@@ -40,9 +40,9 @@ class CharmyManager(CharmyObject):
         self.new("ui.samples", samples)
 
         match self["ui.framework"]:
-            case UIFrame.GLFW:
+            case Backends.GLFW:
                 self.glfw = self["ui.framework.class"].glfw
-            case UIFrame.SDL:
+            case Backends.SDL:
                 self.sdl3 = self["ui.framework.class"].sdl3
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
@@ -51,7 +51,7 @@ class CharmyManager(CharmyObject):
         self.new("drawing.framework.class", drawing_framework_map[drawing]())  # NOQA
 
         match self["drawing.framework"]:
-            case DrawingFrame.SKIA:
+            case Backends.SKIA:
                 self.skia = importlib.import_module("skia")
             case _:
                 raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
@@ -59,7 +59,7 @@ class CharmyManager(CharmyObject):
         self.new("backend.framework", backend)
 
         match self["backend.framework"]:
-            case BackendFrame.OPENGL:
+            case Backends.OPENGL:
                 self.opengl = importlib.import_module("OpenGL")
                 self.opengl_GL = importlib.import_module("OpenGL.GL")
             case _:
@@ -73,7 +73,7 @@ class CharmyManager(CharmyObject):
     def _init_ui_framework(self):
         """According to attribute `ui.framework` to init ui framework"""
         match self.get("ui.framework"):
-            case UIFrame.GLFW:
+            case Backends.GLFW:
                 self["ui.framework.class"].init(
                     error_callback=self.error, samples=self.get("ui.samples")
                 )
@@ -83,7 +83,7 @@ class CharmyManager(CharmyObject):
 
         input_mode: bool = True
 
-        # poll_events()
+        self.glfw.wait_events()
         windows = self.windows
 
         for window in windows:
@@ -153,7 +153,7 @@ class CharmyManager(CharmyObject):
     def cleanup(self) -> None:
         """Clean up resources."""
         match self.get("ui.framework"):
-            case UIFrame.GLFW:
+            case Backends.GLFW:
                 for window in self.windows:
                     self.glfw.destroy_window(window.the_window)
                 self.glfw.terminate()
@@ -178,21 +178,21 @@ class CharmyManager(CharmyObject):
 
 # Auto create Manager Object
 uimap = {
-    "GLFW": UIFrame.GLFW,
+    "GLFW": Backends.GLFW,
 }
-main_manager: CharmyManager = CharmyManager(
-    id_=MAIN_MANAGER_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")]
+manager: CharmyManager = CharmyManager(
+    id_=MANAGER_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")]
 )
 
 
 def mainloop() -> None:
     """Start main loop."""
     try:
-        main_manager.run()
+        manager.run()
     except Exception as e:
         raise e
 
 
 def cquit():  # NOQA
     """Quit the main loop"""
-    main_manager.quit()
+    manager.quit()

@@ -1,4 +1,3 @@
-from .. import Event
 from ..const import DrawingFrame
 from .container import Container
 from .windowbase import WindowBase

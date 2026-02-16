@@ -1,6 +1,6 @@
 """Widgets for Charmy"""
 
-from .cmm import cquit, main_manager, mainloop
+from .cmm import cquit, manager, mainloop
 from .container import Container, auto_find_parent
 from .widget import Widget
 from .window import Window
