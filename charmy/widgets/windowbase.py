@@ -27,7 +27,7 @@ class WindowBase(EventHandling, CharmyObject):
         title: str = "Charmy GUI",
         size: tuple[int, int] = (100, 100),
         fha: bool = True,
-        drawing_mode: DrawingMode = DrawingMode.IMMEDIATE,
+        drawing_mode: DrawingMode = DrawingMode.RETAINED,
     ):
         super().__init__()
 
@@ -105,7 +105,7 @@ class WindowBase(EventHandling, CharmyObject):
         self.new("size", Size(size[0], size[1]), set_func=self._set_size)  # The size of the window
         self.new("title", title, set_func=self._set_title)  # The title of the window
 
-        self.is_dirty: bool = False
+        self.is_dirty: bool = True
         self.is_force_hardware_acceleration: bool = fha
         self.is_visible: bool = False  # Is the window visible
         self.is_alive: bool = False  # Is the window alive
@@ -114,8 +114,8 @@ class WindowBase(EventHandling, CharmyObject):
 
         self.create_event_bounds()
 
-        self.bind("on_move", self._on_move)
-        self.bind("on_resize", self._on_resize)
+        self.bind("move", self._on_move)
+        self.bind("resize", self._on_resize)
 
     def create(self):
         """Create the window."""

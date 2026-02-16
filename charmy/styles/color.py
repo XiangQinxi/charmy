@@ -30,6 +30,7 @@ class Color(CharmyObject):
                 self.skia = self.manager.skia
             case _:
                 raise ValueError("Not supported drawing framework")
+        self.new("color_object", None)
 
     def set_color_rgba(
         self, r: int | float, g: int | float, b: int | float, a: int | float = 255

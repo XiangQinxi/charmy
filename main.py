@@ -2,7 +2,7 @@ import charmy as cm
 
 window = cm.Window(size=(300, 160))
 
-window.bind(
+"""window.bind(
     "resize",
     lambda event: print(f"<{event.event_type}>: {event["width"]}x{event['height']}"),
 )
@@ -26,7 +26,12 @@ window.bind(
 window.bind(
     "mouse_release",
     lambda event: print(f"<{event.event_type}>：{event["button"]} {event["mods"]}"),
-)
-print(window)
+)"""
+print(window.id)
+
+widget = cm.Widget(window)
+color = cm.Color()
+color.set_color_rgba(0, 0, 0)
+widget.add_element("rect", rect=cm.Rect(x=0, y=0, width=100, height=100), color=color)
 
 cm.mainloop()

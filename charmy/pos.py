@@ -17,4 +17,4 @@ class Pos(CharmyObject):
 
     def __str__(self):
         """Return position in string."""
-        return f"CPos({self.get('x')}, {self.get('y')})"
+        return f"Pos({self.get('x')}, {self.get('y')})"

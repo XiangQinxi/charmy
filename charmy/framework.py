@@ -1,3 +1,5 @@
+"""我暂时将他们都包在一起，没分开不要太在意，到后面我会将他们分成一个个扩展库的😊"""
+
 import importlib.util
 import sys
 import typing
@@ -193,7 +195,8 @@ class GLFW(WindowFramework):
             ),
         )
 
-        from glfw import MOD_SHIFT, MOD_CONTROL, MOD_ALT, MOD_SUPER, MOD_NUM_LOCK, MOD_CAPS_LOCK
+        from glfw import (MOD_ALT, MOD_CAPS_LOCK, MOD_CONTROL, MOD_NUM_LOCK,
+                          MOD_SHIFT, MOD_SUPER)
 
         def _enter(w, entered: int):
             if entered:
@@ -279,11 +282,53 @@ if importlib.util.find_spec("glfw") is not None:
     window_framework_map[UIFrame.GLFW] = GLFW  # NOQA
 # endregion
 
+from .rect import Rect
+
 
 # region Drawing
 class DrawingFramework:
     """The base class of DrawingFramework."""
 
+    def draw_rect(self, canvas, rect: Rect, radius: int = 0, bg=None, bd=None):
+        """Draw a rectangle
+
+        Args:
+            canvas (Canvas): The canvas to draw
+            rect (Rect): The rect area to draw
+            radius (int, optional): The radius of the rectangle. Defaults to 0.
+            bg (charmy.styles.color.Color, optional): The background color of the rectangle. Defaults to None.
+            bd (charmy.styles.color.Color, optional): The border color of the rectangle. Defaults to None.
+        """
+        ...
+
 
 drawing_framework_map: dict[DrawingFrame, DrawingFramework] = {}
+
+
+class SKIA:
+    def __init__(self):
+        self.skia = importlib.import_module("skia")
+
+    def draw_rect(self, canvas, rect: Rect, radius: int | float = 8, bg=None, bd=None):
+        # from skia import RRect, Rect, Canvas, Paint
+        # Paint()
+        # canvas: Canvas
+
+        if bg is None:
+            bg = {}
+        print(bg)
+        canvas.drawRoundRect(
+            rect=self.skia.Rect.MakeXYWH(rect["x"], rect["y"], rect["width"], rect["height"]),
+            rx=radius,
+            ry=radius,
+            paint=self.skia.Paint(
+                Color=bg.get("color_object", self.skia.ColorBLUE),
+                Style=self.skia.Paint.kStroke_Style,
+            ),
+        )
+
+
+if importlib.util.find_spec("skia") is not None:
+    drawing_framework_map[DrawingFrame.SKIA] = SKIA  # NOQA
+
 # endregion

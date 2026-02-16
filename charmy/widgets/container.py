@@ -48,6 +48,12 @@ class Container(CharmyObject):
         if child not in self["children"]:
             self["children"].append(child)
 
+    def draw_children(self, canvas):
+        """Draw the container and its children"""
+        for child in self["children"]:
+            if hasattr(child, "draw"):
+                child.draw(canvas)
+
     # endregion
 
 

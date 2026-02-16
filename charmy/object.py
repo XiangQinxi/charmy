@@ -184,12 +184,12 @@ class CharmyObject(metaclass=InstanceCounterMeta):
                     return self._attributes[key][1]
         return self._attributes[key]
 
-    def get_obj(self, _id: str) -> typing.Any | None:
-        """Get registered object by id. (If not found, return None)"""
+    def get_obj(self, _id: str, default=None) -> typing.Any | None:
+        """Get registered object by id. (If not found, return default)"""
         try:
             return self.objects[_id]
         except KeyError:
-            return None
+            return default
 
     find = get_obj
 

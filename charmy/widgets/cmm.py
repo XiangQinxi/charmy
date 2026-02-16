@@ -5,7 +5,7 @@ from os import environ
 
 from ..const import MAIN_MANAGER_ID, BackendFrame, DrawingFrame, UIFrame
 from ..event import WorkingThread
-from ..framework import window_framework_map
+from ..framework import drawing_framework_map, window_framework_map
 from ..object import CharmyObject
 
 
@@ -48,6 +48,7 @@ class CharmyManager(CharmyObject):
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
 
         self.new("drawing.framework", drawing)
+        self.new("drawing.framework.class", drawing_framework_map[drawing]())  # NOQA
 
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:

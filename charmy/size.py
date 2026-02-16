@@ -26,4 +26,4 @@ class Size(CharmyObject):
             self.set("height", height)
 
     def __str__(self):
-        return f"CSize({self.get('width')}, {self.get('height')})"
+        return f"Size({self.get('width')}, {self.get('height')})"

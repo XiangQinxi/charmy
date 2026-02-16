@@ -4,11 +4,11 @@
 """A modern GUI library."""
 
 from .const import *
-from .drawing import *
+# from .drawing import *
 from .event import Event, EventHandling, EventTask, WorkingThread
-from .framework import drawing_framework_map, window_framework_map
 from .object import CharmyObject
 from .pos import Pos
+from .rect import Rect
 from .size import Size
 from .styles import *
 from .widgets import *
