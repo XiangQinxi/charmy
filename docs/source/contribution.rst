@@ -13,13 +13,13 @@ Contribution
     .. image:: xby_content.png
         :alt: xby_content
 
-.. sidebar:: Contributor / Rgzz666 (Human)
+.. sidebar:: Contributor / rgzz666
 
     A Senior high school student from ``China``.
 
     Compiled English content for 'charmy.this'
 
-    .. image:: rgzz666_logo.jpg
+    .. image:: rgzz666_logo.png
         :alt: rgzz666_logo
 
 .. note::
