@@ -1,10 +1,10 @@
 Contribution
 ============
 
-https://github.com/XiangQinxi/charmy
+Github Repository: https://github.com/XiangQinxi/charmy
 
-How to contribute the project ?
-------------------------------
+How to *Contribute*
+-------------------
 
 1. Fork the project on GitHub.
 
@@ -35,8 +35,8 @@ How to contribute the project ?
 
     - Clearly describe the changes you made.
 
-Build documentation
--------------------
+Build Documents
+---------------
 
 The documentation is built with Sphinx.
 
