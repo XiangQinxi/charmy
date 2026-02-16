@@ -1,10 +1,8 @@
 import importlib.util
-import sys
 import typing
 from abc import ABC, abstractmethod
 from os import environ
-
-from .const import Backends
+from .const import Backends, PLATFORM
 from .event import Event
 from .pos import Pos
 from .size import Size
@@ -159,6 +157,8 @@ class GLFW(UIFramework):
         self.glfw.window_hint(self.glfw.WIN32_KEYBOARD_MENU, True)
         self.glfw.window_hint(self.glfw.COCOA_RETINA_FRAMEBUFFER, True)
         self.glfw.window_hint(self.glfw.SAMPLES, kwargs.get("samples", 4))
+
+
         if kwargs.get("error_callback", None):
             self.glfw.set_error_callback(kwargs["error_callback"])
         ...
@@ -171,33 +171,35 @@ class GLFW(UIFramework):
         self.glfw.window_hint(self.glfw.COCOA_RETINA_FRAMEBUFFER, self.glfw.TRUE)  # macOS
         self.glfw.window_hint(self.glfw.SCALE_TO_MONITOR, self.glfw.TRUE)  # Windows/Linux
 
+
+        self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MAJOR, 3)
         # see https://www.glfw.org/faq#macos
-        if sys.platform.startswith("darwin"):
-            self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MAJOR, 3)
-            self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MINOR, 2)
+        # TODO: add into const PLATFORM
+        if PLATFORM == "macos":
             self.glfw.window_hint(self.glfw.OPENGL_FORWARD_COMPAT, True)
-            self.glfw.window_hint(self.glfw.OPENGL_PROFILE, self.glfw.OPENGL_CORE_PROFILE)
-        else:
-            if kwargs.get("fha", True):
-                self.glfw.window_hint(self.glfw.OPENGL_FORWARD_COMPAT, True)
-                self.glfw.window_hint(self.glfw.CLIENT_API, self.glfw.OPENGL_API)
-                self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MAJOR, 3)
-                self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MINOR, 3)
-                self.glfw.window_hint(self.glfw.OPENGL_PROFILE, self.glfw.OPENGL_CORE_PROFILE)
+        self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MINOR, 2 if PLATFORM == "macos" else 3)
+        self.glfw.window_hint(self.glfw.OPENGL_PROFILE, self.glfw.OPENGL_CORE_PROFILE)
+        # TODO: 存疑，fha本身就开启
 
         window = self.glfw.create_window(size["width"], size["height"], title, None, None)
-        if not window:
+
+        if window == None:
             raise RuntimeError("Can't create window")
 
+        # TODO: 有必要说明为什么这么返回
         return {"pos": self.glfw.get_window_pos(window), "window": window}
 
     def create_event_bounds(self, the_window, window_class, **kwargs) -> None:
+        # TODO: docstring?
+        # TODO: lambda + 没注释 给我请的高人看似了
+        # TODO: 函数套函数，我死了
         self.glfw.set_window_size_callback(
             the_window,
             lambda w, width, height: window_class.trigger(
                 Event(window_class, "resize", width=width, height=height)
             ),
         )
+
         self.glfw.set_window_pos_callback(
             the_window,
             lambda w, root_x, root_y: window_class.trigger(
@@ -255,8 +257,10 @@ class GLFW(UIFramework):
         self.glfw.set_mouse_button_callback(the_window, _mouse)
 
     def destroy(self, the_window) -> None:
+        """Destroy glfw window"""
         self.glfw.destroy_window(the_window)
 
+    # TODO: docstring!!!
     def set_size(self, the_window, size: Size | tuple[int, int]) -> None:
         if isinstance(size, tuple):
             self.glfw.set_window_size(the_window, size[0], size[1])

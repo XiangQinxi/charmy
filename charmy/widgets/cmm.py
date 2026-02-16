@@ -24,9 +24,11 @@ class CharmyManager(CharmyObject):
         **kwargs,
     ):
         super().__init__(**kwargs)
-
-        if self.instance_count >= 1:
-            warnings.warn("There should be only one instance of CApp.")
+ 
+        # TODO: there should be only one manager
+        # TODO: maybe user will use it in later version?
+        #if self.instance_count >= 1:
+        #    warnings.warn("There should be only one instance of CApp.")
 
         self.new("event.thread", WorkingThread())
 
