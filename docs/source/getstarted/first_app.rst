@@ -7,6 +7,9 @@ First application
 
    import charmy as cm
 
+.. note::
+   Instead of developing `cm`, I'm playing `MC` here
+
 2. Create a ``Window``
 
 .. code-block:: python

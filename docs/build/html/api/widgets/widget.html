@@ -229,8 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../this.html">charmy.this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../var.html">charmy.var</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canvas.html">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -300,14 +302,21 @@
         classDiagram
   CanvasBase &lt;|-- Widget
   CharmyObject &lt;|-- CanvasBase
+  CharmyObject &lt;|-- EventHandling
+  EventHandling &lt;|-- Widget
     </pre><dl class="py class" id="module-charmy.widgets.widget">
 <dt class="sig sig-object py" id="charmy.widgets.widget.Widget">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.widget.</span></span><span class="sig-name descname"><span class="pre">Widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.widget.Widget" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="canvas.html#charmy.widgets.canvas.CanvasBase" title="charmy.widgets.canvas.CanvasBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">CanvasBase</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="canvas.html#charmy.widgets.canvas.CanvasBase" title="charmy.widgets.canvas.CanvasBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">CanvasBase</span></code></a>, <a class="reference internal" href="../event.html#charmy.event.EventHandling" title="charmy.event.EventHandling"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventHandling</span></code></a></p>
 <p>Basic widget class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.widget.Widget.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="container.html#charmy.widgets.container.Container" title="charmy.widgets.container.Container"><span class="pre">Container</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.widget.Widget.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.widget.Widget.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="container.html#charmy.widgets.container.Container" title="charmy.widgets.container.Container"><span class="pre">Container</span></a></span><a class="headerlink" href="#charmy.widgets.widget.Widget.parent" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -333,6 +342,21 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="charmy.widgets.widget.Widget.height">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#charmy.widgets.widget.Widget.height" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.widget.Widget.WORKING_THREAD">
+<span class="sig-name descname"><span class="pre">WORKING_THREAD</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">threading.Thread</span></span><a class="headerlink" href="#charmy.widgets.widget.Widget.WORKING_THREAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.widget.Widget.latest_event">
+<span class="sig-name descname"><span class="pre">latest_event</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../event.html#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><a class="headerlink" href="#charmy.widgets.widget.Widget.latest_event" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.widget.Widget.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../event.html#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.widgets.widget.Widget.tasks" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -397,11 +421,15 @@
 <li><a class="reference internal" href="#">widget</a><ul>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget"><code class="docutils literal notranslate"><span class="pre">Widget</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget.__init__"><code class="docutils literal notranslate"><span class="pre">Widget.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.widget.Widget.parent"><code class="docutils literal notranslate"><span class="pre">Widget.parent</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget.rect"><code class="docutils literal notranslate"><span class="pre">Widget.rect</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget.x"><code class="docutils literal notranslate"><span class="pre">Widget.x</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget.y"><code class="docutils literal notranslate"><span class="pre">Widget.y</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget.width"><code class="docutils literal notranslate"><span class="pre">Widget.width</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.widget.Widget.height"><code class="docutils literal notranslate"><span class="pre">Widget.height</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.widget.Widget.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">Widget.WORKING_THREAD</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.widget.Widget.latest_event"><code class="docutils literal notranslate"><span class="pre">Widget.latest_event</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.widget.Widget.tasks"><code class="docutils literal notranslate"><span class="pre">Widget.tasks</span></code></a></li>
 </ul>
 </li>
 </ul>

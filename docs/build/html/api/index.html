@@ -229,8 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="this.html">charmy.this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="var.html">charmy.var</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -316,8 +318,15 @@
   Enum &lt;|-- Backends
   Enum &lt;|-- DrawingMode
   Enum &lt;|-- ID
+  Enum &lt;|-- Orient
+  EventHandling &lt;|-- Var
+  EventHandling &lt;|-- Widget
   EventHandling &lt;|-- WindowBase
   Thread &lt;|-- WorkingThread
+  Var &lt;|-- BooleanVar
+  Var &lt;|-- FloatVar
+  Var &lt;|-- IntVar
+  Var &lt;|-- StringVar
   Widget &lt;|-- Button
   WindowBase &lt;|-- Window
     </pre><div class="toctree-wrapper compound">
@@ -327,6 +336,7 @@
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.ID"><code class="docutils literal notranslate"><span class="pre">ID</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.Backends"><code class="docutils literal notranslate"><span class="pre">Backends</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.DrawingMode"><code class="docutils literal notranslate"><span class="pre">DrawingMode</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.Orient"><code class="docutils literal notranslate"><span class="pre">Orient</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="event.html">charmy.event</a><ul>
@@ -365,6 +375,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="this.html">charmy.this</a></li>
+<li class="toctree-l1"><a class="reference internal" href="var.html">charmy.var</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="var.html#charmy.var.Var"><code class="docutils literal notranslate"><span class="pre">Var</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="var.html#charmy.var.StringVar"><code class="docutils literal notranslate"><span class="pre">StringVar</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="var.html#charmy.var.IntVar"><code class="docutils literal notranslate"><span class="pre">IntVar</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="var.html#charmy.var.BooleanVar"><code class="docutils literal notranslate"><span class="pre">BooleanVar</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="var.html#charmy.var.FloatVar"><code class="docutils literal notranslate"><span class="pre">FloatVar</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -375,6 +393,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="widgets/button.html">button</a></li>
+<li class="toctree-l2"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>

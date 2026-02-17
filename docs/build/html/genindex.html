@@ -227,8 +227,10 @@
 <li class="toctree-l2"><a class="reference internal" href="api/rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/this.html">charmy.this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/var.html">charmy.var</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/canvas.html">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -320,6 +322,16 @@
 </li>
           <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.__init__">(charmy.styles.theme.Theme method)</a>
 </li>
+          <li><a href="api/var.html#charmy.var.BooleanVar.__init__">(charmy.var.BooleanVar method)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.FloatVar.__init__">(charmy.var.FloatVar method)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.IntVar.__init__">(charmy.var.IntVar method)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.StringVar.__init__">(charmy.var.StringVar method)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.Var.__init__">(charmy.var.Var method)</a>
+</li>
           <li><a href="api/widgets/button.html#charmy.widgets.button.Button.__init__">(charmy.widgets.button.Button method)</a>
 </li>
           <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.__init__">(charmy.widgets.canvas.CanvasBase method)</a>
@@ -378,6 +390,8 @@
         <li><a href="api/const.html#charmy.const.Backends">Backends (class in charmy.const)</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.bind">bind() (charmy.event.EventHandling method)</a>
+</li>
+        <li><a href="api/var.html#charmy.var.BooleanVar">BooleanVar (class in charmy.var)</a>
 </li>
         <li><a href="api/widgets/button.html#charmy.widgets.button.Button">Button (class in charmy.widgets.button)</a>
 </li>
@@ -477,12 +491,21 @@
 </li>
         </ul></li>
         <li>
+    charmy.var
+
+        <ul>
+          <li><a href="api/var.html#module-charmy.var">module</a>
+</li>
+        </ul></li>
+        <li>
     charmy.widgets
 
         <ul>
           <li><a href="api/widgets/index.html#module-charmy.widgets">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     charmy.widgets.button
 
@@ -490,8 +513,6 @@
           <li><a href="api/widgets/button.html#module-charmy.widgets.button">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     charmy.widgets.canvas
 
@@ -622,6 +643,8 @@
           <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_rect">(charmy.widgets.canvas.CanvasBase method)</a>
 </li>
         </ul></li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_type_map">draw_type_map (charmy.widgets.canvas.CanvasBase attribute)</a>
+</li>
         <li><a href="api/framework.html#charmy.framework.Framework.drawing">drawing (charmy.framework.Framework attribute)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.Framework.drawing_name">drawing_name (charmy.framework.Framework attribute)</a>
@@ -672,11 +695,13 @@
 </li>
         <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.find_element">find_element() (charmy.widgets.canvas.CanvasBase method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.find_loaded_theme">find_loaded_theme() (charmy.styles.theme.Theme class method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.EventHandling.find_task">find_task() (charmy.event.EventHandling method)</a>
+</li>
+        <li><a href="api/var.html#charmy.var.FloatVar">FloatVar (class in charmy.var)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.Framework">Framework (class in charmy.framework)</a>
 </li>
@@ -718,7 +743,13 @@
   <h2>H</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/const.html#charmy.const.Orient.H">H (charmy.const.Orient attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.height">height (charmy.widgets.widget.Widget property)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Orient.HORIZONTAL">HORIZONTAL (charmy.const.Orient attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -756,6 +787,8 @@
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.INTERNAL_THEME_DIR">INTERNAL_THEME_DIR (charmy.styles.theme.Theme attribute)</a>
 </li>
+        <li><a href="api/var.html#charmy.var.IntVar">IntVar (class in charmy.var)</a>
+</li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_alive">is_alive (charmy.widgets.windowbase.WindowBase attribute)</a>
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_dirty">is_dirty (charmy.widgets.windowbase.WindowBase attribute)</a>
@@ -784,16 +817,30 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.Event.latest">latest (charmy.event.Event attribute)</a>
 </li>
-        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.latest_event">latest_event (charmy.widgets.window.Window attribute)</a>
+        <li><a href="api/var.html#charmy.var.BooleanVar.latest_event">latest_event (charmy.var.BooleanVar attribute)</a>
 
         <ul>
+          <li><a href="api/var.html#charmy.var.FloatVar.latest_event">(charmy.var.FloatVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.IntVar.latest_event">(charmy.var.IntVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.StringVar.latest_event">(charmy.var.StringVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.Var.latest_event">(charmy.var.Var attribute)</a>
+</li>
+          <li><a href="api/widgets/button.html#charmy.widgets.button.Button.latest_event">(charmy.widgets.button.Button attribute)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.latest_event">(charmy.widgets.widget.Widget attribute)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.Window.latest_event">(charmy.widgets.window.Window attribute)</a>
+</li>
           <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.latest_event">(charmy.widgets.windowbase.WindowBase attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.launch">launch() (charmy.widgets.cmm.CharmyManager method)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.launch">launch() (charmy.widgets.cmm.CharmyManager method)</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.load_from_file">load_from_file() (charmy.styles.theme.Theme method)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.load_from_json">load_from_json() (charmy.styles.theme.Theme method)</a>
@@ -822,6 +869,8 @@
           <li><a href="api/framework.html#charmy.framework.UIFramework.make_context_current">(charmy.framework.UIFramework method)</a>
 </li>
         </ul></li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.manager">manager (charmy.widgets.canvas.CanvasBase attribute)</a>
+</li>
         <li>
     module
 
@@ -847,6 +896,8 @@
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">charmy.styles.theme</a>
 </li>
           <li><a href="api/this.html#module-charmy.this">charmy.this</a>
+</li>
+          <li><a href="api/var.html#module-charmy.var">charmy.var</a>
 </li>
           <li><a href="api/widgets/index.html#module-charmy.widgets">charmy.widgets</a>
 </li>
@@ -899,13 +950,15 @@
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.objects_sorted">objects_sorted (charmy.object.CharmyObject attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/const.html#charmy.const.Backends.OPENGL">OPENGL (charmy.const.Backends attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/const.html#charmy.const.Backends.opengl">opengl (charmy.const.Backends attribute)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.OPENGL">OPENGL (class in charmy.framework)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Orient">Orient (class in charmy.const)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -915,10 +968,12 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.parse_event_type_str">parse_event_type_str() (charmy.event.EventHandling method)</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.parent">parent (charmy.widgets.widget.Widget attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/event.html#charmy.event.EventHandling.parse_event_type_str">parse_event_type_str() (charmy.event.EventHandling method)</a>
+</li>
         <li><a href="api/pos.html#charmy.pos.Pos">Pos (class in charmy.pos)</a>
 </li>
     </ul></td>
@@ -1015,6 +1070,8 @@
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.skia_surface">skia_surface() (charmy.widgets.windowbase.WindowBase method)</a>
 </li>
+        <li><a href="api/var.html#charmy.var.StringVar">StringVar (class in charmy.var)</a>
+</li>
         <li><a href="api/framework.html#charmy.framework.GLFW.swap_buffers">swap_buffers() (charmy.framework.GLFW method)</a>
 
         <ul>
@@ -1034,6 +1091,20 @@
         <li><a href="api/event.html#charmy.event.WorkingThread.tasks">tasks (charmy.event.WorkingThread attribute)</a>
 
         <ul>
+          <li><a href="api/var.html#charmy.var.BooleanVar.tasks">(charmy.var.BooleanVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.FloatVar.tasks">(charmy.var.FloatVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.IntVar.tasks">(charmy.var.IntVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.StringVar.tasks">(charmy.var.StringVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.Var.tasks">(charmy.var.Var attribute)</a>
+</li>
+          <li><a href="api/widgets/button.html#charmy.widgets.button.Button.tasks">(charmy.widgets.button.Button attribute)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.tasks">(charmy.widgets.widget.Widget attribute)</a>
+</li>
           <li><a href="api/widgets/window.html#charmy.widgets.window.Window.tasks">(charmy.widgets.window.Window attribute)</a>
 </li>
           <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.tasks">(charmy.widgets.windowbase.WindowBase attribute)</a>
@@ -1079,7 +1150,15 @@
   <h2>V</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/const.html#charmy.const.Orient.V">V (charmy.const.Orient attribute)</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.validate_theme_existed">validate_theme_existed() (charmy.styles.theme.Theme class method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/var.html#charmy.var.Var">Var (class in charmy.var)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Orient.VERTICAL">VERTICAL (charmy.const.Orient attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1099,8 +1178,6 @@
 </li>
         <li><a href="api/widgets/window.html#charmy.widgets.window.Window">Window (class in charmy.widgets.window)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.Event.window_base">window_base (charmy.event.Event attribute)</a>
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase">WindowBase (class in charmy.widgets.windowbase)</a>
@@ -1108,11 +1185,27 @@
         <li><a href="api/event.html#charmy.event.EventHandling.WORKING_THREAD">WORKING_THREAD (charmy.event.EventHandling attribute)</a>
 
         <ul>
+          <li><a href="api/var.html#charmy.var.BooleanVar.WORKING_THREAD">(charmy.var.BooleanVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.FloatVar.WORKING_THREAD">(charmy.var.FloatVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.IntVar.WORKING_THREAD">(charmy.var.IntVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.StringVar.WORKING_THREAD">(charmy.var.StringVar attribute)</a>
+</li>
+          <li><a href="api/var.html#charmy.var.Var.WORKING_THREAD">(charmy.var.Var attribute)</a>
+</li>
+          <li><a href="api/widgets/button.html#charmy.widgets.button.Button.WORKING_THREAD">(charmy.widgets.button.Button attribute)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.WORKING_THREAD">(charmy.widgets.widget.Widget attribute)</a>
+</li>
           <li><a href="api/widgets/window.html#charmy.widgets.window.Window.WORKING_THREAD">(charmy.widgets.window.Window attribute)</a>
 </li>
           <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.WORKING_THREAD">(charmy.widgets.windowbase.WindowBase attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.WorkingThread">WorkingThread (class in charmy.event)</a>
 </li>
     </ul></td>

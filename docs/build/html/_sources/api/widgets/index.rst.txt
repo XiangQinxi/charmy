@@ -13,6 +13,7 @@ charmy.widgets
    :caption: Contents:
 
    button
+   canvas
    cmm
    container
    widget

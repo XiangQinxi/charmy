@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="&lt;no title&gt;" href="cmm.html"><link rel="prev" title="charmy.widgets" href="index.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="canvas" href="canvas.html"><link rel="prev" title="charmy.widgets" href="index.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>button - Charmy GUI 0.1.0 documentation</title>
@@ -229,8 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../this.html">charmy.this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../var.html">charmy.var</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canvas.html">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -300,6 +302,8 @@
         classDiagram
   CanvasBase &lt;|-- Widget
   CharmyObject &lt;|-- CanvasBase
+  CharmyObject &lt;|-- EventHandling
+  EventHandling &lt;|-- Widget
   Widget &lt;|-- Button
     </pre><dl class="py class" id="module-charmy.widgets.button">
 <dt class="sig sig-object py" id="charmy.widgets.button.Button">
@@ -315,6 +319,21 @@
 <span class="sig-name descname"><span class="pre">draw_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.button.Button.draw_config" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.button.Button.WORKING_THREAD">
+<span class="sig-name descname"><span class="pre">WORKING_THREAD</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">threading.Thread</span></span><a class="headerlink" href="#charmy.widgets.button.Button.WORKING_THREAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.button.Button.latest_event">
+<span class="sig-name descname"><span class="pre">latest_event</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../event.html#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><a class="headerlink" href="#charmy.widgets.button.Button.latest_event" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.button.Button.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../event.html#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.widgets.button.Button.tasks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -324,12 +343,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="cmm.html">
+          <a class="next-page" href="canvas.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">canvas</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -378,6 +397,9 @@
 <li><a class="reference internal" href="#charmy.widgets.button.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.widgets.button.Button.__init__"><code class="docutils literal notranslate"><span class="pre">Button.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.button.Button.draw_config"><code class="docutils literal notranslate"><span class="pre">Button.draw_config()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.button.Button.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">Button.WORKING_THREAD</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.button.Button.latest_event"><code class="docutils literal notranslate"><span class="pre">Button.latest_event</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.button.Button.tasks"><code class="docutils literal notranslate"><span class="pre">Button.tasks</span></code></a></li>
 </ul>
 </li>
 </ul>

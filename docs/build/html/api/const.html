@@ -229,8 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="this.html">charmy.this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="var.html">charmy.var</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -301,6 +303,7 @@
   Enum &lt;|-- Backends
   Enum &lt;|-- DrawingMode
   Enum &lt;|-- ID
+  Enum &lt;|-- Orient
     </pre><p id="module-charmy.const">Charmy constants.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.const.ID">
@@ -398,6 +401,32 @@ RETAINED(retained): RETAINED is an enum to store drawing mode.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.const.Orient">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">Orient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.Orient" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Orient.HORIZONTAL">
+<span class="sig-name descname"><span class="pre">HORIZONTAL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'h'</span></span><a class="headerlink" href="#charmy.const.Orient.HORIZONTAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Orient.H">
+<span class="sig-name descname"><span class="pre">H</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'h'</span></span><a class="headerlink" href="#charmy.const.Orient.H" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Orient.VERTICAL">
+<span class="sig-name descname"><span class="pre">VERTICAL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'v'</span></span><a class="headerlink" href="#charmy.const.Orient.VERTICAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Orient.V">
+<span class="sig-name descname"><span class="pre">V</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'v'</span></span><a class="headerlink" href="#charmy.const.Orient.V" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -477,6 +506,13 @@ RETAINED(retained): RETAINED is an enum to store drawing mode.</p>
 <li><a class="reference internal" href="#charmy.const.DrawingMode.immediate"><code class="docutils literal notranslate"><span class="pre">DrawingMode.immediate</span></code></a></li>
 <li><a class="reference internal" href="#charmy.const.DrawingMode.RETAINED"><code class="docutils literal notranslate"><span class="pre">DrawingMode.RETAINED</span></code></a></li>
 <li><a class="reference internal" href="#charmy.const.DrawingMode.retained"><code class="docutils literal notranslate"><span class="pre">DrawingMode.retained</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#charmy.const.Orient"><code class="docutils literal notranslate"><span class="pre">Orient</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.const.Orient.HORIZONTAL"><code class="docutils literal notranslate"><span class="pre">Orient.HORIZONTAL</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Orient.H"><code class="docutils literal notranslate"><span class="pre">Orient.H</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Orient.VERTICAL"><code class="docutils literal notranslate"><span class="pre">Orient.VERTICAL</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Orient.V"><code class="docutils literal notranslate"><span class="pre">Orient.V</span></code></a></li>
 </ul>
 </li>
 </ul>

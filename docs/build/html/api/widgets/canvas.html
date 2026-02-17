@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="&lt;no title&gt;" href="cmm.html"><link rel="prev" title="button" href="button.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>canvas - Charmy GUI 0.1.0 documentation</title>
@@ -207,7 +207,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../getstarted/install.html">Install Charmy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../getstarted/first_app.html">First application</a></li>
@@ -220,7 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../framework.html">charmy.framework</a></li>
@@ -229,8 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../this.html">charmy.this</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../var.html">charmy.var</a></li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="button.html">button</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -308,6 +310,16 @@
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.canvas.CanvasBase.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.canvas.CanvasBase.manager">
+<span class="sig-name descname"><span class="pre">manager</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager" title="charmy.widgets.cmm.CharmyManager"><span class="pre">CharmyManager</span></a></span><a class="headerlink" href="#charmy.widgets.canvas.CanvasBase.manager" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.canvas.CanvasBase.draw_type_map">
+<span class="sig-name descname"><span class="pre">draw_type_map</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.widgets.canvas.CanvasBase.draw_type_map" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.canvas.CanvasBase.draw_config">
 <span class="sig-name descname"><span class="pre">draw_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.canvas.CanvasBase.draw_config" title="Link to this definition">¶</a></dt>
@@ -364,8 +376,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="cmm.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">&lt;no title&gt;</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="button.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">button</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -399,6 +429,8 @@
 <li><a class="reference internal" href="#">canvas</a><ul>
 <li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase"><code class="docutils literal notranslate"><span class="pre">CanvasBase</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase.__init__"><code class="docutils literal notranslate"><span class="pre">CanvasBase.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase.manager"><code class="docutils literal notranslate"><span class="pre">CanvasBase.manager</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase.draw_type_map"><code class="docutils literal notranslate"><span class="pre">CanvasBase.draw_type_map</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase.draw_config"><code class="docutils literal notranslate"><span class="pre">CanvasBase.draw_config()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase.draw"><code class="docutils literal notranslate"><span class="pre">CanvasBase.draw()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.canvas.CanvasBase.draw_rect"><code class="docutils literal notranslate"><span class="pre">CanvasBase.draw_rect()</span></code></a></li>

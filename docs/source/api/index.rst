@@ -22,6 +22,7 @@ Core Modules
    rect
    size
    this
+   var
 
 Widgets
 -------

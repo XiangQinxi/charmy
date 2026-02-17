@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="button" href="button.html"><link rel="prev" title="charmy.this" href="../this.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="button" href="button.html"><link rel="prev" title="charmy.var" href="../var.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>charmy.widgets - Charmy GUI 0.1.0 documentation</title>
@@ -229,8 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../this.html">charmy.this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../var.html">charmy.var</a></li>
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="canvas.html">canvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
@@ -304,6 +306,7 @@
   CharmyObject &lt;|-- EventHandling
   CharmyObject &lt;|-- WindowBase
   Container &lt;|-- Window
+  EventHandling &lt;|-- Widget
   EventHandling &lt;|-- WindowBase
   Widget &lt;|-- Button
   WindowBase &lt;|-- Window
@@ -313,6 +316,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="button.html">button</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="button.html#charmy.widgets.button.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="canvas.html">canvas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="canvas.html#charmy.widgets.canvas.CanvasBase"><code class="docutils literal notranslate"><span class="pre">CanvasBase</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a><ul>
@@ -365,14 +372,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../this.html">
+          <a class="prev-page" href="../var.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">charmy.this</div>
+                <div class="title">charmy.var</div>
                 
               </div>
             </a>
