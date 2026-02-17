@@ -204,10 +204,10 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     # region Attr configuration
 
-    def __getattr__(self, item):
-        if item in self._attributes:
-            return self.get(item)
-        raise AttributeError(item)
+    # def __getattr__(self, item):
+    #     if item in self._attributes:
+    #         return self.get(item)
+    #     raise AttributeError(item)
 
     def __contains__(self, item: str) -> bool:
         return item in self._attributes
