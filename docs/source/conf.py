@@ -20,6 +20,9 @@ project = "Charmy GUI"
 copyright = "2026, XiangQinxi, rgzz666, littlewhitecloud"
 author = "XiangQinxi, rgzz666, littlewhitecloud"
 release = "0.1.0"
+locale_dirs = ["locale/"]
+language = "en"
+gettext_compact = False
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

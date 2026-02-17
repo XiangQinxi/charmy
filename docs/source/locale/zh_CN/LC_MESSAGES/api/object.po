@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-17 10:59+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/api/object.rst:2
+msgid "charmy.object"
+msgstr ""
+
+#: charmy.object:1 of
+msgid "Basic object class."
+msgstr ""
+
+#: charmy.object.CharmyObject:1 of
+msgid ""
+"CharmyObject is this project's basic class, with features to set and get "
+"attribute."
+msgstr ""
+
+#: charmy.object.CharmyObject.class_name:1 of
+msgid "Return the lowered class name"
+msgstr ""
+
+#: charmy.object.CharmyObject.instances:1 of
+msgid "Return all the class instances"
+msgstr ""
+
+#: charmy.object.CharmyObject.instance_count:1 of
+msgid "Return the class instance count"
+msgstr ""
+
+#: charmy.object.CharmyObject.new:1 of
+msgid "New attribute [Suggested: add `is_`~ as prefix if value is in type bool]"
+msgstr ""
+
+#: charmy.object.CharmyObject.new:5 of
+msgid "Example"
+msgstr ""
+
+#: charmy.object.CharmyObject.get:3 charmy.object.CharmyObject.new:32
+#: charmy.object.CharmyObject.set:3 of
+msgid "Args:"
+msgstr ""
+
+#: charmy.object.CharmyObject.new:33 of
+msgid ""
+"key (str): attribute name default (typing.Any): default value set_func "
+"(typing.Callable): function to set get_func (typing.Callable): function "
+"to get"
+msgstr ""
+
+#: charmy.object.CharmyObject.get:7 charmy.object.CharmyObject.new:38
+#: charmy.object.CharmyObject.set:8 of
+msgid "Return:"
+msgstr ""
+
+#: charmy.object.CharmyObject.new:39 of
+msgid "Self"
+msgstr ""
+
+#: charmy.object.CharmyObject.set:1 of
+msgid "Set attribute."
+msgstr ""
+
+#: charmy.object.CharmyObject.set:4 of
+msgid ""
+"key (str): attribute name value (typing.Any): attribute value skip "
+"(bool): skip custom set_func function"
+msgstr ""
+
+#: charmy.object.CharmyObject.set:9 of
+msgid "self"
+msgstr ""
+
+#: charmy.object.CharmyObject.get:1 of
+msgid "Get attribute by key."
+msgstr ""
+
+#: charmy.object.CharmyObject.get:4 of
+msgid "key (str): attribute name skip (bool): skip custom get_func function"
+msgstr ""
+
+#: charmy.object.CharmyObject.get:8 of
+msgid "the value corresponding to the key"
+msgstr ""
+
+#: charmy.object.CharmyObject.get_obj:1 of
+msgid "Get registered object by id. (If not found, return default)"
+msgstr ""
+
+#: charmy.object.CharmyObject.configure:1 of
+msgid "High level set attributes by keyword arguments."
+msgstr ""
+
+#: charmy.object.CharmyObject.cget:1 of
+msgid "Low level get attribute by key"
+msgstr ""
+
+#: charmy.object.CharmyObject.attributes:1 of
+msgid "Return all attributes"
+msgstr ""
+
