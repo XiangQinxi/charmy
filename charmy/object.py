@@ -25,7 +25,10 @@ class InstanceCounterMeta(type):
 
 
 class CharmyObject(metaclass=InstanceCounterMeta):
-    """CharmyObject is this project's basic class, with features to set and get attribute."""
+    """CharmyObject is this project's basic class.
+
+    CharmyObject provides abilities of cummulating ID and set attributes.
+    """
 
     objects: typing.Dict[str, typing.Any] = {}  # find by ID {1: OBJ1, 2: OBJ2}
     objects_sorted: typing.Dict[str, typing.Any] = (
@@ -33,6 +36,14 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     def __init__(self, id_: ID | str = ID.AUTO):
+        """CharmyObject is this project's basic class.
+
+        CharmyObject provides abilities of cummulating ID and set attributes.
+
+        Args:
+            param (ID | str): Optional, ID for the object
+        """
+
         self._attributes: dict[str, typing.Any | list] = {}  # NOQA: Expected to be user-modifiable.
         # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
         # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
@@ -53,172 +64,39 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     @property
     def class_name(self) -> str:
-        """Return the lowered class name"""
-        return self.__class__.__name__.lower()
+        """Returns the class name."""
+        return self.__class__.__name__
 
     @property
     def instances(self):
-        """Return all the class instances"""
-        return self.objects_sorted[self.class_name]
+        """Returns all the class instances."""
+        return self.__class__.objects_sorted[self.class_name]
 
     @property
     def instance_count(self):
-        """Return the class instance count"""
+        """Returns the class instance count."""
         return len(self._instances)
-
-    def new(
-        self,
-        key: str,
-        default=None,
-        *,
-        set_func: typing.Callable | None = None,
-        get_func: typing.Callable | None = None,
-    ) -> typing.Self:
-        """New attribute
-        [Suggested: add `is_`~ as prefix if value is in type bool]
-
-        Example
-        -------
-        .. code-block:: python
-
-            from charmy import *
-
-            obj = CharmyObject()
-            obj.new("name", "obj1")
-            print(obj.get("name"))  # OUTPUT: obj1
-            obj.set("name", "obj2")
-            print(obj.get("name"))  # OUTPUT: obj2
-
-
-            def set_func(value):
-                print("User set value:", value)
-                return "Hello, " + value
-
-
-            def get_func():
-                return f"User get value: {obj.get('title', skip=True)}"
-
-
-            obj.new("title", "default title", set_func=set_func, get_func=get_func)
-            print(obj.get("title"))  # OUTPUT: default title
-            obj.set("title", "A")  # OUTPUT: User set value: A
-            print(obj.get("title"))  # User get value: Hello, A
-
-
-        Args:
-            key (str): attribute name
-            default (typing.Any): default value
-            set_func (typing.Callable): function to set
-            get_func (typing.Callable): function to get
-
-        Return:
-            Self
-        """
-        if set_func or get_func:
-            self._attributes[key] = ["@custom", default, set_func, get_func]
-        else:
-            self._attributes[key] = default
-        return self
-
-    def set(self, key: str, value, *, skip: bool = False) -> typing.Self:
-        """Set attribute.
-
-        Args:
-            key (str): attribute name
-            value (typing.Any): attribute value
-            skip (bool): skip custom set_func function
-
-        Return:
-            self
-        """
-        if key not in self._attributes:
-            raise KeyError(key)
-        if isinstance(self._attributes[key], list):
-            if self._attributes[key][0] == "@custom":
-                if self._attributes[key][2]:
-                    if not skip:
-                        _return = self._attributes[key][2](value)
-                    else:
-                        _return = None
-                    if _return:
-                        self._attributes[key][1] = _return
-                    else:
-                        self._attributes[key][1] = value
-                else:
-                    self._attributes[key][1] = value
-                return self
-        self._attributes[key] = value
-        return self
-
-    def get(self, key: str, default=None, *, skip: bool = False) -> typing.Any:
-        """Get attribute by key.
-
-        Args:
-            key (str): attribute name
-            skip (bool): skip custom get_func function
-
-        Return:
-            the value corresponding to the key
-        """
-
-        # check is an available key
-        if key not in self._attributes:
-            return default
-
-        # check is a custom attribute
-        if isinstance(self._attributes[key], list) and len(self._attributes[key]) > 0:
-            if self._attributes[key][0] == "@custom":
-                if self._attributes[key][3]:
-                    if not skip:
-                        _return = self._attributes[key][3]()
-                    else:
-                        _return = None
-
-                    if _return:
-                        return _return
-                    else:
-                        return self._attributes[key][1]
-                else:
-                    return self._attributes[key][1]
-        return self._attributes[key]
-
-    def get_obj(self, _id: str, default=None) -> typing.Any | None:
-        """Get registered object by id. (If not found, return default)"""
-        try:
-            return self.objects[_id]
-        except KeyError:
-            return default
-
-    find = get_obj
-
-    def configure(self, **kwargs):
-        """High level set attributes by keyword arguments."""
-        for key, value in kwargs.items():
-            self.set(key, value)
-
-    config = configure
-
-    def cget(self, key: str) -> typing.Any:
-        """Low level get attribute by key"""
-        return self.get(key)
-
-    # region Attr configuration
-
-    # def __getattr__(self, item):
-    #     if item in self._attributes:
-    #         return self.get(item)
-    #     raise AttributeError(item)
-
-    def __contains__(self, item: str) -> bool:
-        return item in self._attributes
+    
+    # region: Attributes set / unset
+    
+    def set(self, name: str, value: typing.Any):
+        """Set the value of a specific attribute with giver name."""
+        setattr(self, name, value)
+    
+    def get(self, name: str):
+        """Get the value of a specific attribute with given name."""
+        return getattr(self, name)
+    
+    def config(self, **kwargs):
+        """Batch set values of multiple attributes by giving params."""
+        param_list: dict[str, typing.Any] = {**kwargs}
+        for name in param_list.keys():
+            self.set(name, param_list[name])
 
     # endregion
 
-    @property
-    def attributes(self) -> typing.Dict[str, typing.Any]:
-        """Return all attributes"""
-        return self._attributes
+    # region: __str__
 
     def __str__(self) -> str:
-        """Return all attributes in string"""
-        return str(self._attributes)
+        """Happens when someone boring puts a Charmy stuff into str() or print()."""
+        return str(f"CharmyObject[{self.id}]")
