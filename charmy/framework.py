@@ -285,13 +285,13 @@ class GLFW(UIFramework):
         if isinstance(size, tuple):
             self.glfw.set_window_size(the_window, size[0], size[1])
         else:
-            self.glfw.set_window_size(the_window, size["width"], size["height"])
+            self.glfw.set_window_size(the_window, size.width, size.height)
 
     def set_pos(self, the_window, pos: Pos | tuple[int, int]) -> None:
         if isinstance(pos, tuple):
             self.glfw.set_window_pos(the_window, pos[0], pos[1])
         else:
-            self.glfw.set_window_pos(the_window, pos["x"], pos["y"])
+            self.glfw.set_window_pos(the_window, pos.x, pos.y)
 
     def set_title(self, the_window, title: str) -> None:
         self.glfw.set_window_title(the_window, title)
