@@ -41,12 +41,9 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         CharmyObject provides abilities of cummulating ID and set attributes.
 
         Args:
-            param (ID | str): Optional, ID for the object
-        """
+            id_ (ID | str): Optional, ID for the object
 
-        self._attributes: dict[str, typing.Any | list] = {}  # NOQA: Expected to be user-modifiable.
-        # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
-        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
+        """
 
         if id_ == ID.AUTO:
             _prefix = self.class_name
@@ -93,49 +90,48 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     # endregion
     
     # region: Attributes set / unset
-    
+
     def set(self, name: str, value: typing.Any):
-        """Set the value of a specific attribute with giver name.
-        
-        :param name: Name of the attribute to set
-        :param value: Value to set
+        """Set the object attribute with given name.
+
+        Args:
+            name (str): Name of the attribute to set
+            value (typing.Any): Value to set
         """
         self.__setattr__(name, value)
-    
-    def get(self, name: str):
-        """Get the value of a specific attribute with given name.
-        
-        :param name: Name of the attribute to get
-        """
-        return self.__getattribute__(name)
-    
-    def config(self, **kwargs):
+
+    def configure(self, **kwargs):
         """Batch set values of multiple attributes by giving params.
         
-        :param **kwargs: Any configs to add
+        Args:
+             **kwargs: Any configs to add
         """
         param_list: dict[str, typing.Any] = {**kwargs}
         for name in param_list.keys():
             self.set(name, param_list[name])
-    
+
+    config = configure
+
     def __setitem__(self, name: str, value: typing.Any):
         """Compatibility with set and get item.
-        
+
         **To Charmy developers:** Rewrite all relating code to new set / get attr method **ASAP!!!**
 
-        :param name: Name of attr to set
-        :param value: Value to set
+        Args:
+            name (str): Name of attr to set
+            value (typing.Any): Value to set
         """
         self.set(name, value)
-    
+
     def __getitem__(self, name: str):
         """Compatibility with set and get item.
-        
+
         **To Charmy developers:** Rewrite all relating code to new set / get attr method **ASAP!!!**
 
-        :param name: Name of attr to get
+        Args:
+            name (str): Name of attr to get
         """
-        return self.get(name)
+        return self.__getattribute__(name)
 
     # endregion
 
@@ -143,6 +139,6 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     def __str__(self) -> str:
         """Happens when someone boring puts a Charmy stuff into str() or print()."""
-        return str(f"CharmyObject[{self.id}]")
+        return self.id
 
     # endregion
