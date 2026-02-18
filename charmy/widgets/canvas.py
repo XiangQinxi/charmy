@@ -19,12 +19,8 @@ class CanvasBase(CharmyObject):
         # e.g. [{"type": "rect", "id": "element0", "radius": 12}]
         self.elements: list[dict] = []
 
-        self.new(
-            "framework",
-            self._get_framework(),
-            get_func=self._get_framework,
-        )
-        self.new("color_object", None)
+        self.framework = self.manager.framework  # The Framework
+        self.color_object = None  # The color object to draw
 
         # 元素绘制映射表
         # TODO: 名字？难以理解感觉
@@ -46,7 +42,7 @@ class CanvasBase(CharmyObject):
                 warnings.warn(f"Warning: Unknown element type {element['type']}")
 
     def draw_rect(self, canvas, element: dict):
-        self["framework"].drawing.draw_rect(
+        self.framework.drawing.draw_rect(
             canvas,
             rect=element.get("rect"),
             radius=element.get("radius", 0),

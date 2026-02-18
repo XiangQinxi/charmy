@@ -80,13 +80,14 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     # region: Object search
 
-    def get_obj(self, target_id: str, default=None) -> typing.Any | None:
+    def get_obj(self, id_: str, default=None) -> typing.Any | None:
         """Get registered object by id. (If not found, return default)"""
-        try:
-            return self.__class__.objects[target_id]
-        except KeyError:
-            return default
-        
+        if id_ in self.objects:
+            return self.objects[id_]
+        return default
+
+    find = get_obj
+
     # endregion
     
     # region: Attributes set / unset

@@ -17,8 +17,8 @@ class Widget(CanvasBase, EventHandling):
             parent = self.find("window0", default=None)
 
         self.parent: Container = parent
-        self.new("size", Size(100, 100))
-        self.new("pos", Pos(0, 0))
+        self.size = Size(100, 100)
+        self.pos = Pos(0, 0)
 
         # Automatically add to parent's children list if parent exists
         if parent is not None:
@@ -30,16 +30,16 @@ class Widget(CanvasBase, EventHandling):
 
     @property
     def x(self):
-        return self["pos"].get("x")
+        return self.pos.x
 
     @property
     def y(self):
-        return self["pos"].get("y")
+        return self.pos.y
 
     @property
     def width(self):
-        return self["size"].get("width")
+        return self.size.width
 
     @property
     def height(self):
-        return self["size"].get("height")
+        return self.size.height

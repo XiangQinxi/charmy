@@ -29,15 +29,12 @@ class CharmyManager(CharmyObject):
         # if self.instance_count >= 1:
         #    warnings.warn("There should be only one instance of CApp.")
 
-        self.new("event.thread", WorkingThread())
+        self.event_thread = WorkingThread()
 
-        self.new("framework", Framework)
-        self.new("ui.framework", self.framework.ui)
-        self.new("drawing.framework", self.framework.drawing)
-        self.new("backend.framework", self.framework.backend)
+        self.framework = Framework()
 
-        self.new("ui.is_vsync", vsync)
-        self.new("ui.samples", samples)
+        self.ui_is_vsync = vsync
+        self.ui_samples = samples
 
         self.windows = []
         self.is_alive: bool = False  # Is the manager running
@@ -46,7 +43,7 @@ class CharmyManager(CharmyObject):
 
     def _init_ui_framework(self):
         """According to attribute `ui.framework` to init ui framework"""
-        self.framework.init(error_callback=self.error, samples=self.get("ui.samples"))
+        self.framework.ui.init(error_callback=self.error, samples=self.ui_samples)
 
     def update(self):
         """Update the Windows' UI and events"""
@@ -87,7 +84,7 @@ class CharmyManager(CharmyObject):
             )
 
         self.is_alive: bool = True
-        self["event.thread"].start()
+        self.event_thread.start()
 
         # Main loop
         while self.is_alive:
@@ -128,7 +125,7 @@ class CharmyManager(CharmyObject):
 
     def cleanup(self) -> None:
         """Clean up resources."""
-        match self["framework"].ui_name:
+        match self.framework.ui_name:
             case "GLFW":
                 for window in self.windows:
                     self.glfw.destroy_window(window.the_window)
@@ -139,7 +136,7 @@ class CharmyManager(CharmyObject):
     def quit(self) -> None:
         """Quit the mainloop."""
         self.is_alive = False
-        self["event.thread"].is_alive = False
+        self.event_thread.is_alive = False
 
     @staticmethod
     def error(error_code: typing.Any, description: bytes):

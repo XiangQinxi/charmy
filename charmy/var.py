@@ -14,23 +14,22 @@ class Var(EventHandling):
     def __init__(self, default_value=None, value_type: type | typing.Any = typing.Any):
         super().__init__()
 
-        self.new(
-            "value",
-            default_value if default_value is not None else value_type(),
-            set_func=self._set_value,
-        )
+        self._value = default_value if default_value is not None else value_type(),
         self._value_type: type = value_type
 
-    def _set_value(self, value: typing.Any) -> typing.Self:
-        if self["value"] != value:
+    @property
+    def value(self) -> typing.Any:
+        return self._value
+
+    @value.setter
+    def value(self, value: typing.Any) -> None:
+        if self._value != value:
             try:
-                self.set("value", self._value_type(value), skip=True)
+                self._value = self._value_type(value)
             except ValueError:
                 pass
             else:
                 self.trigger(Event(self, "change", value=value))
-
-        return self
 
 
 class StringVar(Var):

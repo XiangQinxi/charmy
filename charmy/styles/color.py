@@ -10,21 +10,17 @@ class Color(CharmyObject):
         super().__init__(*args, **kwargs)
         # Auto find CharmyManager Object
         self.manager: CharmyManager = self.get_obj(MANAGER_ID)
-        self.new(
-            "framework",
-            self._get_framework(),
-            get_func=self._get_framework,
-        )
+        self.framework = self.manager.framework
 
         # Import Drawing Framework
-        match self["framework"].drawing_name:
+        match self.framework.drawing_name:
             case "SKIA":
                 self.skia = self["framework"].drawing.skia
             case _:
                 raise ValueError(
                     f"Not supported drawing framework: {self['framework'].drawing_name}"
                 )
-        self.new("color_object", None)
+        self.color_object = None
 
     def set_color_rgba(
         self, r: int | float, g: int | float, b: int | float, a: int | float = 255
@@ -40,9 +36,9 @@ class Color(CharmyObject):
         Returns:
             None
         """
-        match self["framework"].drawing_name:
+        match self.framework.drawing_name:
             case "SKIA":
-                self["color_object"] = self.skia.Color(
+                self.color_object = self.skia.Color(
                     self._c(r), self._c(g), self._c(b), self._c(a)
                 )
 
@@ -64,17 +60,17 @@ class Color(CharmyObject):
             r = int(hex_color[0:2], 16)
             g = int(hex_color[2:4], 16)
             b = int(hex_color[4:6], 16)
-            match self["drawing.framework"]:
+            match self.framework.drawing_name:
                 case Backends.SKIA:
-                    self["color_object"] = self.skia.ColorSetRGB(r, g, b)  # 返回不透明颜色
+                    self.color_object = self.skia.ColorSetRGB(r, g, b)  # 返回不透明颜色
         elif len(hex_color) == 8:  # RGBA 格式(含 Alpha 通道)
             r = int(hex_color[0:2], 16)
             g = int(hex_color[2:4], 16)
             b = int(hex_color[4:6], 16)
             a = int(hex_color[6:8], 16)
-            match self["framework"].drawing_name:
-                case "SKIA":
-                    self["color_object"] = self.skia.ColorSetARGB(a, r, g, b)  # 返回含透明度的颜色
+            match self.framework.drawing_name:
+                case Backends.SKIA:
+                    self.color_object = self.skia.ColorSetARGB(a, r, g, b)  # 返回含透明度的颜色
         else:
             raise ValueError("HEX Should be #RRGGBB or #RRGGBBAA format")
 
@@ -88,10 +84,10 @@ class Color(CharmyObject):
         Raises:
             ValueError: When color not exists
         """
-        match self["framework"].drawing_name:
-            case "SKIA":
+        match self.framework.drawing_name:
+            case Backends.SKIA:
                 try:
-                    self["color_object"] = getattr(self.skia, f"Color{name.upper()}")
+                    self.color_object = getattr(self.skia, f"Color{name.upper()}")
                 except:
                     raise ValueError(f"Unknown color name: {name}")
 
@@ -109,6 +105,3 @@ class Color(CharmyObject):
             if 0 < x <= 1.0:
                 x = x * 255
         return x
-
-    def _get_framework(self):
-        return self.manager["framework"]
