@@ -2,10 +2,10 @@ import importlib
 import typing
 import warnings
 
-from ..const import MANAGER_ID, Backends
-from ..event import WorkingThread
-from ..framework import Framework
-from ..object import CharmyObject
+from charmy.const import MANAGER_ID, Backends
+from charmy.event import WorkingThread
+from charmy.framework import Framework
+from charmy.object import CharmyObject
 
 
 class CharmyManager(CharmyObject):
@@ -30,34 +30,40 @@ class CharmyManager(CharmyObject):
         #    warnings.warn("There should be only one instance of CApp.")
 
         self.event_thread = WorkingThread()
+        
+        self.set("frameworks", Framework())
+        self.set("ui.framework", self.get("frameworks").ui)
+        self.set("ui.framework.name", self.get("frameworks").ui_name)
+        self.set("ui.is_vsync", vsync)
+        self.set("ui.samples", samples)
+        self.set("ui.windows", [])
+        self.set("drawing.framework", self.get("frameworks").drawing)
+        self.set("drawing.framework.name", self.get("frameworks").drawing_name)
+        self.set("backend.framework", self.get("frameworks").backend)
+        self.set("backend.framework.name", self.get("frameworks").backend_name)
 
-        self.framework = Framework()
-
-        self.ui_is_vsync = vsync
-        self.ui_samples = samples
-
-        self.windows = []
         self.is_alive: bool = False  # Is the manager running
 
         self._init_ui_framework()
 
     def _init_ui_framework(self):
         """According to attribute `ui.framework` to init ui framework"""
-        self.framework.ui.init(error_callback=self.error, samples=self.ui_samples)
+        self.get("ui.framework").init(error_callback=self.error, samples=self.get("ui.samples"))
 
     def update(self):
         """Update the Windows' UI and events"""
 
-        self.glfw = self.framework.ui.glfw
+        self.glfw = self.get("ui.framework").glfw
         self.glfw.wait_events()
 
-        for window in self.windows:
+        for window in self.get("ui.windows"):
             if window.is_visible and window.is_alive:
                 window.update()
 
         # TODO: 能不能换个地方？比如说framework.py?
         # TODO: CharmyManager过度耦合glfw, 没有考虑其他框架
-        # self.glfw.swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
+        
+        self.glfw.swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
 
         # not implemented yet
         # input_mode: bool = True
@@ -78,7 +84,7 @@ class CharmyManager(CharmyObject):
 
         If no windows are added to the manager, a warning will be issued.
         """
-        if not self.windows:
+        if not self.get("ui.windows"):
             warnings.warn(
                 "At least one window is required to run manager!",
             )
@@ -90,11 +96,11 @@ class CharmyManager(CharmyObject):
         while self.is_alive:
             try:
                 # quit when no window in list now
-                if not self.windows:
+                if not self.get("ui.windows"):
                     self.quit()
                     break
 
-                for window in self.windows:
+                for window in self.get("ui.windows"):
                     if window.can_be_close():
                         self.destroy_window(window)  # remove window if closed
                         window.destroy()
@@ -112,7 +118,7 @@ class CharmyManager(CharmyObject):
         Args:
             window (charmy.widgets.WindowBase): The window to be added.
         """
-        self.windows.append(window)
+        self.get("ui.windows").append(window)
 
     def destroy_window(self, window):
         """Destroy a window from the manager.
@@ -120,14 +126,14 @@ class CharmyManager(CharmyObject):
         Args:
             window (charmy.widgets.WindowBase): The window to be destroyed.
         """
-        if window in self.windows:
-            self.windows.remove(window)
+        if window in self.get("ui.windows"):
+            self.get("ui.windows").remove(window)
 
     def cleanup(self) -> None:
         """Clean up resources."""
-        match self.framework.ui_name:
+        match self.get("ui.framework.name"):
             case "GLFW":
-                for window in self.windows:
+                for window in self.get("ui.windows"):
                     self.glfw.destroy_window(window.the_window)
                 self.glfw.terminate()
 
