@@ -80,7 +80,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     def instance_count(self):
         """Returns the class instance count."""
         return len(self._instances)
-    
+
     # endregion
 
     # region: Object search
@@ -95,12 +95,12 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     find = get_obj
 
     # endregion
-    
+
     # region: Attributes set / get
 
     def cset(self, name: str, value: typing.Any):
         """Set shared attributes in CharmyObject.
-        
+
         Args:
             name: Name of the attribute to set
             value: Value to set
@@ -109,7 +109,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     def cget(self, name: str, default: typing.Any = None) -> typing.Any:
         """Get shared attributes in CharmyObject.
-        
+
         Args:
             name: Name of the attribute to get
             default: Default value to return if attribute not found
@@ -124,7 +124,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     def cconfig(self, **kwargs):
         """Batch set values of multiple shared attributes in CharmyObject by giving params.
-        
+
         Args:
              **kwargs: Any configs to add
         """

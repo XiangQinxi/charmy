@@ -1,10 +1,10 @@
 import typing
 import warnings
 
+from ..cmm import CharmyManager
 from ..const import ID, MANAGER_ID
 from ..object import CharmyObject
 from ..rect import Rect
-from ..cmm import CharmyManager
 
 
 class CanvasBase(CharmyObject):
@@ -12,14 +12,13 @@ class CanvasBase(CharmyObject):
         super().__init__(*args, **kwargs)
 
         # Auto find CharmyManager Object
-        self.manager: CharmyManager = self.get_obj(MANAGER_ID)
         self._last_count = 0
 
         # element config
         # e.g. [{"type": "rect", "id": "element0", "radius": 12}]
         self.elements: list[dict] = []
 
-        self.framework = self.manager.framework  # The Framework
+        self.frameworks = self.cget("frameworks")  # The Framework
         self.color_object = None  # The color object to draw
 
         # 元素绘制映射表

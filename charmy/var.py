@@ -14,7 +14,7 @@ class Var(EventHandling):
     def __init__(self, default_value=None, value_type: type | typing.Any = typing.Any):
         super().__init__()
 
-        self._value = default_value if default_value is not None else value_type(),
+        self._value = (default_value if default_value is not None else value_type(),)
         self._value_type: type = value_type
 
     @property

@@ -1,12 +1,11 @@
 import importlib.util
 import typing
 from abc import ABC, abstractmethod
-from os import environ
 
-from .const import PLATFORM, Backends
-from .event import Event
-from .pos import Pos
-from .size import Size
+from ..const import PLATFORM
+from ..event import Event
+from ..pos import Pos
+from ..size import Size
 
 
 # region Window
@@ -177,7 +176,7 @@ class GLFW(UIFramework):
         if PLATFORM == "macos":
             self.glfw.window_hint(self.glfw.COCOA_RETINA_FRAMEBUFFER, self.glfw.TRUE)
             self.glfw.window_hint(self.glfw.OPENGL_FORWARD_COMPAT, True)
-        else: # Windows/Linux
+        else:  # Windows/Linux
             self.glfw.window_hint(self.glfw.SCALE_TO_MONITOR, self.glfw.TRUE)
 
         self.glfw.window_hint(self.glfw.CONTEXT_VERSION_MAJOR, 3)
@@ -276,6 +275,12 @@ class GLFW(UIFramework):
 
         return join.join(keys)
 
+    def swap_interval(
+        self,
+        is_vsync: bool,
+    ):
+        self.glfw.swap_interval()
+
     def destroy(self, the_window) -> None:
         """Destroy glfw window"""
         self.glfw.destroy_window(the_window)
@@ -312,83 +317,3 @@ class GLFW(UIFramework):
 if importlib.util.find_spec("glfw") is not None:
     window_framework_map["GLFW"] = GLFW  # NOQA
 # endregion
-
-from .rect import Rect
-
-
-# region Drawing
-class DrawingFramework(ABC):
-    """The base class of DrawingFramework."""
-
-    @abstractmethod
-    def draw_rect(self, canvas, rect: Rect, radius: int = 0, bg=None, bd=None):
-        """Draw a rectangle
-
-        Args:
-            canvas (Canvas): The canvas to draw
-            rect (Rect): The rect area to draw
-            radius (int, optional): The radius of the rectangle. Defaults to 0.
-            bg (charmy.styles.color.Color, optional): The background color of the rectangle. Defaults to None.
-            bd (charmy.styles.color.Color, optional): The border color of the rectangle. Defaults to None.
-        """
-        ...
-
-
-drawing_framework_map = {}
-
-
-class SKIA(DrawingFramework):
-    def __init__(self):
-        self.skia = importlib.import_module("skia")
-
-    def draw_rect(self, canvas, rect: Rect, radius: int | float = 8, bg=None, bd=None):  # noqa
-        # from skia import RRect, Rect, Canvas, Paint
-        # Paint()
-        # canvas: Canvas
-
-        if bg is None:
-            bg = {}
-        canvas.drawRoundRect(
-            rect=self.skia.Rect.MakeXYWH(rect["x"], rect["y"], rect["width"], rect["height"]),
-            rx=radius,
-            ry=radius,
-            paint=self.skia.Paint(
-                Color=bg.get("color_object", self.skia.ColorBLUE),
-                Style=self.skia.Paint.kFill_Style,
-            ),
-        )
-
-
-if importlib.util.find_spec("skia") is not None:
-    drawing_framework_map["SKIA"] = SKIA  # NOQA
-
-# endregion
-
-
-# region Backend
-class BackendFramework(ABC):
-    pass
-
-
-backend_framework_map = {}
-
-
-class OPENGL(BackendFramework):
-    def __init__(self):
-        self.opengl = importlib.import_module("OpenGL")
-        self.opengl_GL = importlib.import_module("OpenGL.GL")
-
-
-if importlib.util.find_spec("OpenGL") is not None:
-    backend_framework_map["OPENGL"] = OPENGL  # NOQA
-
-# endregion
-
-
-class Framework:
-    drawing_name = environ.get("CHARMY_DRAWING_BACKEND", "SKIA")
-    drawing = drawing_framework_map[drawing_name]()
-    ui_name = environ.get("CHARMY_UI_BACKEND", "GLFW")
-    ui = window_framework_map[ui_name]()
-    backend_name = environ.get("CHARMY_BACKEND", "OPENGL")
-    backend = backend_framework_map[backend_name]()

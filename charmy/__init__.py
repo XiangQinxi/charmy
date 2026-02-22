@@ -17,12 +17,14 @@
 
 from .cmm import cquit, mainloop, manager
 from .const import *
+
 # from .drawing import *
 from .event import Event, EventHandling, EventTask, WorkingThread
 from .object import CharmyObject
 from .pos import Pos
 from .rect import Rect
 from .size import Size
+from .frameworks import Frameworks
 from .styles import *
 from .var import BooleanVar, FloatVar, IntVar, StringVar, Var
 from .widgets import *

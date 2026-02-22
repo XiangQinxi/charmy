@@ -26,7 +26,7 @@ class Widget(CanvasBase, EventHandling):
 
     @property
     def rect(self) -> Rect:
-        return Rect(x=self.x, y=self.y, width=self.width, height=self.height)
+        return Rect().make_XYWH(x=self.x, y=self.y, width=self.width, height=self.height)
 
     @property
     def x(self):

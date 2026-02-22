@@ -1,6 +1,6 @@
+from ..cmm import CharmyManager
 from ..const import MANAGER_ID, Backends
 from ..object import CharmyObject
-from ..cmm import CharmyManager
 
 
 class Color(CharmyObject):
@@ -38,9 +38,7 @@ class Color(CharmyObject):
         """
         match self.framework.drawing_name:
             case "SKIA":
-                self.color_object = self.skia.Color(
-                    self._c(r), self._c(g), self._c(b), self._c(a)
-                )
+                self.color_object = self.skia.Color(self._c(r), self._c(g), self._c(b), self._c(a))
 
     def set_color_hex(self, _hex: str) -> None:
         """

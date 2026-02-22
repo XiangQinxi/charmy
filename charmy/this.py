@@ -27,7 +27,7 @@ I mean myself...
 """
 
 # Translated from original Chinese version / 译自中文原文:
-# 
+#
 # python项目有两个极端：
 # 一种是诗，一种是屎。
 # 写诗的人可能看不起写屎的，
@@ -39,9 +39,9 @@ I mean myself...
 # 能直接读懂的我觉得已经飞升了。
 # 如果你知道自己在做什么，
 # 那就大胆去写吧。
-# 
+#
 # 能跑就行了，我说我。
-# 
+#
 # —— Original text by LittleWhiteCloud / 中文原文作者：小白云
 
 

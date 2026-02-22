@@ -1,7 +1,7 @@
-from contextlib import contextmanager
-from typing import Optional, Callable, Any, List
 import functools
 import threading
+from contextlib import contextmanager
+from typing import Any, Callable, List, Optional
 
 
 class ContainerV2:
@@ -15,19 +15,19 @@ class ContainerV2:
         self.children: List[WidgetV2] = []
 
     @classmethod
-    def _get_context_stack(cls) -> List['ContainerV2']:
+    def _get_context_stack(cls) -> List["ContainerV2"]:
         """获取当前线程的上下文栈"""
-        if not hasattr(cls._local, 'context_stack'):
+        if not hasattr(cls._local, "context_stack"):
             cls._local.context_stack = []
         return cls._local.context_stack
 
     @classmethod
-    def get_context(cls) -> Optional['ContainerV2']:
+    def get_context(cls) -> Optional["ContainerV2"]:
         """获取当前上下文容器"""
         stack = cls._get_context_stack()
         return stack[-1] if stack else None
 
-    def __enter__(self) -> 'ContainerV2':
+    def __enter__(self) -> "ContainerV2":
         """进入上下文"""
         stack = self._get_context_stack()
         stack.append(self)
@@ -42,7 +42,7 @@ class ContainerV2:
         print(f"退出 ContainerV2: {self.name}")
         return False  # 不抑制异常
 
-    def add_child(self, child: 'WidgetV2'):
+    def add_child(self, child: "WidgetV2"):
         """添加子部件"""
         if child not in self.children:
             self.children.append(child)
@@ -61,7 +61,7 @@ def auto_parent(widget_class: Callable) -> Callable:
         parent_specified = False
 
         # 检查关键字参数
-        if 'parent' in kwargs:
+        if "parent" in kwargs:
             parent_specified = True
         # 检查位置参数（假设parent是第二个位置参数）
         elif len(args) >= 2:
@@ -71,7 +71,7 @@ def auto_parent(widget_class: Callable) -> Callable:
         if not parent_specified:
             parent = ContainerV2.get_context()
             if parent is not None:
-                kwargs['parent'] = parent
+                kwargs["parent"] = parent
 
         # 调用原始构造函数
         original_init(self, *args, **kwargs)

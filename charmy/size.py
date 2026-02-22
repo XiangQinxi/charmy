@@ -28,6 +28,7 @@ class Size(CharmyObject):
     def __str__(self):
         return f"Size({self.width}, {self.height})"
 
+
 size = Size(300, 400)
 
 print(size)

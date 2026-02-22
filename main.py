@@ -1,8 +1,8 @@
-from charmy import mainloop, Window, Button
+from charmy import Button, Window, mainloop
 
 window1 = Window(size=(300, 400))
 
-window1.config(title = "Button test")
+window1.config(title="Button test")
 
 button = Button()
 
