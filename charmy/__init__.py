@@ -15,6 +15,7 @@
 
 """A modern GUI library."""
 
+from .cmm import cquit, mainloop, manager
 from .const import *
 # from .drawing import *
 from .event import Event, EventHandling, EventTask, WorkingThread

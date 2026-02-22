@@ -1,4 +1,6 @@
-"""Basic object class."""
+"""
+Basic object class.
+"""
 
 import typing
 import weakref
@@ -34,17 +36,17 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     objects_sorted: typing.Dict[str, typing.Any] = (
         {}
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
+    attributes: typing.Dict[str, typing.Any] = {}
 
     def __init__(self, id_: ID | str = ID.AUTO):
         """CharmyObject is this project's basic class.
 
-        CharmyObject provides abilities of cummulating ID and set attributes.
+        CharmyObject provides abilities of cumulating ID and set attributes.
 
         Args:
             id_ (ID | str): Optional, ID for the object
         """
 
-        self._attributes: dict[str, typing.Any | list] = {}  # NOQA: Expected to be user-modifiable.
         # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
         # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
 
@@ -55,7 +57,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             raise KeyError(id_)
         if id_ != ID.NONE:
             self.objects[id_] = self
-            self.id = id_
+            self.id: typing.Final[str] = id_  # Do not change after initialization
 
             if self.class_name not in self.objects_sorted:
                 self.objects_sorted[self.class_name] = {self.id: self}
@@ -89,34 +91,45 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             return self.__class__.objects[target_id]
         except KeyError:
             return default
-        
+
+    find = get_obj
+
     # endregion
     
-    # region: Attributes set / unset
-    
-    def set(self, name: str, value: typing.Any):
-        """Set the value of a specific attribute with giver name.
+    # region: Attributes set / get
+
+    def cset(self, name: str, value: typing.Any):
+        """Set shared attributes in CharmyObject.
         
-        :param name: Name of the attribute to set
-        :param value: Value to set
+        Args:
+            name: Name of the attribute to set
+            value: Value to set
         """
-        self.__setattr__(name, value)
-    
-    def get(self, name: str):
-        """Get the value of a specific attribute with given name.
+        self.attributes[name] = value
+
+    def cget(self, name: str, default: typing.Any = None) -> typing.Any:
+        """Get shared attributes in CharmyObject.
         
-        :param name: Name of the attribute to get
+        Args:
+            name: Name of the attribute to get
+            default: Default value to return if attribute not found
+
+        Returns:
+            Value of the attribute
+
         """
-        return self.__getattribute__(name)
-    
-    def config(self, **kwargs):
-        """Batch set values of multiple attributes by giving params.
+        if name in self.attributes:
+            return self.attributes[name]
+        return default
+
+    def cconfig(self, **kwargs):
+        """Batch set values of multiple shared attributes in CharmyObject by giving params.
         
-        :param **kwargs: Any configs to add
+        Args:
+             **kwargs: Any configs to add
         """
-        param_list: dict[str, typing.Any] = {**kwargs}
-        for name in param_list.keys():
-            self.set(name, param_list[name])
+        for name in kwargs.keys():
+            self.cset(name, kwargs[name])
 
     # endregion
 

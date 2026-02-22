@@ -4,7 +4,7 @@ import warnings
 from ..const import ID, MANAGER_ID
 from ..object import CharmyObject
 from ..rect import Rect
-from .cmm import CharmyManager
+from ..cmm import CharmyManager
 
 
 class CanvasBase(CharmyObject):

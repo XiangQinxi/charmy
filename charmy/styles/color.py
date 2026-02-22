@@ -1,6 +1,6 @@
 from ..const import MANAGER_ID, Backends
 from ..object import CharmyObject
-from ..widgets.cmm import CharmyManager
+from ..cmm import CharmyManager
 
 
 class Color(CharmyObject):
