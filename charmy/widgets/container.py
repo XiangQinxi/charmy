@@ -64,7 +64,6 @@ class Container(CharmyObject):
         for child in self.children:
             if hasattr(child, "draw"):
                 child.draw(canvas)
-                print(12424)
 
     # endregion
 
