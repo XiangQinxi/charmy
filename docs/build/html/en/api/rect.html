@@ -221,9 +221,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cmm.html">charmy.cmm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pos.html">charmy.pos</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">charmy.rect</a></li>
@@ -233,9 +233,6 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="widgets/button.html">button</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
@@ -245,6 +242,12 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="frameworks/ui.html">ui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frameworks/drawing.html">drawing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frameworks/backend.html">backend</a></li>
 </ul>
 </li>
 </ul>
@@ -307,9 +310,7 @@
 <dd><p>Bases: <a class="reference internal" href="object.html#charmy.object.CharmyObject" title="charmy.object.CharmyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></p>
 <p>Rect is a class to store the position and size of a rectangle.</p>
 <dl class="simple">
-<dt>Args:</dt><dd><dl class="simple">
-<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: The keyword arguments to initialize the rectangle.</dt><dd><dl class="simple">
-<dt>The keyword arguments are:</dt><dd><p>x (int): The x coordinate of the top-left corner of the rectangle.
+<dt>Attributes:</dt><dd><p>x (int): The x coordinate of the top-left corner of the rectangle.
 y (int): The y coordinate of the top-left corner of the rectangle.
 width (int): The width of the rectangle.
 height (int): The height of the rectangle.
@@ -319,13 +320,64 @@ right (int): The right coordinate of the top-left corner of the rectangle.
 bottom (int): The bottom coordinate of the top-left corner of the rectangle.</p>
 </dd>
 </dl>
-</dd>
-</dl>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.rect.Rect.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.rect.Rect.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.rect.Rect.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.rect.Rect.make_XYWH">
+<span class="sig-name descname"><span class="pre">make_XYWH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#charmy.rect.Rect.make_XYWH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.rect.Rect.make_LTRB">
+<span class="sig-name descname"><span class="pre">make_LTRB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#charmy.rect.Rect.make_LTRB" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.left">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">left</span></span><a class="headerlink" href="#charmy.rect.Rect.left" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.top">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#charmy.rect.Rect.top" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.right">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">right</span></span><a class="headerlink" href="#charmy.rect.Rect.right" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.bottom">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">bottom</span></span><a class="headerlink" href="#charmy.rect.Rect.bottom" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.rect.Rect.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.rect.Rect.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.x">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#charmy.rect.Rect.x" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.y">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#charmy.rect.Rect.y" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.width">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#charmy.rect.Rect.width" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.rect.Rect.height">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#charmy.rect.Rect.height" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -390,6 +442,17 @@ bottom (int): The bottom coordinate of the top-left corner of the rectangle.</p>
 <li><a class="reference internal" href="#">charmy.rect</a><ul>
 <li><a class="reference internal" href="#charmy.rect.Rect"><code class="docutils literal notranslate"><span class="pre">Rect</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.rect.Rect.__init__"><code class="docutils literal notranslate"><span class="pre">Rect.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.make_XYWH"><code class="docutils literal notranslate"><span class="pre">Rect.make_XYWH()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.make_LTRB"><code class="docutils literal notranslate"><span class="pre">Rect.make_LTRB()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.left"><code class="docutils literal notranslate"><span class="pre">Rect.left</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.top"><code class="docutils literal notranslate"><span class="pre">Rect.top</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.right"><code class="docutils literal notranslate"><span class="pre">Rect.right</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.bottom"><code class="docutils literal notranslate"><span class="pre">Rect.bottom</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.id"><code class="docutils literal notranslate"><span class="pre">Rect.id</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.x"><code class="docutils literal notranslate"><span class="pre">Rect.x</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.y"><code class="docutils literal notranslate"><span class="pre">Rect.y</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.width"><code class="docutils literal notranslate"><span class="pre">Rect.width</span></code></a></li>
+<li><a class="reference internal" href="#charmy.rect.Rect.height"><code class="docutils literal notranslate"><span class="pre">Rect.height</span></code></a></li>
 </ul>
 </li>
 </ul>

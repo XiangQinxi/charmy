@@ -14,9 +14,9 @@ Core Modules
    :maxdepth: 2
    :caption: Core API:
 
+   cmm
    const
    event
-   framework
    object
    pos
    rect
@@ -41,3 +41,13 @@ Styles
    :caption: Styles:
 
    styles/index
+
+
+Frameworks
+------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Frameworks:
+
+   frameworks/index

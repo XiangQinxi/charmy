@@ -29,14 +29,19 @@ class InstanceCounterMeta(type):
 class CharmyObject(metaclass=InstanceCounterMeta):
     """CharmyObject is this project's basic class.
 
-    CharmyObject provides abilities of cummulating ID and set attributes.
+    CharmyObject provides abilities of cumulating ID and set attributes.
+
+    Attributes:
+        _attributes: Private attributes. {key: value}
+        attributes: Public attributes. {key: value}
+        id: ID for the object
     """
 
     objects: typing.Dict[str, typing.Any] = {}  # find by ID {1: OBJ1, 2: OBJ2}
     objects_sorted: typing.Dict[str, typing.Any] = (
         {}
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
-    attributes: typing.Dict[str, typing.Any] = {}
+    attributes: typing.Dict[str, typing.Any] = {}  # public attributes {key: value}
 
     def __init__(self, id_: ID | str = ID.AUTO):
         """CharmyObject is this project's basic class.
@@ -45,10 +50,13 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
         Args:
             id_ (ID | str): Optional, ID for the object
+
         """
 
         # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
         # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
+
+        self._custom: typing.Dict[str, typing.Any] = {}  # Private custom attributes
 
         if id_ == ID.AUTO:
             _prefix = self.class_name
@@ -96,7 +104,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     # endregion
 
-    # region: Attributes set / get
+    # region: Shared attributes set / get
 
     def cset(self, name: str, value: typing.Any):
         """Set shared attributes in CharmyObject.
@@ -132,6 +140,39 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             self.cset(name, kwargs[name])
 
     # endregion
+
+    def set(self, name: str, value: typing.Any):
+        """Set attributes in CharmyObject.
+
+        Args:
+            name: Name of the attribute to set
+            value: Value to set
+        """
+        self.__dict__[name] = value
+
+    def get(self, name: str, default: typing.Any = None) -> typing.Any:
+        """Get attributes in CharmyObject.
+
+        Args:
+            name: Name of the attribute to get
+            default: Default value to return if attribute not found
+
+        Returns:
+            Value of the attribute
+
+        """
+        if name in self.__dict__:
+            return self.__dict__[name]
+        return default
+
+    def config(self, **kwargs):
+        """Batch set values of multiple attributes in CharmyObject by giving params.
+
+        Args:
+             **kwargs: Any configs to add
+        """
+        for name in kwargs.keys():
+            self.set(name, kwargs[name])
 
     # region: __str__
 

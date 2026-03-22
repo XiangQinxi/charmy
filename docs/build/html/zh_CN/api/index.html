@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="charmy.const" href="const.html"><link rel="prev" title="Message Loop (Event Loop)" href="../how_does_it_work/message_loop.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="charmy.cmm" href="cmm.html"><link rel="prev" title="Message Loop (Event Loop)" href="../how_does_it_work/message_loop.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>API参考 - Charmy GUI 0.1.0 文档</title>
@@ -221,9 +221,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API参考</a><input aria-label="Toggle navigation of API参考" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html">charmy.cmm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rect.html">charmy.rect</a></li>
@@ -233,9 +233,6 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="widgets/button.html">button</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
@@ -245,6 +242,12 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="frameworks/ui.html">ui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frameworks/drawing.html">drawing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frameworks/backend.html">backend</a></li>
 </ul>
 </li>
 </ul>
@@ -332,6 +335,13 @@
     </pre><div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">核心API：</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="cmm.html">charmy.cmm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.cmm.GLFWError"><code class="docutils literal notranslate"><span class="pre">GLFWError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.cmm.CharmyManager"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html#charmy.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="const.html">charmy.const</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.ID"><code class="docutils literal notranslate"><span class="pre">ID</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.Backends"><code class="docutils literal notranslate"><span class="pre">Backends</span></code></a></li>
@@ -345,16 +355,6 @@
 <li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.EventTask"><code class="docutils literal notranslate"><span class="pre">EventTask</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.DelayTask"><code class="docutils literal notranslate"><span class="pre">DelayTask</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.WorkingThread"><code class="docutils literal notranslate"><span class="pre">WorkingThread</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="framework.html">charmy.framework</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.UIFramework"><code class="docutils literal notranslate"><span class="pre">UIFramework</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.GLFW"><code class="docutils literal notranslate"><span class="pre">GLFW</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.DrawingFramework"><code class="docutils literal notranslate"><span class="pre">DrawingFramework</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.SKIA"><code class="docutils literal notranslate"><span class="pre">SKIA</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.BackendFramework"><code class="docutils literal notranslate"><span class="pre">BackendFramework</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.OPENGL"><code class="docutils literal notranslate"><span class="pre">OPENGL</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="framework.html#charmy.framework.Framework"><code class="docutils literal notranslate"><span class="pre">Framework</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="object.html">charmy.object</a><ul>
@@ -394,9 +394,6 @@
 <li class="toctree-l1"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="widgets/button.html">button</a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/container.html">container</a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/widget.html">widget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/window.html">window</a></li>
@@ -419,6 +416,21 @@
 </ul>
 </div>
 </section>
+<section id="frameworks">
+<h2>Frameworks<a class="headerlink" href="#frameworks" title="链接到此标题。">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Frameworks:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="frameworks/index.html">charmy.frameworks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/index.html#charmy.frameworks.Frameworks"><code class="docutils literal notranslate"><span class="pre">Frameworks</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/ui.html">ui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/drawing.html">drawing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/backend.html">backend</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
 </section>
 
         </article>
@@ -426,12 +438,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="const.html">
+          <a class="next-page" href="cmm.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">charmy.const</div>
+                <div class="title">charmy.cmm</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -480,6 +492,7 @@
 <li><a class="reference internal" href="#core-modules">核心模块</a></li>
 <li><a class="reference internal" href="#widgets">组件</a></li>
 <li><a class="reference internal" href="#styles">样式</a></li>
+<li><a class="reference internal" href="#frameworks">Frameworks</a></li>
 </ul>
 </li>
 </ul>

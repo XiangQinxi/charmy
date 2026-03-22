@@ -42,5 +42,5 @@ Then, we can execute the corresponding framework's methods through the mapping t
 
 That's the principle of the abstraction layer. Next, you can delve deeper through the source code and testing.
 
-.. autoclasstree:: charmy.framework.GLFW charmy.framework.SKIA
+.. autoclasstree:: charmy.frameworks.ui.GLFW charmy.frameworks.drawing.SKIA
     :full:

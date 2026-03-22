@@ -221,9 +221,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API参考</a><input aria-label="Toggle navigation of API参考" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cmm.html">charmy.cmm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
@@ -233,9 +233,6 @@
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="button.html">button</a></li>
 <li class="toctree-l3"><a class="reference internal" href="canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="window.html">window</a></li>
@@ -245,6 +242,12 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../styles/theme.html">theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../frameworks/ui.html">ui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../frameworks/drawing.html">drawing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../frameworks/backend.html">backend</a></li>
 </ul>
 </li>
 </ul>
@@ -318,7 +321,7 @@ drawing_mode: The drawing mode of the window,</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.CharmyManager" title="charmy.widgets.cmm.CharmyManager"><span class="pre">CharmyManager</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="仅关键字参数分隔符 (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Charmy</span> <span class="pre">GUI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(100,</span> <span class="pre">100)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawing_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.DrawingMode" title="charmy.const.DrawingMode"><span class="pre">DrawingMode</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DrawingMode.RETAINED</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.__init__" title="链接到此定义。">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cmm.html#charmy.cmm.CharmyManager" title="charmy.cmm.CharmyManager"><span class="pre">CharmyManager</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="仅关键字参数分隔符 (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Charmy</span> <span class="pre">GUI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(100,</span> <span class="pre">100)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawing_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.DrawingMode" title="charmy.const.DrawingMode"><span class="pre">DrawingMode</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DrawingMode.RETAINED</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.__init__" title="链接到此定义。">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -361,7 +364,7 @@ drawing_mode: The drawing mode of the window,</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.contextlib">
-<span class="sig-name descname"><span class="pre">contextlib</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'contextlib'</span> <span class="pre">from</span> <span class="pre">'D:\\Python\\313\\Lib\\contextlib.py'&gt;</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.contextlib" title="链接到此定义。">¶</a></dt>
+<span class="sig-name descname"><span class="pre">contextlib</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'contextlib'</span> <span class="pre">from</span> <span class="pre">'C:\\Python\\Py313\\Lib\\contextlib.py'&gt;</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.contextlib" title="链接到此定义。">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -431,14 +434,22 @@ drawing_mode: The drawing mode of the window,</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.resize">
-<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../size.html#charmy.size.Size" title="charmy.size.Size"><span class="pre">Size</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.resize" title="链接到此定义。">¶</a></dt>
-<dd><p>Resize the window to the given size.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.title">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">title</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.title" title="链接到此定义。">¶</a></dt>
+<dd><p>Get the title of the window.</p>
 <dl class="simple">
-<dt>Args:</dt><dd><p>size: Size to resize.</p>
+<dt>Returns:</dt><dd><p>str | None: Title of the window</p>
 </dd>
-<dt>Returns:</dt><dd><p>None</p>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.size">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../size.html#charmy.size.Size" title="charmy.size.Size"><span class="pre">Size</span></a></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.size" title="链接到此定义。">¶</a></dt>
+<dd><p>Get the size of the window.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Size: Size of the window</p>
 </dd>
 </dl>
 </dd></dl>
@@ -546,7 +557,8 @@ drawing_mode: The drawing mode of the window,</p>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.cancel_dirty"><code class="docutils literal notranslate"><span class="pre">WindowBase.cancel_dirty()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.destroy"><code class="docutils literal notranslate"><span class="pre">WindowBase.destroy()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.can_be_close"><code class="docutils literal notranslate"><span class="pre">WindowBase.can_be_close()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.resize"><code class="docutils literal notranslate"><span class="pre">WindowBase.resize()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.title"><code class="docutils literal notranslate"><span class="pre">WindowBase.title</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.size"><code class="docutils literal notranslate"><span class="pre">WindowBase.size</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.move"><code class="docutils literal notranslate"><span class="pre">WindowBase.move()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">WindowBase.WORKING_THREAD</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.latest_event"><code class="docutils literal notranslate"><span class="pre">WindowBase.latest_event</span></code></a></li>

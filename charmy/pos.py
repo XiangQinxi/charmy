@@ -6,15 +6,15 @@ class Pos(CharmyObject):
 
     def __init__(self, x=0, y=0):
         super().__init__()
-        self.x = x
-        self.y = y
+        self.set("x", x)
+        self.set("y", y)
 
     def __call__(self, x: int | float | None = None, y: int | float | None = None):
         if x:
-            self.x = x
+            self.set("x", x)
         if y:
-            self.y = y
+            self.set("y", y)
 
     def __str__(self):
         """Return position in string."""
-        return f"Pos({self.x}, {self.y})"
+        return f"Pos({self.get('x')}, {self.get('y')})"

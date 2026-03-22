@@ -16,19 +16,14 @@ class Size(CharmyObject):
 
     def __init__(self, width=0, height=0):
         super().__init__()
-        self.width = width
-        self.height = height
+        self.set("width", width)
+        self.set("height", height)
 
     def __call__(self, width: int | float | None = None, height: int | float | None = None):
         if width:
-            self.width = width
+            self.set("width", width)
         if height:
-            self.height = height
+            self.set("height", height)
 
     def __str__(self):
-        return f"Size({self.width}, {self.height})"
-
-
-size = Size(300, 400)
-
-print(size)
+        return f"Size({self.get('width')}, {self.get('height')})"

@@ -68,6 +68,12 @@ class CharmyManager(CharmyObject):
         # TODO: 能不能换个地方？比如说framework.py?
         # TODO: CharmyManager过度耦合glfw, 没有考虑其他框架
 
+        windows = self.cget("ui.windows")
+        if windows:
+            first_alive_window = next((w for w in windows if w.is_visible and w.is_alive), None)
+            if first_alive_window:
+                self.glfw.make_context_current(first_alive_window.the_window)
+
         self.glfw.swap_interval(1 if self.cget("ui.is_vsync") else 0)  # 是否启用垂直同步
 
         # not implemented yet

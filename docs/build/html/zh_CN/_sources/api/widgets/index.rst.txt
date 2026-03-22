@@ -14,7 +14,6 @@ charmy.widgets
 
    button
    canvas
-   cmm
    container
    widget
    window
