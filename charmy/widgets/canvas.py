@@ -41,7 +41,7 @@ class CanvasBase(CharmyObject):
                 warnings.warn(f"Warning: Unknown element type {element['type']}")
 
     def draw_rect(self, canvas, element: dict):
-        self.framework.drawing.draw_rect(
+        self.frameworks.drawing.draw_rect(
             canvas,
             rect=element.get("rect"),
             radius=element.get("radius", 0),
