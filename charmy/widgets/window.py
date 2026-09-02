@@ -73,6 +73,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self._mouse_hovering_on: list[_Container | _Widget] = []
         self._drawing_list: _typing.List[_graphics.DrawnObject] = []
         self._redraw_regions: list[_styles.shape.ShapeRange] = [((0, 0), self.size)]
+        self._requested_redraw_regions: list[_styles.shape.ShapeRange] = []
         # Bind on window events
         self.bind(_event_types.WidgetResize, lambda _: self.update(True), _is_internal=True)
         self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)
@@ -242,6 +243,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
                         ), 
                     self.backend_base
                     )
+                self.backend_base.update(True)
         # Update window
         if force_redraw:
             self.backend_base.update(True)
@@ -251,7 +253,11 @@ class WindowEntity(_CharmyObject, _EventHandling):
             if len(self._redraw_regions) == 0:
                 # If no region to redraw, still update window for events or so
                 self.backend_base.update(False)
-        self._redraw_regions = []
+        self._redraw_regions = self._requested_redraw_regions # No need to copy() ...
+        # ... as _requested_redraw_regions will soon be set to a new empty list
+        print(len(self._requested_redraw_regions)) if len(self._requested_redraw_regions) > 0 else None
+        print(len(self._redraw_regions)) if len(self._redraw_regions) > 0 else None
+        self._requested_redraw_regions = []
 
     def destroy(self):
         """Close the window and mark it as inactive."""

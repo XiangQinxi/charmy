@@ -14,6 +14,7 @@ if _typing.TYPE_CHECKING:
     from ..widgets import widget as _widget, container as _container
     from ..widgets import window as _window
     from ..utils import var as _var
+    from ..utils import layout_profiles as _layout_profiles
 
 
 # region Base class & generic classes
@@ -251,16 +252,26 @@ class MouseClick(MouseInteractEvent):
 
 @_dataclass
 class VarChanged(Event):
+    """Represents that the value of a Var was changed."""
     type: _typing.ClassVar[str]  = "var.changed"
 
     subject: _var.Var
 
 @_dataclass
 class ProfileChanged(Event):
+    """Represents that any value of a profile was changed."""
     type: _typing.ClassVar[str]  = "profile.changed"
 
     subject: _widget.WidgetProfile
     item_changed: str
+
+@_dataclass
+class LayoutChanged(Event):
+    """Represents that any property of a LayoutProfile was changed."""
+    type: _typing.ClassVar[str] = "layout.changed"
+
+    subject: _layout_profiles.LayoutProfile
+
 
 # region Delay events
 

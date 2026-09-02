@@ -44,4 +44,4 @@ The Genesis backend uses Cairo and SDL2 for rendering and window operations resp
 
 This is an open-source project licensed under `AGPLv3`, for full license text, please refer to `LICENSE.txt`.
 
-We also plan to provide paid license in the future, anyone who buys paid license will be able to freely (to some extents, terms and conditions apply) use Charmy without the limitations of `AGPL`. Please no that this paragraph is a brief description of one of our future plans, and does not describe, explain, or complete the licensing policies (currently AGPL only) of this project. For more information of the price and terms of paid license, please wait for further notice or contact us.
+We also plan to provide paid license in the future, anyone who buys paid license will be able to freely (to some extents, terms and conditions apply) use Charmy without the limitations of `AGPL`. Please note that this paragraph is a brief description of one of our future plans, and does not describe, explain, or complete the licensing policies (currently AGPL only) of this project. For more information of the price and terms of paid license, please wait for further notice or contact us.

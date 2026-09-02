@@ -76,6 +76,8 @@ class WidgetProfile(CharmyObject, EventHandling):
         super().__setattr__(name, value)
         if not hasattr(self, "_alive"):
             return
+        if not self._alive:
+            return
         if not name.startswith("_"):
             self.trigger(event_types.ProfileChanged(self, name))
 
@@ -156,6 +158,16 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
         self._alive: bool = True
 
+        self.bind(
+            event_types.WidgetMove, 
+            lambda e: self.root_container._requested_redraw_regions.append(e.old_pos)
+            )
+        self.bind(
+            event_types.WidgetMove, 
+            lambda e: print("Hey I'm moving bro! I say I'm moving!")
+            # This is a test, or an ester egg if u prefer that way
+            )
+
     def _negotiate_profile_state(self, 
             target_state: str, 
             target_item: str, 
@@ -203,8 +215,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         Register profiles that are not registered yet, and remove those which are no longer 
         relating to this widget.
         """
-        curr_profiles = list(self.profiles.values())
-        for profile in curr_profiles:
+        for state, profile in self.profiles.items():
             if profile not in self._registered_profiles:
                 # Profile not registered, then register it
                 task_obj = profile.bind(
@@ -214,7 +225,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                     )
                 self._registered_profiles[profile] = task_obj
         for profile in self._registered_profiles.keys():
-            if profile not in curr_profiles:
+            if profile not in self.profiles.values():
                 # Profile is no longer relating to this widget, unregister it
                 profile.unbind(self._registered_profiles[profile])
                 del self._registered_profiles[profile]
@@ -269,6 +280,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             if type(profile_specified) is not tuple:
                 if isinstance(profile_specified, var.Var):
                     profile_specified = profile_specified.value
+                    if profile_specified is None:
+                        return (0, 0)
                 else:
                     return (0, 0)
             if len(profile_specified) != 2:
@@ -359,6 +372,15 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 return True
         else:
             return False
+
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        super().__setattr__(name, value)
+        if not hasattr(self, "_alive"):
+            return
+        if not self._alive:
+            return
+        if not name.startswith("_"):
+            self.trigger(event_types.WidgetConfigure(self, {name: value}))
 
     # def _on_cache_dirty(self, prop_name: str) -> None:
     #     if prop_name == "components":
