@@ -71,7 +71,7 @@ class LinePath(_reactive_caching.CachedClass):
         return []
 
     @property
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rectangle boundary of the line."""
         _warnings.warn(f"Line type {self.type} does not support getting boundary.")
         return (0, 0), (0, 0)
@@ -182,7 +182,7 @@ class Line(LinePath):
         return points[-1]
 
     @_reactive_caching.cached_property(["points"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rectangle boundary of single-section line."""
         # Var conversion
         points = _var.unpack_var(self.points, [])
@@ -268,7 +268,7 @@ class PolyLine(LinePath):
         return points[-1]
 
     @_reactive_caching.cached_property(["points"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rectangle boundary of polyline."""
         points = _var.unpack_var(self.points, [])
         points_x: list[int] = [point[0] for point in points]
@@ -370,7 +370,7 @@ class CircleArc(Curve):
         return PolyLine(points)
 
     @_reactive_caching.cached_property(["center", "radius", "start_orient", "end_orient"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rect range of the circle arc.
 
         Calculation code written by Gemini, model: 3 Flash
@@ -480,7 +480,7 @@ class QuadraticBezier(Curve):
         return PolyLine(polyline_points)
 
     @_reactive_caching.cached_property(["points"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rectangle boundary of quadratic Bezier.
 
         This function was vibed with GitHub Copilot, model GPT-5 mini. 
@@ -545,7 +545,7 @@ class CubicBezier(Curve):
         return PolyLine(points)
 
     @_reactive_caching.cached_property(["points"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rectangle boundary of cubic Bezier using helpers in geo_math.
         
         This function was vibed by GitHub Copilot, model GPT-5 mini. 
@@ -581,7 +581,7 @@ class ShapeType(_reactive_caching.CachedClass):
 
     @property
     @_abstractmethod
-    def boundary(self) -> ShapeRange: ...
+    def boundary(self) -> RectRange: ...
 
     @_abstractmethod
     def __contains__(self, point: Point) -> bool: ...
@@ -669,7 +669,7 @@ class SingleShape(ShapeType):
     def lines(self) -> list[LinePath]: ...
 
     @_reactive_caching.cached_property(["lines"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rect range of a shape."""
         if len(self.lines) == 0:
             return (0, 0), (0, 0)
@@ -798,7 +798,7 @@ class Rect(SingleShape):
         return [polyline]
 
     @_reactive_caching.cached_property(["pos", "size"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Bounding box of the rect."""
         pos = _var.unpack_var(self.pos, (0, 0))
         size = _var.unpack_var(self.size, (0, 0))
@@ -878,7 +878,7 @@ class RoundRect(SingleShape):
             ]
 
     @_reactive_caching.cached_property(["pos", "size"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Bounding box of the Rounded rect."""
         pos = _var.unpack_var(self.pos, (0, 0))
         size = _var.unpack_var(self.size, (0, 0))
@@ -911,7 +911,7 @@ class ShapeGroup(ShapeType):
                 self._shapes.append(shape)
 
     @_reactive_caching.cached_property(["shapes"])
-    def boundary(self) -> ShapeRange:
+    def boundary(self) -> RectRange:
         """Rect range of a group of shape."""
         if len(self.shapes) == 0:
             return (0, 0), (0, 0)
@@ -952,7 +952,7 @@ Point: _typing.TypeAlias = tuple[int, int]
 Size: _typing.TypeAlias = tuple[int, int]
 
 # Type ShapeRange
-ShapeRange: _typing.TypeAlias = tuple[Point, Size]
+RectRange: _typing.TypeAlias = tuple[Point, Size]
 
 # Type LineJSON and ShapeJSON
 LineJSON: _typing.TypeAlias = dict[str, _typing.Any]

@@ -53,7 +53,7 @@ class DrawnObject(_cm_object.CharmyObject):
 
     @property
     @_abstractmethod
-    def boundary(self) -> _styles.shape.ShapeRange: ...
+    def boundary(self) -> _styles.shape.RectRange: ...
 
     @_abstractmethod
     def __contains__(self, point: _styles.shape.Point) -> bool: ...
@@ -124,7 +124,7 @@ class DrawnLine(DrawnObject):
             self._texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def boundary(self) -> _styles.shape.ShapeRange:
+    def boundary(self) -> _styles.shape.RectRange:
         """Rect boundary of the drawn line"""
         return (
             self.offset[0] + self.line.boundary[0][0] - self.anchor[0], 
@@ -238,7 +238,7 @@ class DrawnShape(DrawnObject):
             self._border_texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def boundary(self) -> _styles.shape.ShapeRange:
+    def boundary(self) -> _styles.shape.RectRange:
         """Rect boundary of the drawn shape."""
         return (
             self.offset[0] + self.shape.boundary[0][0] - self.anchor[0], 
@@ -338,7 +338,7 @@ class DrawnText(DrawnObject):
             self._texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def boundary(self) -> _styles.shape.ShapeRange:
+    def boundary(self) -> _styles.shape.RectRange:
         """Rect boundary of the drawn text."""
         # TODO: Implement getting text boundary via text-shape conversion
         pos = self.offset[0] - self.anchor[0], self.offset[1] - self.anchor[1]

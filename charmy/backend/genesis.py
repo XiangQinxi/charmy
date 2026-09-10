@@ -240,7 +240,7 @@ class WindowBase(template.WindowBase):
             case sdl2.SDL_QUIT:
                 self.charmy_window.destroy()
 
-    def update(self, redraw: bool | charmy_stuff.styles.shape.ShapeRange = True) -> typing.Self:
+    def update(self, redraw: bool | charmy_stuff.styles.shape.RectRange = True) -> typing.Self:
         """Update the window.
 
         :return self: The WindowBase itself
@@ -394,46 +394,57 @@ class LineBase(template.LineBase):
         painting_pos = tuple([int(v) for v in window.cairo_context.get_current_point()])
         # Draw line
         if isinstance(line, charmy_stuff.styles.shape.Line):
+            # Unpack vars
+            points = charmy_stuff.var.unpack_var(line.points, [])
             # Straight line
-            if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
+            if painting_pos != _calc_point_actual_pos(points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
-                    *_calc_point_actual_pos(line.points[0], anchor, offset)
+                    *_calc_point_actual_pos(points[0], anchor, offset)
                     )
             window.cairo_context.line_to(
-                *_calc_point_actual_pos(line.points[1], anchor, offset)
+                *_calc_point_actual_pos(points[1], anchor, offset)
                 )
         elif isinstance(line, charmy_stuff.styles.shape.PolyLine):
+            # Unpack vars
+            points = charmy_stuff.var.unpack_var(line.points, [])
             # Polyline
-            if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
+            if painting_pos != _calc_point_actual_pos(points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
-                    *_calc_point_actual_pos(line.points[0], anchor, offset)
+                    *_calc_point_actual_pos(points[0], anchor, offset)
                     )
-            for index, point in enumerate(line.points):
+            for index, point in enumerate(points):
                 if index == 0:
                     continue
                 window.cairo_context.line_to(
                     *_calc_point_actual_pos(point, anchor, offset)
                     )
         elif isinstance(line, charmy_stuff.styles.shape.CircleArc):
+            # Unpack vars
+            start_orient = charmy_stuff.var.unpack_var(line.start_orient, 0)
+            end_orient = charmy_stuff.var.unpack_var(line.end_orient, 0)
+            center = charmy_stuff.var.unpack_var(line.center, (0, 0))
+            radius = charmy_stuff.var.unpack_var(line.radius, 0)
             # Circle arc
-            start_orient_rad = (line.start_orient - 90) * (math.pi / 180)
-            end_orient_rad = (line.end_orient - 90) * (math.pi / 180)
+            start_orient_rad = (start_orient - 90) * (math.pi / 180)
+            end_orient_rad = (end_orient - 90) * (math.pi / 180)
             window.cairo_context.arc(
-                *_calc_point_actual_pos(line.center, anchor, offset), 
-                line.radius, 
+                *_calc_point_actual_pos(center, anchor, offset), 
+                radius, 
                 start_orient_rad, end_orient_rad)
         elif isinstance(line, charmy_stuff.styles.shape.CubicBezier):
-            if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
+            # Unpack vars
+            points = charmy_stuff.var.unpack_var(line.points, [])
+            if painting_pos != _calc_point_actual_pos(points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
-                    *_calc_point_actual_pos(line.points[0], anchor, offset)
+                    *_calc_point_actual_pos(points[0], anchor, offset)
                     )
             window.cairo_context.curve_to(
-                *_calc_point_actual_pos(line.points[1], anchor, offset), 
-                *_calc_point_actual_pos(line.points[2], anchor, offset), 
-                *_calc_point_actual_pos(line.points[3], anchor, offset), 
+                *_calc_point_actual_pos(points[1], anchor, offset), 
+                *_calc_point_actual_pos(points[2], anchor, offset), 
+                *_calc_point_actual_pos(points[3], anchor, offset), 
                 )
         else:
             template.not_implemented_func(Backend.friendly_name, f"Drawing line type {line.type}")

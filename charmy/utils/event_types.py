@@ -77,7 +77,7 @@ class WidgetUpdate(WidgetEvent):
     type: _typing.ClassVar[str] = "widget.update"
 
     subject: _EventHandling | None
-    redraw: bool | _shape.ShapeRange = False
+    redraw: bool | _shape.RectRange = False
 
 @_dataclass
 class WidgetDraw(WidgetEvent):

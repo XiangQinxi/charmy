@@ -16,12 +16,40 @@ provide no guarantee for codes this file.
 from __future__ import annotations
 
 import math
-from typing import Tuple, List, Sequence
+import typing
 
-Point = tuple[int, int]
+if typing.TYPE_CHECKING:
+    from ..styles import shape
 
 
-def evaluate_quadratic_bezier(points: Sequence[Point], t: float) -> tuple[float, float]:
+_DirectionChar: typing.TypeAlias = typing.Literal["n", "e", "s", "w", "N", "E", "S", "W"]
+def expand_rectrange(
+        rectrange: shape.RectRange, 
+        width: int, 
+        direction: tuple[_DirectionChar, ...] | _DirectionChar | str
+        ) -> shape.RectRange:
+    """Expand a RectRange to specific directions for specific pixels.
+
+    This is the only human-written function in this file currently.
+
+    :param rectrange: The original rectrange to expand
+    :param width: For how much (px)
+    :param direction: In which direction(s)
+    """
+    direction_lowered = [d.lower() for d in direction] if type(direction) is tuple else \
+        [direction.lower()] # type: ignore # because this place direction must be str
+    n_expansion = width if "n" in direction_lowered else 0
+    e_expansion = width if "e" in direction_lowered else 0
+    s_expansion = width if "s" in direction_lowered else 0
+    w_expansion = width if "w" in direction_lowered else 0
+    result = (
+        (rectrange[0][0] - e_expansion, rectrange[0][1] - n_expansion), 
+        (rectrange[1][0] + w_expansion, rectrange[1][1] + s_expansion)
+        )
+    return result
+
+
+def evaluate_quadratic_bezier(points: typing.Sequence[shape.Point], t: float) -> tuple[float, float]:
     """Evaluate a quadratic Bezier at parameter t (0..1).
 
     Returns (x, y) as floats.
@@ -35,22 +63,22 @@ def evaluate_quadratic_bezier(points: Sequence[Point], t: float) -> tuple[float,
     return x, y
 
 
-def _unique_t_values(values: List[float], abs_tolerance: float = 1e-9) -> List[float]:
+def _unique_t_values(values: typing.List[float], abs_tolerance: float = 1e-9) -> typing.List[float]:
     """Return unique t values within abs_tolerance preserving order."""
-    unique: List[float] = []
+    unique: typing.List[float] = []
     for value in values:
         if not any(math.isclose(value, existing, abs_tol=abs_tolerance) for existing in unique):
             unique.append(value)
     return unique
 
 
-def quadratic_bezier_internal_t_roots(points: Sequence[Point], eps: float = 1e-12) -> List[float]:
+def quadratic_bezier_internal_t_roots(points: typing.Sequence[shape.Point], eps: float = 1e-12) -> typing.List[float]:
     """Return the list of unique t roots (0<t<1) where derivative in x or y is zero.
 
     This mirrors solving (p0 - 2*p1 + p2) * t = (p0 - p1) for each coordinate.
     """
     start_point, control_point, end_point = points
-    candidate_ts: List[float] = []
+    candidate_ts: typing.List[float] = []
     for coord_index in (0, 1):
         denom_coord = (
             start_point[coord_index]
@@ -68,7 +96,7 @@ def quadratic_bezier_internal_t_roots(points: Sequence[Point], eps: float = 1e-1
     return _unique_t_values(candidate_ts, abs_tolerance=1e-9)
 
 
-def evaluate_cubic_bezier(points: Sequence[Point], t: float) -> tuple[float, float]:
+def evaluate_cubic_bezier(points: typing.Sequence[shape.Point], t: float) -> tuple[float, float]:
     """Evaluate a cubic Bezier at parameter t (0..1). Returns (x, y) floats."""
     start_point, control_point_first, control_point_second, end_point = points
     one_minus_t = 1.0 - t
@@ -88,7 +116,7 @@ def evaluate_cubic_bezier(points: Sequence[Point], t: float) -> tuple[float, flo
 
 
 def cubic_bezier_derivative_roots(
-        points: Sequence[Point], eps: float = 1e-12) -> List[float]:
+        points: typing.Sequence[shape.Point], eps: float = 1e-12) -> typing.List[float]:
     """Return t roots (0<t<1) where derivative in x or y is zero.
 
     Solves quadratic 3*a t^2 + 2*b t + c = 0 for each coordinate, where
@@ -97,7 +125,7 @@ def cubic_bezier_derivative_roots(
     c = 3*(p1 - p0)
     """
     start_point, control_point_first, control_point_second, end_point = points
-    candidate_ts: List[float] = []
+    candidate_ts: typing.List[float] = []
 
     def compute_polynomial_coefficients(
         coord_start_value,
@@ -155,7 +183,7 @@ def gui_deg_to_math_rad(gui_deg: float) -> float:
     """
     return math.radians(90 - gui_deg)
 
-def point_on_circle(center: Point, radius: int, gui_deg: float) -> Point:
+def point_on_circle(center: shape.Point, radius: int, gui_deg: float) -> shape.Point:
     """Return the integer point on circle at GUI orientation degrees.
 
     GUI coordinate system: 0 degrees is up and angles increase clockwise.
@@ -180,7 +208,7 @@ def is_angle_covered(target: float, start: float, end: float) -> bool:
         return target_norm >= start_norm or target_norm <= end_norm
 
 def arc_to_cubic_beziers(
-        center: Point, radius: int, start_orient: int, end_orient: int) -> List[List[Point]]:
+        center: shape.Point, radius: int, start_orient: int, end_orient: int) -> typing.List[typing.List[shape.Point]]:
     """Convert a circle arc (in GUI degrees) to a list of cubic Bezier point lists.
 
     Returns a list where each item is [p0, p1, p2, p3] with integer points.
@@ -200,7 +228,7 @@ def arc_to_cubic_beziers(
     segment_delta = total_delta / segments
     alpha = (4/3) * math.tan(segment_delta / 4)
 
-    beziers: List[List[Point]] = []
+    beziers: typing.List[typing.List[shape.Point]] = []
     for i in range(segments):
         angle0 = start_rad + i * segment_delta
         angle1 = start_rad + (i + 1) * segment_delta
@@ -221,12 +249,12 @@ def arc_to_cubic_beziers(
 
 
 def flatten_circle_arc(
-        center: Point,
+        center: shape.Point,
         radius: int,
         start_orient: int,
         end_orient: int,
         tolerance: float = 15.0,
-    ) -> List[Point]:
+    ) -> typing.List[shape.Point]:
     """Flatten a circle arc into a polyline approximation.
 
     The returned list includes the start and end points of the arc.
@@ -245,7 +273,7 @@ def flatten_circle_arc(
         return [point_on_circle(center, radius, start_orient), point_on_circle(center, radius, end_orient)]
 
     segment_count = max(1, int(math.ceil(abs(total_delta) / math.radians(tolerance))))
-    points: List[Point] = []
+    points: typing.List[shape.Point] = []
     for segment_index in range(segment_count + 1):
         angle = start_rad + segment_index * (total_delta / segment_count)
         gui_degree = 90 - math.degrees(angle)
@@ -254,9 +282,9 @@ def flatten_circle_arc(
 
 
 def flatten_quadratic_bezier(
-        points: Sequence[Point],
+        points: typing.Sequence[shape.Point],
         tolerance: float = 15.0,
-    ) -> List[Point]:
+    ) -> typing.List[shape.Point]:
     """Flatten a quadratic Bezier curve into a polyline.
 
     :param tolerance: Approximate maximum angle between adjacent polyline segments, in degrees.
@@ -265,7 +293,7 @@ def flatten_quadratic_bezier(
         segments = 1
     else:
         segments = max(1, int(math.ceil(180.0 / tolerance)))
-    result: List[Point] = []
+    result: typing.List[shape.Point] = []
     for i in range(segments + 1):
         t = i / segments
         x_f, y_f = evaluate_quadratic_bezier(points, t)
@@ -274,9 +302,9 @@ def flatten_quadratic_bezier(
 
 
 def flatten_cubic_bezier(
-        points: Sequence[Point],
+        points: typing.Sequence[shape.Point],
         tolerance: float = 15.0,
-    ) -> List[Point]:
+    ) -> typing.List[shape.Point]:
     """Flatten a cubic Bezier curve into a polyline.
 
     :param tolerance: Approximate maximum angle between adjacent polyline segments, in degrees.
@@ -285,7 +313,7 @@ def flatten_cubic_bezier(
         segments = 1
     else:
         segments = max(1, int(math.ceil(180.0 / tolerance)))
-    result: List[Point] = []
+    result: typing.List[shape.Point] = []
     for i in range(segments + 1):
         t = i / segments
         x_f, y_f = evaluate_cubic_bezier(points, t)

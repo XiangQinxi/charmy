@@ -6,4 +6,4 @@ referencing Charmy objects while less likely to trigger circular import errors.
 
 from .. import styles
 from .. import graphics
-from ..utils import event_types
+from ..utils import event_types, var

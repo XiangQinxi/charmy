@@ -72,8 +72,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
         self._drawing_list: _typing.List[_graphics.DrawnObject] = []
-        self._redraw_regions: list[_styles.shape.ShapeRange] = [((0, 0), self.size)]
-        self._requested_redraw_regions: list[_styles.shape.ShapeRange] = []
+        self._redraw_regions: list[_styles.shape.RectRange] = [((0, 0), self.size)]
+        self._requested_redraw_regions: list[_styles.shape.RectRange] = []
         # Bind on window events
         self.bind(_event_types.WidgetResize, lambda _: self.update(True), _is_internal=True)
         self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)

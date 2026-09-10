@@ -130,7 +130,7 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
     def get_text_boundary(self, 
             text: str, 
             backend: _typing.Optional[_backend.Backend]
-            ) -> _shape.ShapeRange:
+            ) -> _shape.RectRange:
         """Get boundary of a specific text in this style. (NOT IMPLEMENTED)"""
         return (0, 0), (0, 0)
 
