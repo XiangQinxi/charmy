@@ -207,13 +207,15 @@ class WindowBase(template.WindowBase):
                     case sdl2.SDL_WINDOWEVENT_RESIZED:
                         self.charmy_window.trigger(cme.WidgetConfigure(
                             self.charmy_window, 
-                            {"size": (event.window.data1, event.window.data2)}
+                            "size", self.size
                             ))
+                        self.size = (event.window.data1, event.window.data2)
                     case sdl2.SDL_WINDOWEVENT_MOVED:
                         self.charmy_window.trigger(cme.WidgetConfigure(
                             self.charmy_window, 
-                            {"pos": (event.window.data1, event.window.data2)}
+                            "pos", self.pos
                             ))
+                        self.pos = (event.window.data1, event.window.data2)
                     case sdl2.SDL_WINDOWEVENT_FOCUS_GAINED:
                         self.charmy_window.trigger(cme.FocusGain(self.charmy_window))
                     case sdl2.SDL_WINDOWEVENT_FOCUS_LOST:

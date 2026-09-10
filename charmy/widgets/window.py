@@ -255,8 +255,6 @@ class WindowEntity(_CharmyObject, _EventHandling):
                 self.backend_base.update(False)
         self._redraw_regions = self._requested_redraw_regions # No need to copy() ...
         # ... as _requested_redraw_regions will soon be set to a new empty list
-        print(len(self._requested_redraw_regions)) if len(self._requested_redraw_regions) > 0 else None
-        print(len(self._redraw_regions)) if len(self._redraw_regions) > 0 else None
         self._requested_redraw_regions = []
 
     def destroy(self):
