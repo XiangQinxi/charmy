@@ -23,16 +23,20 @@ def later_on_setattr(func: _typing.Callable) -> _typing.Callable[[ClazzType], Cl
         def new_setattr(self, name: str, value: _typing.Any) -> None:
             """The overwritten `__setattr__` function.
 
-            Params same as an ordinary `__setattr__`
+            Params same as an ordinary `__setattr__`, with an additional to reveive old value.
             """
+            old = getattr(self, name) if hasattr(self, name) else None
             original_setattr_func(self, name, value) # type: ignore
-            func()
-            print("Run hijackted setattr with bound func")
+            if hasattr(self, "_setattr_detection_initialized"):
+                if self._setattr_detection_initialized:
+                    func(self, name, value, old)
+            # print("Run hijackted setattr with bound func")
         def new_init(self, *args, **kwargs):
             """The overwritten __init__ function."""
             original_init_func(self, *args, **kwargs)
-            self.__setattr__ = new_setattr
+            self._setattr_detection_initialized = True
         clazz.__init__ = new_init
+        clazz.__setattr__ = new_setattr # type: ignore
         if _typing.TYPE_CHECKING:
             clazz = _typing.cast(ClazzType, clazz)
         return clazz

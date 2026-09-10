@@ -92,14 +92,15 @@ class WidgetConfigure(WidgetEvent):
     """Will be generated when a widget or window has its configuration changed."""
     type: _typing.ClassVar[str] = "widget.configure"
 
-    attrs_changed: dict
+    item_changed: str
+    old_value: _typing.Any
 
     def call_chain(self, subject: _EventHandling) -> None:
         super().call_chain(subject)
-        if "pos" in self.attrs_changed.keys():
-            subject.trigger(WidgetMove(subject, self.attrs_changed["pos"]))
-        if "size" in self.attrs_changed.keys():
-            subject.trigger(WidgetResize(subject, self.attrs_changed["size"]))
+        if self.item_changed == "pos":
+            subject.trigger(WidgetMove(subject, subject.pos, self.old_value)) # type: ignore
+        if self.item_changed == "size":
+            subject.trigger(WidgetResize(subject, self.size, self.old_value)) # type: ignore
 
 @_dataclass
 class WidgetResize(WidgetEvent):
@@ -107,7 +108,7 @@ class WidgetResize(WidgetEvent):
     type: _typing.ClassVar[str] = "widget.resize"
 
     new_size: _shape.Size
-    old_size: _typing.Optional[_shape.Size] = None
+    old_size: _shape.Size
 
 @_dataclass
 class WidgetMove(WidgetEvent):
@@ -115,7 +116,7 @@ class WidgetMove(WidgetEvent):
     type: _typing.ClassVar[str] = "widget.move"
 
     new_pos: _shape.Point
-    old_pos: _typing.Optional[_shape.Point] = None
+    old_pos: _shape.Point
 
 @_dataclass
 class FocusGain(WidgetEvent):
@@ -271,6 +272,8 @@ class LayoutChanged(Event):
     type: _typing.ClassVar[str] = "layout.changed"
 
     subject: _layout_profiles.LayoutProfile
+    item_changed: str
+    old_value: _typing.Any
 
 
 # region Delay events

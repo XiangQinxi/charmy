@@ -12,8 +12,7 @@ from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
-from ..utils import marks, type_checking
-from ..utils import var
+from ..utils import marks, type_checking, var, on_setattr
 
 if typing.TYPE_CHECKING:
     from ..event import EventTask
@@ -98,6 +97,8 @@ class WidgetProfile(CharmyObject, EventHandling):
     def __hash__(self) -> int:
         return super().__hash__()
 
+
+@on_setattr.apply_on_setattr
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
@@ -152,7 +153,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
 
         self.is_visible: bool = False
-        self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
+        self._layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
+        self._on_layout_change_task: typing.Optional[EventTask] = None
 
         self.state: str = "normal"
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
@@ -160,13 +162,17 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         self.bind(
             event_types.WidgetMove, 
-            lambda e: self.root_container._requested_redraw_regions.append(e.old_pos)
+            lambda e: self.root_container._requested_redraw_regions.append((e.old_pos, self.size))
             )
         self.bind(
-            event_types.WidgetMove, 
-            lambda e: print("Hey I'm moving bro! I say I'm moving!")
-            # This is a test, or an ester egg if u prefer that way
+            event_types.WidgetResize, 
+            lambda e: self.root_container._requested_redraw_regions.append((self.pos, e.old_size))
             )
+        # self.bind(
+        #     event_types.WidgetMove, 
+        #     lambda e: print("Hey I'm moving bro! I say I'm moving!")
+        #     # This is a test, or an ester egg if u prefer that way
+        #     )
 
     def _negotiate_profile_state(self, 
             target_state: str, 
@@ -215,7 +221,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         Register profiles that are not registered yet, and remove those which are no longer 
         relating to this widget.
         """
-        for state, profile in self.profiles.items():
+        for _, profile in self.profiles.items():
             if profile not in self._registered_profiles:
                 # Profile not registered, then register it
                 task_obj = profile.bind(
@@ -230,6 +236,31 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 profile.unbind(self._registered_profiles[profile])
                 del self._registered_profiles[profile]
         self._update_components() # After changing the profile list, components needs rebuild
+
+    @property
+    def layout_profile(self) -> layout_profiles.LayoutProfile:
+        return self._layout_profile
+
+    @layout_profile.setter
+    def layout_profile(self, new: layout_profiles.LayoutProfile):
+        def handle_layout_change(event: event_types.LayoutChanged):
+            match event.item_changed:
+                case "pos":
+                    self.trigger(event_types.WidgetMove(
+                        self, 
+                        self._layout_profile.pos, 
+                        event.old_value
+                        ))
+                case "size":
+                    self.trigger(event_types.WidgetResize(
+                        self, 
+                        self._layout_profile.size, 
+                        event.old_value
+                        ))
+        if self._on_layout_change_task is not None:
+            self._layout_profile.unbind(self._on_layout_change_task)
+        self._layout_profile = new
+        self._layout_profile.bind(event_types.LayoutChanged, handle_layout_change)
 
     @property
     def pos(self) -> styles.shape.Point:
@@ -373,14 +404,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         else:
             return False
 
-    def __setattr__(self, name: str, value: typing.Any) -> None:
-        super().__setattr__(name, value)
-        if not hasattr(self, "_alive"):
-            return
-        if not self._alive:
-            return
+    def _on_setattr(self, name: str, _: typing.Any, old: typing.Any) -> None:
         if not name.startswith("_"):
-            self.trigger(event_types.WidgetConfigure(self, {name: value}))
+            if not self._alive:
+                return
+            self.trigger(event_types.WidgetConfigure(self, name, old))
 
     # def _on_cache_dirty(self, prop_name: str) -> None:
     #     if prop_name == "components":

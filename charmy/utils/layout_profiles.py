@@ -25,16 +25,23 @@ class LayoutProfile(_event.EventHandling):
         self.pos: _shape.Point
         self.size: _shape.Size
 
-    def _on_setattr(self, name: str, value: typing.Any) -> None:
+    def _on_setattr(self, name: str, value: typing.Any, old: typing.Any) -> None:
         # super().__setattr__(name, value)
-        if not name.startswith("_") and name != "type":
-            self.trigger(_event.event_types.LayoutChanged(self))
-            print("Layout changed")
+        if not hasattr(self, "_alive"):
+            return
+        if not self._alive:
+            return
+        if name != "type":
+            self.trigger(_event.event_types.LayoutChanged(self, name, old))
+            # print(f"Layout changed: {name}")
 
 @_dataclass
 class PlaceProfile(LayoutProfile):
     """Place profile, to directly specify the position and size of the widget."""
     type: typing.ClassVar[str] = "place"
+
+    def __post_init__(self) -> ...:
+        super().__init__()
 
     pos: _shape.Point
     size: typing.Optional[_shape.Size] = None
@@ -46,6 +53,14 @@ class ManagedLayoutProfile(LayoutProfile):
     @_abstractmethod
     def pos(self) -> _shape.Point: ...
 
+    @pos.setter
+    def pos(self) -> None: raise NotImplementedError(
+        "Not supported to set pos for managed layout.")
+
     @property
     @_abstractmethod
     def size(self) -> _shape.Size: ...
+
+    @size.setter
+    def size(self) -> None: raise NotImplementedError(
+        "Not supported to set size for managed layout.")
